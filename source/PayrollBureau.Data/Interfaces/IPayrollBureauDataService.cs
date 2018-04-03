@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using PayrollBureau.Data.Models;
 using PayrollBureau.Data.Entities;
-using PayrollBureau.Data.Models.Ordering;
-using PayrollBureau.Data.Models.Paging;
+
 
 
 namespace PayrollBureau.Data.Interfaces
@@ -20,6 +20,7 @@ namespace PayrollBureau.Data.Interfaces
         T Retrieve<T>(int Id) where T : class;
         List<T> Retrieve<T>(Expression<Func<T, bool>> predicate) where T : class;
         T RetrieveByPredicate<T>(Expression<Func<T, bool>> predicate) where T : class;
+        PagedResult<BureauGrid> RetrieveBureau(string searchTerm, List<OrderBy> orderBy = null, Paging paging = null);
         #endregion
 
         #region Update

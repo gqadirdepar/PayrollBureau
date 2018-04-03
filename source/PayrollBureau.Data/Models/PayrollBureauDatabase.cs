@@ -17,12 +17,9 @@ namespace PayrollBureau.Data.Models
         public virtual DbSet<Employer> Employers { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<DocumentCategory> DocumentCategories { get; set; }
-
+        public virtual DbSet<BureauGrid> BureauGrids { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Bureau>()
-                .HasOptional(e => e.Bureau1)
-                .WithRequired(e => e.Bureau2);
 
             modelBuilder.Entity<Bureau>()
                 .HasOptional(e => e.Employer)

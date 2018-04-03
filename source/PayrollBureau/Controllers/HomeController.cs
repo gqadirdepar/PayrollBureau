@@ -6,10 +6,10 @@ using System.Web.Mvc;
 using PayrollBureau.Business.Interfaces;
 using PayrollBureau.Extensions;
 using PayrollBureau.Models;
-
 namespace PayrollBureau.Controllers
 {
-    public class HomeController : Controller
+    [Authorize]
+    public class HomeController : BaseController
     {
         private readonly IPayrollBureauBusinessService _payrollBureauBusinessService;
 
@@ -40,6 +40,22 @@ namespace PayrollBureau.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        // GET: Extension
+        [HttpPost]
+        [Route("Home/Statistics")]
+        public ActionResult Statistics()
+        {
+            try
+            {
+                var result = _payrollBureauBusinessService.Retrievestatistics();
+                return this.JsonNet(result);
+            }
+            catch (Exception ex)
+            {
+                return this.JsonNet(ex);
+            }
         }
     }
 }
