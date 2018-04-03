@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using PayrollBureau.Data.Interfaces;
 using PayrollBureau.Business.Interfaces;
 using PayrollBureau.Data.Entities;
 using PayrollBureau.Data.Interfaces;
@@ -21,6 +22,20 @@ namespace PayrollBureau.Business.Services
             _payrollBureauDataService = payrollBureauDataService;
         }
 
+        #region Retrieve
+
+        public Employer RetrieveEmployerByUserId(string userId)
+        {
+            return _payrollBureauDataService.RetrieveEmployerByUserId(userId);
+        }
+
+        public PagedResult<Employer> RetrieveEmployerByBureauId(int id, List<OrderBy> orderBy, Paging paging)
+        {
+            if (paging == null)
+                return _payrollBureauDataService.RetrievePagedResult<Employer>(t => t.BureauId == id);
+            return _payrollBureauDataService.RetrievePagedResult<Employer>(t => t.BureauId == id, orderBy, paging);
+        }
+        #endregion
 
 
 
