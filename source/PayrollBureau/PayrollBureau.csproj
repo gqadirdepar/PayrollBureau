@@ -220,6 +220,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\EmployerController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Models\Authorization\IdentityModel.cs" />
     <Compile Include="Models\Authorization\PolicyAuthorizeAttribute.cs" />
     <Compile Include="Models\EmployerViewModel.cs" />
+    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\JsonNetResult.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -267,6 +269,8 @@
     <Content Include="Scripts\Angular\Prototypes\Paging.js" />
     <Content Include="Scripts\Angular\app.js" />
     <Content Include="Scripts\Angular\Services\EmployerService.js" />
+    <Content Include="Scripts\Angular\Controllers\EmployeeController.js" />
+    <Content Include="Scripts\Angular\Services\EmployeeService.js" />
     <Content Include="Scripts\Angular\Services\OrderService.js" />
     <Content Include="Scripts\App\css_browser_selector.js" />
     <Content Include="Scripts\App\daterangepicker.js" />
@@ -309,10 +313,13 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Employer\Index.cshtml" />
-    <Content Include="Views\Shared\Pagination\_pagination.cshtml" />
-    <Content Include="Views\Shared\Pagination\_pageSize.cshtml" />
-    <Content Include="Views\Shared\Pagination\_pageInformation.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Shared\Pagination\_pageButtons.cshtml" />
+    <Content Include="Views\Shared\Pagination\_pageInformation.cshtml" />
+    <Content Include="Views\Shared\Pagination\_pageSize.cshtml" />
+    <Content Include="Views\Shared\Pagination\_pagination.cshtml" />
+    <Content Include="Views\Shared\_EmployerDashboard.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

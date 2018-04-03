@@ -21,7 +21,11 @@ namespace PayrollBureau.Data.Entities
 
         [Required]
         [StringLength(100)]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string LastName { get; set; }
 
         [StringLength(100)]
         public string Address1 { get; set; }

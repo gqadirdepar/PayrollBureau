@@ -1,22 +1,7 @@
-﻿<div class="row" ng-if="model.paging.totalResults > 0">
-    <div class="col-xs-12 col-sm-5 col-md-6">
-        <div class="dataTables_length" id="datatable_length">
-            <div class="visible-sm-block visible-md-block visible-lg-block">
-                @Html.Partial("Pagination/_pageSize")
-                <br class="visible-sm-block" />
-                @Html.Partial("Pagination/_pageInformation")
-            </div>
-            <div class="visible-xs-block">
-                <div class="col-xs-12 col-sm-6">
-                    @Html.Partial("Pagination/_pageSize")
-                </div>
-                <div class="col-xs-12 col-sm-6">
-                    @Html.Partial("Pagination/_pageInformation")
-                </div>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-sm-5">
     </div>
-    <div class="col-xs-12 col-sm-7 col-md-6">
+    <div class="col-sm-12">
         @Html.Partial("Pagination/_pageButtons")
     </div>
 </div>
