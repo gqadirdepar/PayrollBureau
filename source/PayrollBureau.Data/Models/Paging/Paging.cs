@@ -1,4 +1,4 @@
-﻿namespace PayrollBureau.Data.Models.Paging
+﻿namespace PayrollBureau.Data.Models
 {
     public class Paging
     {

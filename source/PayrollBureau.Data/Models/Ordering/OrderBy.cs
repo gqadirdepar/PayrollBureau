@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace PayrollBureau.Data.Models.Ordering
+namespace PayrollBureau.Data.Models
 {
     public class OrderBy
     {

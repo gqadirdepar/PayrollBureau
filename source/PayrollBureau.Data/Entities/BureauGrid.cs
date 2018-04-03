@@ -6,14 +6,22 @@ namespace PayrollBureau.Data.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Bureau")]
-    public partial class Bureau
+    [Table("BureauGrid")]
+    public partial class BureauGrid
     {
+        [Key]
+        [Column(Order = 0)]
         public int BureauId { get; set; }
 
-        [Required]
+        [Key]
+        [Column(Order = 1)]
         [StringLength(100)]
         public string Name { get; set; }
+
+        [Key]
+        [Column(Order = 2)]
+        [StringLength(256)]
+        public string EmailId { get; set; }
 
         [StringLength(100)]
         public string Address1 { get; set; }
@@ -27,20 +35,11 @@ namespace PayrollBureau.Data.Entities
         [StringLength(100)]
         public string Address4 { get; set; }
 
-        [Required]
-        [StringLength(256)]
-        public string EmailId { get; set; }
+        public int? EmployerCount { get; set; }
 
-        [Column(TypeName = "datetime2")]
-        public DateTime CreatedDateUtc { get; set; }
-
-        [StringLength(128)]
-        public string CreatedBy { get; set; }
-
-        [Required]
-        [StringLength(128)]
-        public string AspnetUserId { get; set; }
-
-        public virtual Employer Employer { get; set; }
+        [Key]
+        [Column(Order = 3)]
+        [StringLength(756)]
+        public string SearchTerm { get; set; }
     }
 }

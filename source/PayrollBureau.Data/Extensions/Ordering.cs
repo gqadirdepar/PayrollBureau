@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
-using PayrollBureau.Data.Models.Ordering;
+using PayrollBureau.Data.Models;
 
 namespace PayrollBureau.Data.Extensions
 {

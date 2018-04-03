@@ -1,15 +1,17 @@
 ﻿@using PayrollBureau.Extensions
+
 @model PayrollBureau.Models.HomeViewModel
+
 @{
     ViewBag.Title = "PayrollBureau";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row">
-    @*@if (User.IsBureau())
-        {
-            <h2>Hi,Admin Welcome to Payroll Bureau </h2>
-        }*@
-    <hr />
+   @if (User.IsSuperUser())
+    {
+    <h2>Hi,Admin Welcome to Payroll Bureau </h2>
+     }
+    <hr/>
 </div>
 <div class="row">
     <ol class="breadcrumb">

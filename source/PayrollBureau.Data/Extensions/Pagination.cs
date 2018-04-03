@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using PayrollBureau.Data.Models.Paging;
+using PayrollBureau.Data.Models;
 
 namespace PayrollBureau.Data.Extensions
 {
