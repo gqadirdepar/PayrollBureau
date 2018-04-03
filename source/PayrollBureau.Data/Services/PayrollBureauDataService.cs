@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using System.Transactions;
+using PayrollBureau.Data.Entities;
 using PayrollBureau.Data.Interfaces;
 using PayrollBureau.Data.Models;
-using PayrollBureau.Data.Models.Ordering;
-using PayrollBureau.Data.Models.Paging;
 using PayrollBureau.Data.Extensions;
 
 namespace PayrollBureau.Data.Services
@@ -102,7 +100,27 @@ namespace PayrollBureau.Data.Services
             }
         }
 
+        public PagedResult<BureauGrid> RetrieveBureau(string searchTerm, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.CreateContext())
+            {
+                var bureau = context
+                            .BureauGrids
+                            .AsQueryable();
 
+
+                if (!string.IsNullOrWhiteSpace(searchTerm))
+                    bureau = bureau.Where(o => o.SearchTerm.ToUpper().Contains(searchTerm.ToUpper()));
+
+                var result = bureau
+                         .OrderBy(orderBy)
+                         .Paginate(paging);
+                return result;
+
+            }
+
+        }
         public T UpdateEntityEntry<T>(T t) where T : class
         {
             using (var context = _databaseFactory.CreateContext())

@@ -2,7 +2,7 @@
 using System.Security.Principal;
 using PayrollBureau.Common.Enum.User;
 
-namespace OrbTalk.Extensions
+namespace PayrollBureau.Extensions
 {
     public static class PrincipalExtensions
     {
@@ -19,6 +19,10 @@ namespace OrbTalk.Extensions
         public static bool IsSuperUser(this IPrincipal principal)
         {
             return principal.IsInRole(nameof(Role.SuperUser));
+        }
+        public static bool IsBureau(this IPrincipal principal)
+        {
+            return principal.IsInRole(nameof(Role.Bureau));
         }
 
         public static bool IsEmployer(this IPrincipal principal)
