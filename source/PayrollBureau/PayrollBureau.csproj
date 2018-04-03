@@ -319,7 +319,7 @@
     <Content Include="Views\Shared\Pagination\_pageSize.cshtml" />
     <Content Include="Views\Shared\Pagination\_pagination.cshtml" />
     <Content Include="Views\Shared\_EmployerDashboard.cshtml" />
-
+    <Content Include="Views\Employer\Employees.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -53,9 +53,5 @@ namespace PayrollBureau.Data.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
-
-        public virtual Employer Employer1 { get; set; }
-
-        public virtual Employer Employer2 { get; set; }
     }
 }

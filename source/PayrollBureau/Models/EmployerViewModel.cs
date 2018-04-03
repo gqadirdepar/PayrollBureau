@@ -9,5 +9,6 @@ namespace PayrollBureau.Models
     public class EmployerViewModel
     {
         public Employer Employer { get; set; }
+        public int EmployerId { get; set; }
     }
 }

@@ -47,5 +47,12 @@ namespace PayrollBureau.Controllers
                 return this.JsonNet(ex);
             }
         }
+
+        [Route("Employer/{employerId}/Employees")]
+        public ActionResult Employees(int employerId)
+        {
+            var employer = new EmployerViewModel() { EmployerId = employerId };
+            return View(employer);
+        }
     }
 }

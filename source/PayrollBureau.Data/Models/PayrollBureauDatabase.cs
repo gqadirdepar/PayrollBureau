@@ -37,10 +37,7 @@ namespace PayrollBureau.Data.Models
                 .HasMany(e => e.Employees)
                 .WithRequired(e => e.Employer)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Employer>()
-                .HasOptional(e => e.Employer1)
-                .WithRequired(e => e.Employer2);
+          
         }
     }
 }
