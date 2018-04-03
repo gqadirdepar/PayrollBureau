@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Transactions;
+using PayrollBureau.Data.Entities;
 using PayrollBureau.Data.Interfaces;
 using PayrollBureau.Data.Models;
 using PayrollBureau.Data.Models.Ordering;
@@ -75,6 +76,16 @@ namespace PayrollBureau.Data.Services
             using (var context = _databaseFactory.CreateContext())
             {
                 var returnItems = context.Set<T>().Where(predicate).ToList();
+                return returnItems;
+            }
+        }
+
+        public Employer RetrieveEmployerByUserId(string userId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.CreateContext())
+            {
+                var returnItems = context.Employers.FirstOrDefault(u => u.AspnetUserId == userId);
                 return returnItems;
             }
         }

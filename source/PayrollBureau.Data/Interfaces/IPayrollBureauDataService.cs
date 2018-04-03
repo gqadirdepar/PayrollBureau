@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using PayrollBureau.Data.Entities;
 using PayrollBureau.Data.Models.Ordering;
 using PayrollBureau.Data.Models.Paging;
+
 
 namespace PayrollBureau.Data.Interfaces
 {
@@ -14,6 +16,7 @@ namespace PayrollBureau.Data.Interfaces
         #endregion
 
         #region Retrieve
+        Employer RetrieveEmployerByUserId(string userId);
         T Retrieve<T>(int Id) where T : class;
         List<T> Retrieve<T>(Expression<Func<T, bool>> predicate) where T : class;
         T RetrieveByPredicate<T>(Expression<Func<T, bool>> predicate) where T : class;
