@@ -1,0 +1,61 @@
+﻿
+@using PayrollBureau.Extensions
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title - PayrollBureau</title>
+    @Styles.Render("~/Content/bower")
+    @Styles.Render("~/Content/Application")
+    <meta name="description" content="PayrollBureau" />
+
+</head>
+<body class="xs-mt-50">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+                    Home
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                @if (Request.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                }
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-12" ng-app="PayrollBureau">
+        <div class="container-fluid">
+            @RenderBody()
+            <footer>
+                <div class="pull-left">
+                    <p>&copy; @DateTime.Now.Year All Rights Reserved. ITSL</p>
+                </div>
+                <div class="pull-right">
+                    <h4><i class="fa fa-code-fork"></i> @ViewContext.Controller.GetType().Assembly.GetName().Version</h4>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    @Scripts.Render("~/Scripts/bower")
+    @Scripts.Render("~/Scripts/Application")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

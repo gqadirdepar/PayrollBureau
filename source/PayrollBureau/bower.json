@@ -1,0 +1,24 @@
+{
+	"name": "ASP.NET",
+	"private": true,
+	"dependencies": {
+    "angular": "1.6.2",
+    "angular-animate": "1.6.2",
+    "angular-bootstrap": "2.5.0",
+    "angular-responsive-tables": "0.4.4",
+    "angular-sanitize": "1.6.2",
+    "angular-ui-select": "0.19.6",
+    "angular-ui-uploader": "1.4.0",
+    "bootstrap": "3.3.7",
+    "Font-Awesome": "4.7.0",
+    "jquery": "3.1.1",
+    "jquery-validation": "1.16.0",
+    "jquery-validation-unobtrusive": "3.2.6",
+    "less-space": "1.1.1",
+    "moment": "2.17.1",
+    "ngBootbox": "0.2.0",
+    "bootstrap-side-navbar": "1.0.1",
+    "bootstrap-daterangepicker": "^2.1.25",
+    "ng-file-upload": "12.2.13"
+  }
+}

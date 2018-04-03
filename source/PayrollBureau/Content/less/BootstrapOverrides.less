@@ -1,0 +1,465 @@
+﻿@import "Colors.less";
+html {
+    font-size: 100%;
+}
+
+body {
+    font-family: "europa", sans-serif;
+    font-size: 1rem;
+    color: @gray-primary;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: @brand-primary;
+
+    &.secondary {
+        color: @brand-secondary;
+    }
+}
+
+a {
+    color: @brand-primary;
+
+    &:hover {
+        color: darken(@brand-primary, 10%);
+        text-decoration: underline;
+    }
+}
+
+button, input, optgroup, select, textarea, .btn, .form-control {
+    font-size: 1rem;
+}
+
+select.form-control {
+    height: 40px;
+}
+
+[type='file'].form-control {
+    height: 40px;
+}
+
+.input-group .form-control {
+    height: auto;
+}
+
+
+.btn-lg {
+    font-size: 1.2rem;
+}
+
+.breadcrumb {
+    background-color: @gray-light;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    position: relative;
+    z-index: 990;
+
+    a {
+        color: @brand-secondary;
+    }
+}
+
+.dropdown-menu {
+    font-size: 1rem;
+}
+
+.panel-default {
+    border-color: darken(@gray-secondary, 10%);
+
+    .panel-heading {
+        background-color: @gray-secondary;
+        color: @brand-secondary;
+    }
+
+    .panel-footer {
+        background-color: @brand-secondary;
+        border-top: none;
+    }
+}
+
+
+.panel-primary {
+    border-color: darken(@brand-primary, 10%);
+
+    .panel-heading {
+        border-color: darken(@brand-primary, 10%);
+        background-color: @brand-primary;
+        color: @brand-secondary;
+    }
+
+    .panel-footer {
+        background-color: @brand-secondary;
+        border-top: none;
+    }
+}
+
+.panel-success {
+    border-color: darken(@brand-success, 10%);
+
+    .panel-heading {
+        border-color: darken(@brand-success, 10%);
+        background-color: @brand-success;
+        color: @brand-secondary;
+    }
+
+    .panel-footer {
+        background-color: @brand-secondary;
+        border-top: none;
+    }
+}
+
+/*region Navigation */
+.navbar-inverse {
+    background-color: @brand-primary;
+    border-color: darken(@brand-primary, 6.5%);
+
+    .navbar-brand {
+        color: @brand-secondary;
+        padding: 10px 10px;
+
+        img {
+            height: 50px;
+        }
+    }
+
+
+    .navbar-nav > li > a {
+        color: @brand-secondary;
+
+        &:hover,
+        &:focus,
+        &.active {
+            background-color: @brand-secondary;
+            border-color: darken(@brand-secondary, 6.5%);
+            color: @brand-primary;
+        }
+    }
+}
+
+// Default navbar
+.navbar-default {
+    background-color: @gray-primary;
+    border: none;
+
+    .navbar-brand {
+        color: @brand-secondary;
+        padding: 0;
+
+        img {
+            height: 20px;
+        }
+    }
+
+    .navbar-toggle {
+        margin-left: 10px;
+        border: none;
+        color: @brand-secondary;
+        float: left;
+
+        .icon-bar {
+            background-color: @brand-secondary;
+        }
+
+        &:focus, &:hover {
+            background-color: @gray-primary;
+        }
+    }
+}
+
+.navbar-fixed-side {
+    z-index: 900;
+    height: calc(~"100vh - 67px");
+
+    .navbar-collapse {
+        border-top: none;
+    }
+
+    .navbar-nav {
+        > li {
+            &.active > a {
+                background-color: @brand-primary;
+                color: @brand-secondary;
+            }
+
+            > a {
+                border-bottom: 1px solid @gray-secondary;
+                color: @gray-light;
+
+                &:hover, &:focus {
+                    background-color: @brand-primary;
+                    color: @brand-secondary;
+                }
+            }
+
+            .dropdown-menu {
+                border-bottom: 1px solid @gray-secondary;
+                padding: 0 0;
+
+                > .active > a {
+                    background-color: @brand-primary;
+                    color: @brand-secondary;
+                }
+
+                > li > a {
+                    color: @gray-light;
+
+                    &:hover, &:focus {
+                        background-color: @brand-primary;
+                        color: @brand-secondary;
+                    }
+                }
+            }
+        }
+    }
+
+    .navbar-toggle-brand {
+        border: none !important;
+        padding: 6px 0;
+    }
+}
+
+
+/*#endregion */
+
+/*region Buttons */
+.btn-primary {
+    color: @brand-secondary;
+    background-color: @brand-primary;
+    border-color: darken(@brand-primary, 6.5%);
+
+    &:hover {
+        background-color: darken(@brand-primary, 6.5%);
+        border-color: darken(@brand-primary, 13.5%);
+    }
+
+    &:focus, &:active, &.active, &:active:focus {
+        background-color: darken(@brand-primary, 6.5%);
+        border-color: darken(@brand-primary, 13.5%);
+        outline-color: darken(@brand-primary, 6.5%);
+    }
+
+    &.disabled, &[disabled] {
+        &.focus,
+        &:focus,
+        &:hover {
+            background-color: lighten(@brand-primary, 20%);
+            border-color: lighten(@brand-primary, 15%);
+        }
+    }
+}
+
+.btn-group ul.dropdown-menu .btn-naked {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding-left: 15px;
+    white-space: nowrap;
+    position: relative;
+
+    .checker {
+        position: absolute;
+        margin-left: -8px;
+        margin-top: 3px;
+    }
+
+    .btn-text {
+        margin-left: 10px;
+    }
+}
+
+.btn-block {
+    height: 100%;
+    font-weight: normal;
+    cursor: pointer;
+}
+/*#endregion*/
+
+.alert-success, .btn-success {
+    background-color: @brand-success;
+    border-color: darken(@brand-success, 6.5%);
+    color: @brand-secondary;
+
+    &:hover {
+        background-color: darken(@brand-success, 6.5%);
+        border-color: darken(@brand-success, 13.5%);
+    }
+
+    &:focus, &:active, &.active, &:active:focus {
+        background-color: darken(@brand-success, 6.5%);
+        border-color: darken(@brand-success, 13.5%);
+        outline-color: darken(@brand-success, 6.5%);
+    }
+}
+
+.alert-warning, .btn-warning {
+    background-color: @brand-warning;
+    border-color: darken(@brand-warning, 6.5%);
+    color: @brand-secondary;
+
+    &:hover {
+        background-color: darken(@brand-warning, 6.5%);
+        border-color: darken(@brand-warning, 13.5%);
+    }
+
+    &:focus, &:active, &.active, &:active:focus {
+        background-color: darken(@brand-warning, 6.5%);
+        border-color: darken(@brand-warning, 13.5%);
+        outline-color: darken(@brand-warning, 6.5%);
+    }
+}
+
+.alert-danger, .btn-danger {
+    background-color: @brand-danger;
+    border-color: darken(@brand-danger, 6.5%);
+    color: @brand-secondary;
+
+    &:hover {
+        background-color: darken(@brand-danger, 6.5%);
+        border-color: darken(@brand-danger, 13.5%);
+    }
+
+    &:focus, &:active, &.active, &:active:focus {
+        background-color: darken(@brand-danger, 6.5%);
+        border-color: darken(@brand-danger, 13.5%);
+        outline-color: darken(@brand-danger, 6.5%);
+    }
+}
+
+.alert-info, .btn-info {
+    background-color: @brand-info;
+    border-color: darken(@brand-info, 6.5%);
+    color: @brand-secondary;
+
+    &:hover {
+        background-color: darken(@brand-info, 6.5%);
+        border-color: darken(@brand-info, 13.5%);
+    }
+
+    &:focus, &:active, &.active, &:active:focus {
+        background-color: darken(@brand-info, 6.5%);
+        border-color: darken(@brand-info, 13.5%);
+        outline-color: darken(@brand-info, 6.5%);
+    }
+}
+
+
+/*region Modal*/
+.modal-success {
+    .modal-header {
+        background-color: @brand-success;
+
+        h4 {
+            color: @brand-secondary;
+        }
+    }
+}
+
+.modal-warning {
+    .modal-header {
+        background-color: @brand-warning;
+
+        h4 {
+            color: @brand-secondary;
+        }
+    }
+}
+
+.modal-danger {
+    .modal-header {
+        background-color: @brand-danger;
+
+        h4 {
+            color: @brand-secondary;
+        }
+    }
+}
+
+.modal-info {
+    .modal-header {
+        background-color: @brand-info;
+
+        h4 {
+            color: @brand-secondary;
+        }
+    }
+}
+/*#endregion*/
+/*#region Pagination*/
+.pagination {
+
+    > .active {
+
+        > a,
+        > span {
+            color: @brand-secondary;
+            background-color: @brand-primary;
+            border-color: darken(@brand-primary, 6.5%);
+
+            &:focus,
+            &:hover {
+                color: @brand-secondary;
+                background-color: @brand-primary;
+                border-color: darken(@brand-primary, 6.5%);
+            }
+        }
+    }
+}
+/*#endregion*/
+/*#region Mobile */
+@media (max-width: 768px) {
+    .body-padding {
+        margin-top: 0 !important;
+    }
+
+    .navbar-fixed-top {
+        display: none;
+    }
+
+    .navbar-fixed-side {
+        height: auto !important;
+
+        .navbar-brand {
+            height: auto;
+        }
+
+        .navbar-collapse {
+            border-top: solid 1px @gray-secondary;
+        }
+    }
+}
+/*#endregion*/
+.ui-select-bootstrap .ui-select-choices-row.active > span {
+    color: @brand-secondary;
+    background-color: @brand-primary;
+}
+
+.ui-select-match-item {
+    font-size: 1em;
+    color: @brand-secondary !important;
+    background-color: @brand-primary !important;
+    border-color: darken(@brand-primary, 10%) !important;
+
+    &:hover, &:focus, &:active, &.active, &:active:focus {
+        background-color: @gray-secondary !important;
+        border-color: darken(@gray-secondary, 10%) !important;
+
+        .ui-select-match-close {
+            background-color: @gray-secondary !important;
+        }
+    }
+
+    .ui-select-match-close {
+        padding: 0 5px;
+        color: @brand-secondary;
+        opacity: 1;
+
+        &:hover, &:focus, &:active, &.active, &:active:focus {
+            background-color: @gray-secondary !important;
+            color: darken(@gray-secondary, 10%);
+        }
+    }
+}
+
+.alert a {
+    color: #fff;
+}
