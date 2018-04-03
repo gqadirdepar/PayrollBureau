@@ -49,6 +49,16 @@
   <ItemGroup>
     <Folder Include="Models\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PayrollBureau.Common\PayrollBureau.Common.csproj">
+      <Project>{4aeb8970-b6a4-4b5e-815b-a275aa0d1434}</Project>
+      <Name>PayrollBureau.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PayrollBureau.Data\PayrollBureau.Data.csproj">
+      <Project>{01b7a370-41cd-4a3a-a867-2cbc79c698f8}</Project>
+      <Name>PayrollBureau.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

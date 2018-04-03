@@ -2,7 +2,7 @@
 using System.Security.Principal;
 using PayrollBureau.Common.Enum.User;
 
-namespace OrbTalk.Extensions
+namespace PayrollBureau.Extensions
 {
     public static class PrincipalExtensions
     {

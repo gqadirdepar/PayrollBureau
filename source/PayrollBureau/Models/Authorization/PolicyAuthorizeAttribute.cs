@@ -2,7 +2,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Web.Mvc;
 using Microsoft.Owin.Security.Authorization.Mvc;
-using OrbTalk.Extensions;
 using PayrollBureau.Common.Enum.User;
 using PayrollBureau.Extensions;
 
