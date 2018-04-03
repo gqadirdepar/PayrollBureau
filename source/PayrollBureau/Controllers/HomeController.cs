@@ -5,8 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using PayrollBureau.Business.Interfaces;
 using PayrollBureau.Extensions;
-
-
+using PayrollBureau.Models;
 namespace PayrollBureau.Controllers
 {
     [Authorize]
@@ -18,9 +17,15 @@ namespace PayrollBureau.Controllers
         {
             _payrollBureauBusinessService = payrollBureauBusinessService;
         }
+
         public ActionResult Index()
         {
-            return View();
+            var model = new HomeViewModel();
+            if (User.IsEmployer())
+            {
+                model.EmployerId = 1;
+            }
+            return View(model);
         }
 
         public ActionResult About()
