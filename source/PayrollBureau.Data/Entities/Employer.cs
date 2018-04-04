@@ -35,17 +35,12 @@ namespace PayrollBureau.Data.Entities
         [StringLength(100)]
         public string Address4 { get; set; }
 
-        [Required]
-        [StringLength(256)]
-        public string Email { get; set; }
-
         [Column(TypeName = "datetime2")]
         public DateTime CreatedDateUtc { get; set; }
 
         [StringLength(128)]
         public string CreatedBy { get; set; }
 
-        [Required]
         [StringLength(128)]
         public string AspnetUserId { get; set; }
 

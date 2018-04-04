@@ -9,27 +9,17 @@ namespace PayrollBureau.Data.Entities
     [Table("Bureau")]
     public partial class Bureau
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Bureau()
+        {
+            Employers = new HashSet<Employer>();
+        }
+
         public int BureauId { get; set; }
 
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
-
-        [StringLength(100)]
-        public string Address1 { get; set; }
-
-        [StringLength(100)]
-        public string Address2 { get; set; }
-
-        [StringLength(100)]
-        public string Address3 { get; set; }
-
-        [StringLength(100)]
-        public string Address4 { get; set; }
-
-        [Required]
-        [StringLength(256)]
-        public string EmailId { get; set; }
 
         [Column(TypeName = "datetime2")]
         public DateTime CreatedDateUtc { get; set; }
@@ -40,5 +30,8 @@ namespace PayrollBureau.Data.Entities
         [Required]
         [StringLength(128)]
         public string AspnetUserId { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Employer> Employers { get; set; }
     }
 }

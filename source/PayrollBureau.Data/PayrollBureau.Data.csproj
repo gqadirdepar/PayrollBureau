@@ -60,7 +60,6 @@
     <Compile Include="Entities\AspNetUser.cs" />
     <Compile Include="Entities\AspNetUserRole.cs" />
     <Compile Include="Entities\Bureau.cs" />
-    <Compile Include="Entities\BureauGrid.cs" />
     <Compile Include="Entities\DocumentCategory.cs" />
     <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\EmployeeDocument.cs" />

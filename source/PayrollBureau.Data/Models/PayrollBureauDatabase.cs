@@ -17,14 +17,9 @@ namespace PayrollBureau.Data.Models
         public virtual DbSet<Employer> Employers { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<DocumentCategory> DocumentCategories { get; set; }
-        public virtual DbSet<BureauGrid> BureauGrids { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Employee>()
-                .HasMany(e => e.EmployeeDocuments)
-                .WithRequired(e => e.Employee)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Employer>()
                 .HasMany(e => e.Employees)
