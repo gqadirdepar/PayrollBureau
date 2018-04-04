@@ -18,7 +18,6 @@ namespace PayrollBureau.Controllers
         }
         // GET: Bureau
 
-        [Authorize(Roles = "SuperUser")]
         [Route("Bureau")]
         public ActionResult Index()
         {
@@ -91,7 +90,6 @@ namespace PayrollBureau.Controllers
         //        }
         //    }
 
-        [Authorize(Roles = "SuperUser")]
         [HttpPost]
         [Route("Bureau/List")]
         public ActionResult List(string searchTerm, Paging paging, List<OrderBy> orderBy)

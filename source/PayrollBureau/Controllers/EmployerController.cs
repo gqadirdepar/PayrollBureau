@@ -16,15 +16,9 @@ namespace PayrollBureau.Controllers
         {
             _payrollBureauBusinessService = PayrollBureauBusinessService;
         }
+
         public ActionResult Index()
         {
-            //var userId = User.Identity.GetUserId();
-            //var employer = _PayrollBureauBusinessService.RetrieveEmployerByUserId(userId);
-            //var viewModel = new EmployerViewModel
-            //{
-            //   Employer = employer,
-            //};
-            //return View(viewModel);
             return View();
         }
 
