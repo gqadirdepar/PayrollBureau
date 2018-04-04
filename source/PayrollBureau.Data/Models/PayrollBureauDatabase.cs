@@ -21,10 +21,6 @@ namespace PayrollBureau.Data.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Bureau>()
-                .HasOptional(e => e.Employer)
-                .WithRequired(e => e.Bureau);
-
             modelBuilder.Entity<Employee>()
                 .HasMany(e => e.EmployeeDocuments)
                 .WithRequired(e => e.Employee)

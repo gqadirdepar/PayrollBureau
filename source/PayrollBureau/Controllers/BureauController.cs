@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using PayrollBureau.Business.Interfaces;
 using PayrollBureau.Data.Models;
 using PayrollBureau.Extensions;
+using PayrollBureau.Models;
 
 namespace PayrollBureau.Controllers
 {
@@ -104,6 +105,22 @@ namespace PayrollBureau.Controllers
             {
                 return this.JsonNet(ex);
             }
+        }
+
+        [Route("Bureau/{bureauId}")]
+        public ActionResult DashBoard(int bureauId)
+        {
+            var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
+            var model = new BaseViewModel() { BureauId = bureau.BureauId, BureauName = bureau.Name };
+            return View(model);
+        }
+
+        [Route("Bureau/{bureauId}/Employers")]
+        public ActionResult Employers(int bureauId)
+        {
+            var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
+            var model = new BaseViewModel { BureauId = bureau.BureauId, BureauName = bureau.Name };
+            return View(model);
         }
     }
 }

@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 using PayrollBureau.Business.Interfaces;
-using PayrollBureau.Data.Models.Ordering;
-using PayrollBureau.Data.Models.Paging;
+using PayrollBureau.Data.Models;
 using PayrollBureau.Extensions;
 using PayrollBureau.Models;
 
@@ -39,7 +35,7 @@ namespace PayrollBureau.Controllers
         {
             try
             {
-                var result = _PayrollBureauBusinessService.RetrieveEmployerByBureauId(bureauId, orderBy, paging);
+                var result = _PayrollBureauBusinessService.RetrieveEmployer(bureauId, orderBy, paging);
                 return this.JsonNet(result);
             }
             catch (Exception ex)
@@ -48,11 +44,12 @@ namespace PayrollBureau.Controllers
             }
         }
 
-        [Route("Employer/{employerId}/Employees")]
+        [Route("Employers/{employerId}/Employees")]
         public ActionResult Employees(int employerId)
         {
-            var employer = new EmployerViewModel() { EmployerId = employerId };
-            return View(employer);
+            var employer = _PayrollBureauBusinessService.RetrieveEmployer(employerId);
+            var model = new BaseViewModel { EmployerId = employerId };
+            return View(model);
         }
     }
 }

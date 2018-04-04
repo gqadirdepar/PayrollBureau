@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using PayrollBureau.Business.Interfaces;
-using PayrollBureau.Data.Models.Ordering;
-using PayrollBureau.Data.Models.Paging;
+using PayrollBureau.Data.Models;
 using PayrollBureau.Extensions;
 
 namespace PayrollBureau.Controllers

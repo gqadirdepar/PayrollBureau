@@ -20,8 +20,8 @@ namespace PayrollBureau.Business.Services
         {
             _payrollBureauDataService = payrollBureauDataService;
         }
-        
-     #region Retrieve
+
+        #region Retrieve
 
         public Statistics Retrievestatistics()
         {
@@ -32,24 +32,31 @@ namespace PayrollBureau.Business.Services
                 Users = result.Count(u => !string.IsNullOrEmpty(u.AspnetUserId))
             };
         }
-        public PagedResult<BureauGrid> RetrieveBureau(string searchTerm, List<OrderBy> orderBy, Paging paging)
+        public PagedResult<Bureau> RetrieveBureau(string searchTerm, List<OrderBy> orderBy, Paging paging)
         {
-            return _payrollBureauDataService.RetrieveBureau(searchTerm, orderBy, paging);
-            }
-
-      
-        public Employer RetrieveEmployerByUserId(string userId)
-        {
-            return _payrollBureauDataService.RetrieveEmployerByUserId(userId);
+            if (!string.IsNullOrEmpty(searchTerm))
+                return _payrollBureauDataService.RetrievePagedResult<Bureau>(e => e.Name.Contains(searchTerm), orderBy, paging);
+            return _payrollBureauDataService.RetrievePagedResult<Bureau>(e => true, orderBy, paging);
         }
 
-        public PagedResult<Employer> RetrieveEmployerByBureauId(int id, List<OrderBy> orderBy, Paging paging)
+
+        public Employer RetrieveEmployer(string aspNetUserId)
+        {
+            return _payrollBureauDataService.Retrieve<Employer>(e => e.AspnetUserId == aspNetUserId).FirstOrDefault();
+        }
+
+        public Employer RetrieveEmployer(int employerId)
+        {
+            return _payrollBureauDataService.Retrieve<Employer>(e => e.EmployerId == employerId, e => new { e.Bureau }).FirstOrDefault();
+        }
+
+        public PagedResult<Employer> RetrieveEmployer(int bureauId, List<OrderBy> orderBy, Paging paging)
         {
             if (paging == null)
-                return _payrollBureauDataService.RetrievePagedResult<Employer>(t => t.BureauId == id);
-            return _payrollBureauDataService.RetrievePagedResult<Employer>(t => t.BureauId == id, orderBy, paging);
+                return _payrollBureauDataService.RetrievePagedResult<Employer>(t => t.BureauId == bureauId);
+            return _payrollBureauDataService.RetrievePagedResult<Employer>(t => t.BureauId == bureauId, orderBy, paging);
         }
-      
+
 
 
         public PagedResult<Employee> RetrieveEmployees(Expression<Func<Employee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
@@ -62,6 +69,19 @@ namespace PayrollBureau.Business.Services
             return _payrollBureauDataService.Retrieve<Employee>(employeeId);
 
         }
-          #endregion
+
+        public Bureau RetrieveBureau(int bureauId)
+        {
+            return _payrollBureauDataService.Retrieve<Bureau>(bureauId);
+
+        }
+
+        public Bureau RetrieveBureau(string aspNetUserId)
+        {
+            return _payrollBureauDataService.Retrieve<Bureau>(e => e.AspnetUserId == aspNetUserId).FirstOrDefault();
+
+        }
+
+        #endregion
     }
 }

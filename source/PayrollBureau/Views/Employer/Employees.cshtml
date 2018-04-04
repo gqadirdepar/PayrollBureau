@@ -1,22 +1,33 @@
 ﻿@using PayrollBureau.Extensions
-@model PayrollBureau.Models.EmployerViewModel
+@model PayrollBureau.Models.BaseViewModel
 <div>
     <h1>Employees</h1>
 </div>
-<ol class="breadcrumb">
-    @if (User.IsEmployer())
-    {
-        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-    }
-</ol>
 <div class="row">
-    <div class="col-lg-3">
-        <input type="text" class="form-control" />
+    @if (User.IsSuperUser())
+    {
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Bureaus", "Index", "Bureau")</li>
+            <li>@Html.ActionLink(@Model.BureauName, "Employers", "Bureau")</li>
+
+        </ol>
+    }
+</div>
+<div class="row">
+    <div class="col-sm-12 col-md-6 md-mb-10">
+        <a type="button" class="btn btn-primary" href="/Bureau/Create">Create</a>
     </div>
-    <div class="col-lg-2">
-        <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+    <div class="col-sm-12 col-md-6 md-mb-10">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" ng-model="model.searchTerm" ng-keyup="$event.keyCode == 13 && model.search()">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="model.search()"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
     </div>
 </div>
+
 <div class="row" ng-controller="EmployeeController as model" ng-init="model.initialise('@Model.EmployerId')">
     <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
         <div class="ng-cloak" ng-show="model.employees.length > 0">
@@ -31,7 +42,6 @@
                             <th ng-click="model.order('EmailSent')" ng-class="model.orderClass('EmailSent')">Email Sent</th>
                             <th ng-click="model.order('EmailConfirmed')" ng-class="model.orderClass('EmailConfirmed')">Email Confirmed</th>
                             <td>Action</td>
-
                         </tr>
                     </thead>
                     <tbody>

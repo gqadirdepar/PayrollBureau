@@ -40,7 +40,5 @@ namespace PayrollBureau.Data.Entities
         [Required]
         [StringLength(128)]
         public string AspnetUserId { get; set; }
-
-        public virtual Employer Employer { get; set; }
     }
 }

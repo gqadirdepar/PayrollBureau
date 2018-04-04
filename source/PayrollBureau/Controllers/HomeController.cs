@@ -22,10 +22,10 @@ namespace PayrollBureau.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
-            var model = new HomeViewModel();
+            var model = new BaseViewModel();
             if (User.IsEmployer())
             {
-                var data = _payrollBureauBusinessService.RetrieveEmployerByUserId(userId);
+                var data = _payrollBureauBusinessService.RetrieveEmployer(userId);
                 model.EmployerId = data.EmployerId;
             }
             return View(model);

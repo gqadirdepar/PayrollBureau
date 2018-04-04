@@ -234,7 +234,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Authorization\IdentityModel.cs" />
     <Compile Include="Models\Authorization\PolicyAuthorizeAttribute.cs" />
-    <Compile Include="Models\BaseViewModel.cs" />
+    <Compile Include="Models\EmployerViewModel.cs" />
+    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\JsonNetResult.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -329,14 +330,16 @@
     <Content Include="Views\Shared\Pagination\_pageSize.cshtml" />
     <Content Include="Views\Shared\Pagination\_pagination.cshtml" />
     <Content Include="Views\Shared\_EmployerDashboard.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Employer\Employees.cshtml" />
-    <Content Include="Views\Bureau\DashBoard.cshtml" />
-    <Content Include="Views\Shared\_BureauDashboard.cshtml" />
-    <Content Include="Views\Bureau\Employers.cshtml" />
+=======
+>>>>>>> 03a161e1ed5f85502b20e913b4b097dd203b166c
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\images\" />
+    <Folder Include="Views\Shared\Pagination\" />
+    <Folder Include="Views\Bureau\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
