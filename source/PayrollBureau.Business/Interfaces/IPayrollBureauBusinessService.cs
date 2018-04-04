@@ -22,6 +22,13 @@ namespace PayrollBureau.Business.Interfaces
         Employee RetrieveEmployee(int employeeId);
         Bureau RetrieveBureau(int bureauId);
         Bureau RetrieveBureau(string aspNetUserId);
+        ValidationResult<Employer> EmployerAlreadyExists(string name,string email, int? employerId);
+
+        #endregion
+
+        #region create
+
+        ValidationResult<Employer> CreateEmployer(Employer employer);
 
         #endregion
 

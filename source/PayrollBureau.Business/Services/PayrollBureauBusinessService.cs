@@ -83,5 +83,39 @@ namespace PayrollBureau.Business.Services
         }
 
         #endregion
+
+
+        #region Create
+        public ValidationResult<Employer> CreateEmployer(Employer employer)
+        {
+            var validationResult = new ValidationResult<Employer>();
+            //if (!validationResult.Succeeded)
+            //    return validationResult;
+            try
+            {
+                validationResult.Entity = _payrollBureauDataService.Create(employer); ;
+                return validationResult;
+            }
+            catch (Exception ex)
+            {
+                validationResult.Succeeded = false;
+                validationResult.Message = ex.Message;
+            }
+            return validationResult;
+
+        }
+        #endregion
+
+        #region Helper
+        public ValidationResult<Employer> EmployerAlreadyExists(string name,string email, int? employerId)
+        {
+            var alreadyExists = _payrollBureauDataService.Retrieve<Employer>(p => p.Name.ToLower() == name.ToLower() && p.EmployerId != (employerId ?? -1)).Any();
+            return new ValidationResult<Employer>
+            {
+                Succeeded = !alreadyExists,
+                Errors = alreadyExists ? new List<string> { $"Employer name already exists." } : null
+            };
+        }
+        #endregion
     }
 }
