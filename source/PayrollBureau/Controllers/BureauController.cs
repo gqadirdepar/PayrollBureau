@@ -107,7 +107,7 @@ namespace PayrollBureau.Controllers
             }
         }
 
-        [Route("Bureau/{bureauId}")]
+        [Route("Bureaus/{bureauId}")]
         public ActionResult DashBoard(int bureauId)
         {
             var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
@@ -115,7 +115,7 @@ namespace PayrollBureau.Controllers
             return View(model);
         }
 
-        [Route("Bureau/{bureauId}/Employers")]
+        [Route("Bureaus/{bureauId}/Employers")]
         public ActionResult Employers(int bureauId)
         {
             var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);

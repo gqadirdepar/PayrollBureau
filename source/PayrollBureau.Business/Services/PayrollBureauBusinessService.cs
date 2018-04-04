@@ -47,7 +47,7 @@ namespace PayrollBureau.Business.Services
 
         public Employer RetrieveEmployer(int employerId)
         {
-            return _payrollBureauDataService.Retrieve<Employer>(e => e.EmployerId == employerId, e => new { e.Bureau }).FirstOrDefault();
+            return _payrollBureauDataService.Retrieve<Employer>(e => e.EmployerId == employerId, e => e.Bureau).FirstOrDefault();
         }
 
         public PagedResult<Employer> RetrieveEmployer(int bureauId, List<OrderBy> orderBy, Paging paging)
@@ -57,17 +57,19 @@ namespace PayrollBureau.Business.Services
             return _payrollBureauDataService.RetrievePagedResult<Employer>(t => t.BureauId == bureauId, orderBy, paging);
         }
 
+        public PagedResult<EmployeeGrid> RetrieveEmployees(Expression<Func<EmployeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _payrollBureauDataService.RetrievePagedResult(predicate, orderBy, paging);
+        }
 
-
-        public PagedResult<Employee> RetrieveEmployees(Expression<Func<Employee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<EmployeeDocument> RetrieveEmployeeDocuments(Expression<Func<EmployeeDocument, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _payrollBureauDataService.RetrievePagedResult(predicate, orderBy, paging);
         }
 
         public Employee RetrieveEmployee(int employeeId)
         {
-            return _payrollBureauDataService.Retrieve<Employee>(employeeId);
-
+            return _payrollBureauDataService.Retrieve<Employee>(e => e.EmployeeId == employeeId, e => e.Employer, e => e.Employer.Bureau).FirstOrDefault();
         }
 
         public Bureau RetrieveBureau(int bureauId)

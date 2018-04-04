@@ -11,15 +11,19 @@ namespace PayrollBureau.Data.Models
 
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
-        public virtual DbSet<Bureau> Bureaux { get; set; }
+        public virtual DbSet<Bureau> Bureaus { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeDocument> EmployeeDocuments { get; set; }
         public virtual DbSet<Employer> Employers { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<DocumentCategory> DocumentCategories { get; set; }
+        public virtual DbSet<EmployeeGrid> EmployeeGrids { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            modelBuilder.Entity<Bureau>()
+               .HasMany(e => e.Employers)
+               .WithRequired(e => e.Bureau)
+               .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Employer>()
                 .HasMany(e => e.Employees)

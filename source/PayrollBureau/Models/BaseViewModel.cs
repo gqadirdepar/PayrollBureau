@@ -9,7 +9,9 @@ namespace PayrollBureau.Models
     {
         public int EmployerId { get; set; }
         public int BureauId { get; set; }
+        public int EmployeeId { get; set; }
         public string EmployerName { get; set; }
         public string BureauName { get; set; }
+        public string EmployeeName { get; set; }
     }
 }
