@@ -18,7 +18,6 @@ namespace PayrollBureau.Controllers
         }
         // GET: Bureau
 
-        [Authorize(Roles = "SuperUser")]
         [Route("Bureau")]
         public ActionResult Index()
         {
@@ -91,7 +90,6 @@ namespace PayrollBureau.Controllers
         //        }
         //    }
 
-        [Authorize(Roles = "SuperUser")]
         [HttpPost]
         [Route("Bureau/List")]
         public ActionResult List(string searchTerm, Paging paging, List<OrderBy> orderBy)
@@ -107,7 +105,7 @@ namespace PayrollBureau.Controllers
             }
         }
 
-        [Route("Bureau/{bureauId}")]
+        [Route("Bureaus/{bureauId}")]
         public ActionResult DashBoard(int bureauId)
         {
             var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
@@ -115,7 +113,7 @@ namespace PayrollBureau.Controllers
             return View(model);
         }
 
-        [Route("Bureau/{bureauId}/Employers")]
+        [Route("Bureaus/{bureauId}/Employers")]
         public ActionResult Employers(int bureauId)
         {
             var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);

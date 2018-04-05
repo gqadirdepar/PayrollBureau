@@ -27,7 +27,16 @@ namespace PayrollBureau.Controllers
             {
                 var data = _payrollBureauBusinessService.RetrieveEmployer(userId);
                 model.EmployerId = data.EmployerId;
+                model.EmployerName = data.Name;
             }
+            if (User.IsBureau())
+            {
+                var data = _payrollBureauBusinessService.RetrieveBureau(userId);
+                model.BureauId = data.BureauId;
+                model.BureauName = data.Name;
+
+            }
+
             return View(model);
         }
 

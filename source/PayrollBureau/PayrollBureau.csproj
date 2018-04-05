@@ -266,10 +266,12 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Scripts\Angular\Controllers\BureauController.js" />
+    <Content Include="Scripts\Angular\Controllers\EmployeeDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\HomeController.js" />
     <Content Include="Scripts\Angular\Prototypes\OrderBy.js" />
     <Content Include="Scripts\Angular\Prototypes\Paging.js" />
     <Content Include="Scripts\Angular\app.js" />
+    <Content Include="Scripts\Angular\Services\EmployeeDocumentService.js" />
     <Content Include="Scripts\Angular\Services\HomeService.js" />
     <Content Include="Scripts\Angular\Services\BureauService.js" />
     <Content Include="Scripts\Angular\Controllers\EmployerController.js" />
@@ -333,6 +335,11 @@
     <Content Include="Views\Bureau\DashBoard.cshtml" />
     <Content Include="Views\Shared\_BureauDashboard.cshtml" />
     <Content Include="Views\Bureau\Employers.cshtml" />
+    <Content Include="Views\Employer\DashBoard.cshtml" />
+    <Content Include="Views\Employee\DashBoard.cshtml" />
+    <Content Include="Views\Shared\_EmployeeDashboard.cshtml" />
+    <Content Include="Views\Shared\_Payslips.cshtml" />
+    <Content Include="Views\Shared\_Documents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

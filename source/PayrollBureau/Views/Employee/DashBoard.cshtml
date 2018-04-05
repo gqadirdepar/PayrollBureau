@@ -1,0 +1,52 @@
+﻿@using PayrollBureau.Extensions
+@model PayrollBureau.Models.BaseViewModel
+@{
+    ViewBag.Title = "DashBoard";
+}
+
+<div class="row">
+    <h2>@Model.EmployeeName</h2>
+    <hr />
+</div>
+
+<div class="row">
+    @if (User.IsSuperUser())
+    {
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Bureaus", "Index", "Bureau")</li>
+            <li>@Html.ActionLink(@Model.BureauName, "DashBoard", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
+            <li>@Html.ActionLink("Employers", "Employers", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
+            <li>@Html.ActionLink(@Model.EmployerName, "Dashboard", "Employer", new { employerId = @Model.EmployerId }, null)</li>
+            <li>@Html.ActionLink("Employees", "Employees", "Employer", new { employerId = @Model.EmployerId }, null)</li>
+        </ol>
+    }
+    @if (User.IsBureau())
+    {
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink(@Model.BureauName, "DashBoard", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
+            <li>@Html.ActionLink("Employers", "Employers", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
+            <li>@Html.ActionLink(@Model.EmployerName, "Dashboard", "Employer", new { employerId = @Model.EmployerId }, null)</li>
+            <li>@Html.ActionLink("Employees", "Employees", "Employer", new { employerId = @Model.EmployerId }, null)</li>
+        </ol>
+    }
+    @if (User.IsEmployer())
+    {
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink(@Model.EmployerName, "Dashboard", "Employer", new { employerId = @Model.EmployerId }, null)</li>
+            <li>@Html.ActionLink("Employees", "Employees", "Employer", new { employerId = @Model.EmployerId }, null)</li>
+        </ol>
+    }
+</div>
+
+<div ng-controller="EmployeeDocumentController as model" ng-init="model.initialise('@Model.EmployeeId')">
+    <div class="row">
+        @Html.Partial("_Payslips", Model)
+    </div>
+
+    <div class="row">
+        @Html.Partial("_Documents", Model)
+    </div>
+</div>

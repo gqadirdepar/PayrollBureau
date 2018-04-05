@@ -24,7 +24,7 @@
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
             vm.employerId = employerId;
-            order("FirstName");
+            order("Name");
         }
 
         function retrieveEmployees() {

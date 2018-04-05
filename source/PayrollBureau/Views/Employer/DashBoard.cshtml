@@ -1,0 +1,34 @@
+﻿@using PayrollBureau.Extensions
+@model PayrollBureau.Models.BaseViewModel
+@{
+    ViewBag.Title = "DashBoard";
+}
+
+<div class="row">
+    <h2>@Model.EmployerName</h2>
+    <hr />
+</div>
+
+<div class="row">
+    @if (User.IsSuperUser())
+    {
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Bureaus", "Index", "Bureau")</li>
+            <li>@Html.ActionLink(@Model.BureauName, "DashBoard", "Bureau", new {bureauId = @Model.BureauId}, null)</li>
+            <li>@Html.ActionLink("Employers", "Employers", "Bureau", new {bureauId = @Model.BureauId}, null)</li>
+        </ol>
+    }
+    @if (User.IsBureau())
+    {
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink(@Model.BureauName, "DashBoard", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
+            <li>@Html.ActionLink("Employers", "Employers", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
+        </ol>
+    }
+</div>
+
+<div class="row">
+    @Html.Partial("_EmployerDashboard", Model)
+</div>

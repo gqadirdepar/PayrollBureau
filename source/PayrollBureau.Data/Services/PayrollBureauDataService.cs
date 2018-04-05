@@ -57,11 +57,6 @@ namespace PayrollBureau.Data.Services
 
         public List<T> Retrieve<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeExpressions) where T : class
         {
-            return RetrieveQueryable(predicate, includeExpressions).ToList();
-        }
-
-        protected virtual IQueryable<T> RetrieveQueryable<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeExpressions) where T : class
-        {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.CreateContext())
             {
@@ -70,9 +65,23 @@ namespace PayrollBureau.Data.Services
                     query = includeExpressions.Aggregate(query, (current, expression) => current.Include(expression));
                 if (predicate != null)
                     query = query.Where(predicate);
-                return query;
+                return query.ToList();
             }
         }
+
+        //protected virtual IQueryable<T> RetrieveQueryable<T>(Expression<Func<T, bool>> predicate,Expression<Func<T, TResult>> selectExpression, params Expression<Func<T, object>>[] includeExpressions) where T : class
+        //{
+        //    using (ReadUncommitedTransactionScope)
+        //    using (var context = _databaseFactory.CreateContext())
+        //    {
+        //        var query = context.Set<T>().AsQueryable<T>();
+        //        if (includeExpressions?.Any() ?? false)
+        //            query = includeExpressions.Aggregate(query, (current, expression) => current.Include(expression));
+        //        if (predicate != null)
+        //            query = query.Where(predicate);
+        //        return query.Select(selectExpression);
+        //    }
+        //}
 
 
         //generic type use only when no other tables are needed
