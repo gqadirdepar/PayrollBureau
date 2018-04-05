@@ -1,4 +1,7 @@
 ﻿@using PayrollBureau.Extensions
+
+@model PayrollBureau.Models.HomeViewModel
+
 @{
     ViewBag.Title = "PayrollBureau";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -18,6 +21,10 @@
     @if (User.IsSuperUser())
     {
         @Html.Partial("_SuperAdminDashboard")
+    }
+    @if (User.IsEmployer())
+    {
+        @Html.Partial("_EmployerDashboard", Model)
     }
 
 </div>

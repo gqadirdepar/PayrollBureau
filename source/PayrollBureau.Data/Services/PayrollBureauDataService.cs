@@ -77,6 +77,16 @@ namespace PayrollBureau.Data.Services
             }
         }
 
+        public Employer RetrieveEmployerByUserId(string userId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.CreateContext())
+            {
+                var returnItems = context.Employers.FirstOrDefault(u => u.AspnetUserId == userId);
+                return returnItems;
+            }
+        }
+
         //generic type use only when no other tables are needed
         public PagedResult<T> RetrievePagedResult<T>(Expression<Func<T, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null) where T : class
         {
