@@ -109,7 +109,7 @@ namespace PayrollBureau.Business.Services
         #endregion
 
         #region Helper
-        public ValidationResult<Employer> EmployerAlreadyExists(string name,string email, int? employerId)
+        public ValidationResult<Employer> EmployerAlreadyExists(string name, int? employerId)
         {
             var alreadyExists = _payrollBureauDataService.Retrieve<Employer>(p => p.Name.ToLower() == name.ToLower() && p.EmployerId != (employerId ?? -1)).Any();
             return new ValidationResult<Employer>
@@ -117,6 +117,33 @@ namespace PayrollBureau.Business.Services
                 Succeeded = !alreadyExists,
                 Errors = alreadyExists ? new List<string> { $"Employer name already exists." } : null
             };
+        }
+        #endregion
+
+        #region update
+        public ValidationResult<Employer> UpdateEmployer(Employer employer)
+        {
+            var validationResult = EmployerAlreadyExists(employer.Name, employer.EmployerId);
+            if (!validationResult.Succeeded)
+                return validationResult;
+            try
+            {
+                var employerData = RetrieveEmployer(employer.EmployerId);
+                employerData.Name = employer.Name;
+                employerData.Address1 = employer.Address1;
+                employerData.Address2 = employer.Address2;
+                employerData.Address3 = employer.Address3;
+                employerData.Address4 = employer.Address4;
+                validationResult.Entity = _payrollBureauDataService.UpdateEntityEntry(employerData);
+                validationResult.Succeeded = true;
+                return validationResult;
+            }
+            catch (Exception ex)
+            {
+                validationResult.Succeeded = false;
+                validationResult.Message = ex.Message;
+            }
+            return validationResult;
         }
         #endregion
     }

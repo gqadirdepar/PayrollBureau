@@ -1,5 +1,8 @@
 ﻿@model PayrollBureau.Models.EmployerViewModel
+@{
 
+     bool isEdit = (string)ViewData["mode"] == "edit";
+}
 <div class="row ">
     @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
     {
@@ -58,14 +61,18 @@
             @Html.ValidationMessageFor(m => m.Employer.Address4, "", new {@class = "help-block"})
         </div>
     </div>
-    <div class="form-group">
-        @Html.Label("Email", new { @class = "col-md-4 control-label" })
-        <div class="col-md-4">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @rows = 3 })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "help-block" })
+    @if (!isEdit)
+    {
+        <div class="form-group">
+            @Html.Label("Email", new {@class = "col-md-4 control-label"})
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Email, new {@class = "form-control", @rows = 3})
+                @Html.ValidationMessageFor(m => m.Email, "", new {@class = "help-block"})
+            </div>
         </div>
-    </div>
+    }
     @Html.HiddenFor(m => m.BureauId)
     @Html.HiddenFor(m => m.BureauName)
+    @Html.HiddenFor(m=>m.Employer.EmployerId)
 </div>
 

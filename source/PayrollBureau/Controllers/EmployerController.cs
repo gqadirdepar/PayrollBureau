@@ -44,12 +44,12 @@ namespace PayrollBureau.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet]     
         [Route("Employer/Create/{bureauId}")]
         public ActionResult Create(int bureauId)
         {
             var userId = User.Identity.GetUserId();
-            var bureau = _PayrollBureauBusinessService.RetrieveBureau(bureauId);
+            var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
             var model = new EmployerViewModel { BureauId = bureau.BureauId , BureauName = bureau.Name};
             return View(model);
         }
@@ -61,7 +61,7 @@ namespace PayrollBureau.Controllers
         {
             try
             {
-                var validationResult = _PayrollBureauBusinessService.EmployerAlreadyExists(viewModel.Employer.Name,viewModel.Email, null);
+                var validationResult = _payrollBureauBusinessService.EmployerAlreadyExists(viewModel.Employer.Name, null);
                 if (!validationResult.Succeeded)
                 {
                     foreach (var error in validationResult.Errors)
@@ -89,7 +89,7 @@ namespace PayrollBureau.Controllers
                 //create employer
                 viewModel.Employer.BureauId = viewModel.BureauId;
                 viewModel.Employer.AspnetUserId = user.Id;
-                var employer = _PayrollBureauBusinessService.CreateEmployer(viewModel.Employer);
+                var employer = _payrollBureauBusinessService.CreateEmployer(viewModel.Employer);
                 if (employer.Succeeded) return RedirectToAction("Index", "Employer");
               
             }
@@ -126,6 +126,34 @@ namespace PayrollBureau.Controllers
                 BureauName = employer.Bureau.Name,
                 EmployerName = employer.Name
             };
+            return View(model);
+        }
+
+        [HttpGet]
+        [Route("Employer/{id}/Edit")]       
+        public ActionResult Edit(int id)
+        {
+           
+            var employer = _payrollBureauBusinessService.RetrieveEmployer(id);
+            if (employer == null)
+                return RedirectToAction("NotFound", "Error");
+
+            var bureau = _payrollBureauBusinessService.RetrieveBureau(employer.BureauId);
+            var model = new EmployerViewModel { BureauId = bureau.BureauId, BureauName = bureau.Name ,Employer = employer};
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("Employer/Edit")]
+        public ActionResult Edit(EmployerViewModel model)
+        {
+
+            var result = _payrollBureauBusinessService.UpdateEmployer(model.Employer);
+            if (result.Succeeded) return RedirectToAction("Index", "Employer");
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
             return View(model);
         }
     }
