@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using PayrollBureau.Business.Interfaces;
+using PayrollBureau.Data.Entities;
 using PayrollBureau.Data.Models;
 using PayrollBureau.Extensions;
 using PayrollBureau.Models;
@@ -18,7 +19,7 @@ namespace PayrollBureau.Controllers
         }
         // GET: Bureau
 
-        [Route("Bureau")]
+        [Route("Bureaus")]
         public ActionResult Index()
         {
             return View();
@@ -91,7 +92,7 @@ namespace PayrollBureau.Controllers
         //    }
 
         [HttpPost]
-        [Route("Bureau/List")]
+        [Route("Bureaus/List")]
         public ActionResult List(string searchTerm, Paging paging, List<OrderBy> orderBy)
         {
             try
@@ -109,16 +110,17 @@ namespace PayrollBureau.Controllers
         public ActionResult DashBoard(int bureauId)
         {
             var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
-            var model = new BaseViewModel() { BureauId = bureau.BureauId, BureauName = bureau.Name };
-            return View(model);
+            return View(RetrieveModel(bureau));
         }
 
-        [Route("Bureaus/{bureauId}/Employers")]
-        public ActionResult Employers(int bureauId)
+        private BaseViewModel RetrieveModel(Bureau bureau)
         {
-            var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
-            var model = new BaseViewModel { BureauId = bureau.BureauId, BureauName = bureau.Name };
-            return View(model);
+            var model = new BaseViewModel
+            {
+                BureauId = bureau.BureauId,
+                BureauName = bureau.Name,
+            };
+            return model;
         }
     }
 }

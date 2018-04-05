@@ -15,7 +15,7 @@
         return service;
 
         function retrieveEmployer(bureauId, paging, orderBy) {
-            var url = "/Employer/List",
+            var url = "/Bureaus/" + bureauId + "/Employer/List",
                 data = {
                     bureauId: bureauId,
                     paging: paging,
@@ -23,7 +23,7 @@
                 };
 
             return $http.post(url, data);
-        }     
+        }
     }
 
 })();

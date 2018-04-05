@@ -15,12 +15,14 @@
         <ol class="breadcrumb">
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li>@Html.ActionLink("Bureaus", "Index", "Bureau")</li>
+            <li>@Model.BureauName</li>
         </ol>
     }
     @if (User.IsBureau())
     {
         <ol class="breadcrumb">
             <li>Home</li>
+            <li>@Model.BureauName</li>
         </ol>
     }
     @if (User.IsEmployer())

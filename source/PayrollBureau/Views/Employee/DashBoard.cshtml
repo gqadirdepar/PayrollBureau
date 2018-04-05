@@ -16,9 +16,10 @@
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li>@Html.ActionLink("Bureaus", "Index", "Bureau")</li>
             <li>@Html.ActionLink(@Model.BureauName, "DashBoard", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
-            <li>@Html.ActionLink("Employers", "Employers", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
+            <li>@Html.ActionLink("Employers", "Index", "Employers", new { bureauId = @Model.BureauId }, null)</li>
             <li>@Html.ActionLink(@Model.EmployerName, "Dashboard", "Employer", new { employerId = @Model.EmployerId }, null)</li>
-            <li>@Html.ActionLink("Employees", "Employees", "Employer", new { employerId = @Model.EmployerId }, null)</li>
+            <li>@Html.ActionLink("Employees", "Index", "Employee", new { bureauId = @Model.BureauId, employerId = @Model.EmployerId }, null)</li>
+            <li>@Model.EmployeeName</li>
         </ol>
     }
     @if (User.IsBureau())
@@ -26,9 +27,10 @@
         <ol class="breadcrumb">
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li>@Html.ActionLink(@Model.BureauName, "DashBoard", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
-            <li>@Html.ActionLink("Employers", "Employers", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
+            <li>@Html.ActionLink("Employers", "Index", "Employers", new { bureauId = @Model.BureauId }, null)</li>
             <li>@Html.ActionLink(@Model.EmployerName, "Dashboard", "Employer", new { employerId = @Model.EmployerId }, null)</li>
-            <li>@Html.ActionLink("Employees", "Employees", "Employer", new { employerId = @Model.EmployerId }, null)</li>
+            <li>@Html.ActionLink("Employees", "Index", "Employee", new { bureauId = @Model.BureauId, employerId = @Model.EmployerId }, null)</li>
+            <li>@Model.EmployeeName</li>
         </ol>
     }
     @if (User.IsEmployer())
@@ -36,17 +38,15 @@
         <ol class="breadcrumb">
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li>@Html.ActionLink(@Model.EmployerName, "Dashboard", "Employer", new { employerId = @Model.EmployerId }, null)</li>
-            <li>@Html.ActionLink("Employees", "Employees", "Employer", new { employerId = @Model.EmployerId }, null)</li>
+            <li>@Html.ActionLink("Employees", "Index", "Employee", new { bureauId = @Model.BureauId, employerId = @Model.EmployerId }, null)</li>
+            <li>@Model.EmployeeName</li>
         </ol>
     }
 </div>
+<div class="row">
+    @Html.Partial("_Payslips", Model)
+</div>
 
-<div ng-controller="EmployeeDocumentController as model" ng-init="model.initialise('@Model.EmployeeId')">
-    <div class="row">
-        @Html.Partial("_Payslips", Model)
-    </div>
-
-    <div class="row">
-        @Html.Partial("_Documents", Model)
-    </div>
+<div class="row">
+    @Html.Partial("_Documents", Model)
 </div>

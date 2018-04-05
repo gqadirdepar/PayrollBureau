@@ -18,17 +18,20 @@
         vm.orderClass = orderClass;
         vm.initialise = initialise;
         vm.employerId;
+        vm.bureauId;
 
-        function initialise(employerId) {
+
+        function initialise(bureauId, employerId) {
             vm.orderBy.property = "Name";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
             vm.employerId = employerId;
+            vm.bureauId = bureauId;
             order("Name");
         }
 
         function retrieveEmployees() {
-            return EmployeeService.retrieveEmployees(vm.employerId, vm.paging, vm.orderBy)
+            return EmployeeService.retrieveEmployees(vm.bureauId, vm.employerId, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.employees = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
