@@ -235,6 +235,7 @@
     <Compile Include="Models\Authorization\IdentityModel.cs" />
     <Compile Include="Models\Authorization\PolicyAuthorizeAttribute.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
+    <Compile Include="Models\EmployerViewModel.cs" />
     <Compile Include="Models\JsonNetResult.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -267,11 +268,13 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Scripts\Angular\Controllers\BureauController.js" />
+    <Content Include="Scripts\Angular\Controllers\EmployeePayslipController.js" />
     <Content Include="Scripts\Angular\Controllers\EmployeeDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\HomeController.js" />
     <Content Include="Scripts\Angular\Prototypes\OrderBy.js" />
     <Content Include="Scripts\Angular\Prototypes\Paging.js" />
     <Content Include="Scripts\Angular\app.js" />
+    <Content Include="Scripts\Angular\Services\EmployeePayslipService.js" />
     <Content Include="Scripts\Angular\Services\EmployeeDocumentService.js" />
     <Content Include="Scripts\Angular\Services\HomeService.js" />
     <Content Include="Scripts\Angular\Services\BureauService.js" />
