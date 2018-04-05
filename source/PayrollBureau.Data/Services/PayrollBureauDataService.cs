@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Remoting.Contexts;
 using System.Transactions;
 using PayrollBureau.Data.Entities;
 using PayrollBureau.Data.Interfaces;
@@ -32,7 +33,6 @@ namespace PayrollBureau.Data.Services
             }
         }
 
-
         public IEnumerable<T> Create<T>(IEnumerable<T> t) where T : class
         {
             using (var context = _databaseFactory.CreateContext())
@@ -44,8 +44,6 @@ namespace PayrollBureau.Data.Services
             return t.ToList();
         }
 
-
-
         //generic type use only when no other tables are needed
         public T Retrieve<T>(int Id) where T : class
         {
@@ -56,15 +54,35 @@ namespace PayrollBureau.Data.Services
                 return returnItems;
             }
         }
-        public T RetrieveByPredicate<T>(Expression<Func<T, bool>> predicate) where T : class
+
+        public List<T> Retrieve<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeExpressions) where T : class
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.CreateContext())
             {
-                var returnItems = context.Set<T>().Where(predicate).FirstOrDefault();
-                return returnItems;
+                var query = context.Set<T>().AsQueryable<T>();
+                if (includeExpressions?.Any() ?? false)
+                    query = includeExpressions.Aggregate(query, (current, expression) => current.Include(expression));
+                if (predicate != null)
+                    query = query.Where(predicate);
+                return query.ToList();
             }
         }
+
+        //protected virtual IQueryable<T> RetrieveQueryable<T>(Expression<Func<T, bool>> predicate,Expression<Func<T, TResult>> selectExpression, params Expression<Func<T, object>>[] includeExpressions) where T : class
+        //{
+        //    using (ReadUncommitedTransactionScope)
+        //    using (var context = _databaseFactory.CreateContext())
+        //    {
+        //        var query = context.Set<T>().AsQueryable<T>();
+        //        if (includeExpressions?.Any() ?? false)
+        //            query = includeExpressions.Aggregate(query, (current, expression) => current.Include(expression));
+        //        if (predicate != null)
+        //            query = query.Where(predicate);
+        //        return query.Select(selectExpression);
+        //    }
+        //}
+
 
         //generic type use only when no other tables are needed
         public List<T> Retrieve<T>(Expression<Func<T, bool>> predicate) where T : class
@@ -73,16 +91,6 @@ namespace PayrollBureau.Data.Services
             using (var context = _databaseFactory.CreateContext())
             {
                 var returnItems = context.Set<T>().Where(predicate).ToList();
-                return returnItems;
-            }
-        }
-
-        public Employer RetrieveEmployerByUserId(string userId)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.CreateContext())
-            {
-                var returnItems = context.Employers.FirstOrDefault(u => u.AspnetUserId == userId);
                 return returnItems;
             }
         }
@@ -110,27 +118,6 @@ namespace PayrollBureau.Data.Services
             }
         }
 
-        public PagedResult<BureauGrid> RetrieveBureau(string searchTerm, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.CreateContext())
-            {
-                var bureau = context
-                            .BureauGrids
-                            .AsQueryable();
-
-
-                if (!string.IsNullOrWhiteSpace(searchTerm))
-                    bureau = bureau.Where(o => o.SearchTerm.ToUpper().Contains(searchTerm.ToUpper()));
-
-                var result = bureau
-                         .OrderBy(orderBy)
-                         .Paginate(paging);
-                return result;
-
-            }
-
-        }
         public T UpdateEntityEntry<T>(T t) where T : class
         {
             using (var context = _databaseFactory.CreateContext())

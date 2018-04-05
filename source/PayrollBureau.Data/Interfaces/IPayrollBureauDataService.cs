@@ -5,7 +5,6 @@ using PayrollBureau.Data.Models;
 using PayrollBureau.Data.Entities;
 
 
-
 namespace PayrollBureau.Data.Interfaces
 {
     public interface IPayrollBureauDataService
@@ -16,11 +15,10 @@ namespace PayrollBureau.Data.Interfaces
         #endregion
 
         #region Retrieve
-        Employer RetrieveEmployerByUserId(string userId);
         T Retrieve<T>(int Id) where T : class;
         List<T> Retrieve<T>(Expression<Func<T, bool>> predicate) where T : class;
-        T RetrieveByPredicate<T>(Expression<Func<T, bool>> predicate) where T : class;
-        PagedResult<BureauGrid> RetrieveBureau(string searchTerm, List<OrderBy> orderBy = null, Paging paging = null);
+        List<T> Retrieve<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeExpressions) where T : class;
+
         #endregion
 
         #region Update

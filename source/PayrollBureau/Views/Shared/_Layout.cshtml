@@ -24,11 +24,17 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="@Url.Action("Index", "Home")" class="navbar-brand">
-
                     <img src="~/Content/images/logo.png" />
                 </a>
             </div>
             <div class="navbar-collapse collapse">
+
+                @if (Request.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav">
+                        <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+                    </ul>
+                }
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

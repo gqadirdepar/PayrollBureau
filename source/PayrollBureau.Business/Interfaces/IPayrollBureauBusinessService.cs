@@ -1,15 +1,10 @@
-
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using PayrollBureau.Data.Entities;
 using PayrollBureau.Data.Models;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using PayrollBureau.Data.Entities;
-using PayrollBureau.Data.Models;
+using PayrollBureau.Business.Models;
+
 
 namespace PayrollBureau.Business.Interfaces
 {
@@ -19,11 +14,23 @@ namespace PayrollBureau.Business.Interfaces
         #region Retrieve
 
         Statistics Retrievestatistics();
-        PagedResult<BureauGrid> RetrieveBureau(string searchTerm, List<OrderBy> orderBy, Paging paging);
-        Employer RetrieveEmployerByUserId(string id);
-        PagedResult<Employer> RetrieveEmployerByBureauId(int id, List<OrderBy> orderBy, Paging paging);
-        PagedResult<Employee> RetrieveEmployees(Expression<Func<Employee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<Bureau> RetrieveBureau(string searchTerm, List<OrderBy> orderBy, Paging paging);
+        Employer RetrieveEmployer(string aspNetUserId);
+        Employer RetrieveEmployer(int employerId);
+        PagedResult<Employer> RetrieveEmployer(int bureauId, List<OrderBy> orderBy, Paging paging);
+        PagedResult<EmployeeGrid> RetrieveEmployees(Expression<Func<EmployeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<EmployeeDocument> RetrieveEmployeeDocuments(Expression<Func<EmployeeDocument, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Employee RetrieveEmployee(int employeeId);
+        Bureau RetrieveBureau(int bureauId);
+        Bureau RetrieveBureau(string aspNetUserId);
+        ValidationResult<Employer> EmployerAlreadyExists(string name,string email, int? employerId);
+
+        #endregion
+
+        #region create
+
+        ValidationResult<Employer> CreateEmployer(Employer employer);
+
         #endregion
 
 
