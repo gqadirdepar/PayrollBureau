@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using PayrollBureau.Business.Interfaces;
 using PayrollBureau.Data.Models;
 using PayrollBureau.Extensions;
+using PayrollBureau.Models;
 
 namespace PayrollBureau.Controllers
 {
@@ -17,7 +18,6 @@ namespace PayrollBureau.Controllers
         }
         // GET: Bureau
 
-        [Authorize(Roles = "SuperUser")]
         [Route("Bureau")]
         public ActionResult Index()
         {
@@ -90,7 +90,6 @@ namespace PayrollBureau.Controllers
         //        }
         //    }
 
-        [Authorize(Roles = "SuperUser")]
         [HttpPost]
         [Route("Bureau/List")]
         public ActionResult List(string searchTerm, Paging paging, List<OrderBy> orderBy)
@@ -104,6 +103,22 @@ namespace PayrollBureau.Controllers
             {
                 return this.JsonNet(ex);
             }
+        }
+
+        [Route("Bureaus/{bureauId}")]
+        public ActionResult DashBoard(int bureauId)
+        {
+            var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
+            var model = new BaseViewModel() { BureauId = bureau.BureauId, BureauName = bureau.Name };
+            return View(model);
+        }
+
+        [Route("Bureaus/{bureauId}/Employers")]
+        public ActionResult Employers(int bureauId)
+        {
+            var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
+            var model = new BaseViewModel { BureauId = bureau.BureauId, BureauName = bureau.Name };
+            return View(model);
         }
     }
 }

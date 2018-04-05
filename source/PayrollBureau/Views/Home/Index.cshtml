@@ -1,6 +1,6 @@
 ﻿@using PayrollBureau.Extensions
 
-@model PayrollBureau.Models.HomeViewModel
+@model PayrollBureau.Models.BaseViewModel
 
 @{
     ViewBag.Title = "PayrollBureau";
@@ -9,9 +9,17 @@
 <div class="row">
     @if (User.IsSuperUser())
     {
-    <h2>Hi,Admin Welcome to Payroll Bureau </h2>
-     }
-    <hr/>
+        <h2>Welcome to Payroll Bureau </h2>
+    }
+    @if (User.IsBureau())
+    {
+        <h2>@Model.BureauName </h2>
+    }
+    @if (User.IsEmployer())
+    {
+        <h2>@Model.EmployerName </h2>
+    }
+    <hr />
 </div>
 <div class="row">
     <ol class="breadcrumb">
@@ -25,6 +33,10 @@
     @if (User.IsEmployer())
     {
         @Html.Partial("_EmployerDashboard", Model)
+    }
+    @if (User.IsBureau())
+    {
+        @Html.Partial("_BureauDashboard", Model)
     }
 
 </div>

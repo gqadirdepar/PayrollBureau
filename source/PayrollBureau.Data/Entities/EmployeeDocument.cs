@@ -25,9 +25,10 @@ namespace PayrollBureau.Data.Entities
         [StringLength(128)]
         public string CreatedBy { get; set; }
 
+        [StringLength(500)]
+        public string Description { get; set; }
+
         [Column(TypeName = "datetime2")]
         public DateTime? CreatedDateUtc { get; set; }
-
-        public virtual Employee Employee { get; set; }
     }
 }

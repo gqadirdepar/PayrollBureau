@@ -1,11 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace PayrollBureau.Data.Entities
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
     [Table("Employer")]
     public partial class Employer
     {
@@ -35,17 +34,12 @@ namespace PayrollBureau.Data.Entities
         [StringLength(100)]
         public string Address4 { get; set; }
 
-        [Required]
-        [StringLength(256)]
-        public string Email { get; set; }
-
         [Column(TypeName = "datetime2")]
         public DateTime CreatedDateUtc { get; set; }
 
         [StringLength(128)]
         public string CreatedBy { get; set; }
 
-        [Required]
         [StringLength(128)]
         public string AspnetUserId { get; set; }
 
@@ -53,9 +47,5 @@ namespace PayrollBureau.Data.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
-
-        public virtual Employer Employer1 { get; set; }
-
-        public virtual Employer Employer2 { get; set; }
     }
 }

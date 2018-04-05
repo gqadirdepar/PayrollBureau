@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PayrollBureau.Business.Interfaces;
 using PayrollBureau.Extensions;
 using PayrollBureau.Models;
@@ -20,11 +21,22 @@ namespace PayrollBureau.Controllers
 
         public ActionResult Index()
         {
-            var model = new HomeViewModel();
+            var userId = User.Identity.GetUserId();
+            var model = new BaseViewModel();
             if (User.IsEmployer())
             {
-                model.EmployerId = 1;
+                var data = _payrollBureauBusinessService.RetrieveEmployer(userId);
+                model.EmployerId = data.EmployerId;
+                model.EmployerName = data.Name;
             }
+            if (User.IsBureau())
+            {
+                var data = _payrollBureauBusinessService.RetrieveBureau(userId);
+                model.BureauId = data.BureauId;
+                model.BureauName = data.Name;
+
+            }
+
             return View(model);
         }
 
@@ -57,5 +69,6 @@ namespace PayrollBureau.Controllers
                 return this.JsonNet(ex);
             }
         }
+
     }
 }
