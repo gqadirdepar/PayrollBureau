@@ -250,6 +250,7 @@
     <Content Include="Content\css\Site.min.css">
       <DependentUpon>Site.css</DependentUpon>
     </Content>
+    <Content Include="Content\images\logo.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -312,11 +313,15 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_SuperAdminDashboard.cshtml" />
     <Content Include="Views\Bureau\Index.cshtml" />
+    <Content Include="Views\Shared\Pagination\_pageButtons.cshtml" />
+    <Content Include="Views\Shared\Pagination\_pageInformation.cshtml" />
+    <Content Include="Views\Shared\Pagination\_pageSize.cshtml" />
+    <Content Include="Views\Shared\Pagination\_pagination.cshtml" />
+    <Content Include="Views\Shared\_footer.cshtml" />
+    <Content Include="Views\Shared\_OutsideLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\images\" />
-    <Folder Include="Views\Shared\Pagination\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

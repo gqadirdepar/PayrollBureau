@@ -23,17 +23,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+
+                    <img src="~/Content/images/logo.png" />
+                </a>
                
             </div>
             <div class="navbar-collapse collapse">
-                @if (Request.IsAuthenticated)
-                {
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>
-                }
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -41,14 +37,8 @@
     <div class="col-sm-12 col-lg-12" ng-app="PayrollBureau">
         <div class="container-fluid">
             @RenderBody()
-            <footer>
-                <div class="pull-left">
-                    <p>&copy; @DateTime.Now.Year All Rights Reserved. ITSL</p>
-                </div>
-                <div class="pull-right">
-                    <h4><i class="fa fa-code-fork"></i> @ViewContext.Controller.GetType().Assembly.GetName().Version</h4>
-                </div>
-            </footer>
+            @Html.Partial("_footer")
+          
         </div>
     </div>
 
