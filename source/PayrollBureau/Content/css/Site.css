@@ -824,11 +824,13 @@ footer {
   overflow: auto;
   margin-left: -30px;
   margin-right: -30px;
-  padding: 15px;
+  /*padding: 15px;*/
+  padding: 5px 0px 0px 0px;
   color: #FFFFFF;
   height: auto;
   border-top: solid 1px #c20000;
   margin-top: 40px;
+  text-align: center;
 }
 footer h4 {
   color: #FFFFFF;
@@ -889,10 +891,6 @@ footer .footerContent .footerLinks li a {
 }
 footer .footerContent .footerLinks li a:hover {
   text-decoration: underline;
-}
-.umbrella-layout footer {
-  margin-left: -15px !important;
-  margin-right: -15px !important;
 }
 .pre-wrap {
   white-space: pre-wrap;
@@ -1117,4 +1115,14 @@ footer .footerContent .footerLinks li a:hover {
 }
 .error-body .btn {
   border-color: #fff;
+}
+.footer-margin {
+  /*margin-left: -60px;
+    margin-right: -60px;*/
+  margin-left: 30px;
+  margin-right: 30px;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
 }
