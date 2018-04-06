@@ -9,16 +9,13 @@
 
     function BureauService($http) {
         var service = {
-           
             retrieveBureau: retrieveBureau
-           
-
         };
 
         return service;
 
         function retrieveBureau(searchTerm, paging, orderBy) {
-            var url = "/Bureau/List",
+            var url = "/Bureaus/List",
                 data = {
                     searchTerm: searchTerm,
                     paging: paging,
@@ -27,7 +24,5 @@
 
             return $http.post(url, data);
         }
-
-     
     }
 })();

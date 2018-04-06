@@ -29,7 +29,7 @@ namespace PayrollBureau.Business.Services
             return new Statistics
             {
                 Bureau = result.Count,
-                Users = result.Count(u => !string.IsNullOrEmpty(u.AspnetUserId))
+                //Users = result.Count(u => !string.IsNullOrEmpty(u.AspnetUserId))
             };
         }
         public PagedResult<Bureau> RetrieveBureau(string searchTerm, List<OrderBy> orderBy, Paging paging)
@@ -62,7 +62,7 @@ namespace PayrollBureau.Business.Services
             return _payrollBureauDataService.RetrievePagedResult(predicate, orderBy, paging);
         }
 
-        public PagedResult<EmployeeDocument> RetrieveEmployeeDocuments(Expression<Func<EmployeeDocument, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<DocumentGrid> RetrieveEmployeeDocuments(Expression<Func<DocumentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _payrollBureauDataService.RetrievePagedResult(predicate, orderBy, paging);
         }
@@ -81,7 +81,6 @@ namespace PayrollBureau.Business.Services
         public Bureau RetrieveBureau(string aspNetUserId)
         {
             return _payrollBureauDataService.Retrieve<Bureau>(e => e.AspnetUserId == aspNetUserId).FirstOrDefault();
-
         }
 
         #endregion

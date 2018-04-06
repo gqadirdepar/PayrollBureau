@@ -3,14 +3,14 @@
 
     angular
         .module('PayrollBureau')
-        .controller('EmployeeDocumentController', EmployeeDocumentController);
+        .controller('EmployeePayslipController', EmployeePayslipController);
 
-    EmployeeDocumentController.$inject = ['$scope', '$window', 'EmployeeDocumentService', 'Paging', 'OrderService', 'OrderBy', 'Order'];
+    EmployeePayslipController.$inject = ['$scope', '$window', 'EmployeePayslipService', 'Paging', 'OrderService', 'OrderBy', 'Order'];
 
-    function EmployeeDocumentController($scope, $window, EmployeeDocumentService, Paging, OrderService, OrderBy, Order) {
+    function EmployeePayslipController($scope, $window, EmployeePayslipService, Paging, OrderService, OrderBy, Order) {
         var vm = this;
-        vm.retrieveEmployeeDocuments = retrieveEmployeeDocuments;
-        vm.employeeDocuments = [];
+        vm.retrieveEmployeePayslips = retrieveEmployeePayslips;
+        vm.employeePayslips = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -33,25 +33,25 @@
             order("EmployeeDocumentId");
         }
 
-        function retrieveEmployeeDocuments() {
-            return EmployeeDocumentService.retrieveEmployeeDocuments(vm.bureauId, vm.employerId, vm.employeeId, vm.paging, vm.orderBy).then(
+        function retrieveEmployeePayslips() {
+            return EmployeePayslipService.retrieveEmployeePayslips(vm.bureauId, vm.employerId, vm.employeeId, vm.paging, vm.orderBy).then(
                function (response) {
-                   vm.employeeDocuments = response.data.Items;
+                   vm.employeePayslips = response.data.Items;
                    vm.paging.totalPages = response.data.TotalPages;
                    vm.paging.totalResults = response.data.TotalResults;
-                   vm.searchMessage = vm.employeeDocuments.length === 0 ? "No Records Found" : "";
-                   return vm.employeeDocuments;
+                   vm.searchMessage = vm.employeePayslips.length === 0 ? "No Records Found" : "";
+                   return vm.employeePayslips;
                },
                function () { /*dismissed */ });
         }
 
         function pageChanged() {
-            return retrieveEmployeeDocuments();
+            return retrieveEmployeePayslips();
         }
 
         function order(property) {
             vm.orderBy = OrderService.order(vm.orderBy, property);
-            return retrieveEmployeeDocuments();
+            return retrieveEmployeePayslips();
         }
 
         function orderClass(property) {

@@ -34,7 +34,6 @@ namespace PayrollBureau.Controllers
                 var data = _payrollBureauBusinessService.RetrieveBureau(userId);
                 model.BureauId = data.BureauId;
                 model.BureauName = data.Name;
-
             }
 
             return View(model);

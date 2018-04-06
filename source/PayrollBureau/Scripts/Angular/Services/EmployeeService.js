@@ -14,9 +14,10 @@
 
         return service;
 
-        function retrieveEmployees(employerId, Paging, OrderBy) {
-            var url = "/Employee/List",
+        function retrieveEmployees(bureauId, employerId, Paging, OrderBy) {
+            var url = "/Bureaus/" + bureauId + "/Employers/" + employerId + "/Employees/List",
                 data = {
+                    bureauId: bureauId,
                     employerId: employerId,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
