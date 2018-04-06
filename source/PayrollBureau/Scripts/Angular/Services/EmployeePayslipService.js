@@ -14,8 +14,8 @@
 
         return service;
 
-        function retrieveEmployeePayslips(employeeId, Paging, OrderBy) {
-            var url = "/Employee/Documents",
+        function retrieveEmployeePayslips(bureauId, employerId, employeeId, Paging, OrderBy) {
+            var url = "/Bureaus/" + bureauId + "/Employers/" + employerId + "/Employees/" + employerId + "/Payslips",
                 data = {
                     employeeId:employeeId,
                     paging: Paging,

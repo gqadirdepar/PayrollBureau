@@ -18,21 +18,28 @@
         vm.orderClass = orderClass;
         vm.initialise = initialise;
         vm.employeeId;
+        vm.employerId;
+        vm.bureauId;
         return vm;
 
 
-        function initialise(employeeId) {
+        function initialise(bureauId, employerId, employeeId) {
             vm.orderBy.property = "EmployeeDocumentId";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
             vm.employeeId = employeeId;
+            vm.employerId = employerId;
+            vm.bureauId = bureauId;
             order("EmployeeDocumentId");
         }
 
         function retrieveEmployeeDocuments() {
-            return EmployeeDocumentService.retrieveEmployeeDocuments(vm.employeeId, vm.paging, vm.orderBy).then(
+            return EmployeeDocumentService.retrieveEmployeeDocuments(vm.bureauId, vm.employerId, vm.employeeId, vm.paging, vm.orderBy).then(
                function (response) {
                    vm.employeeDocuments = response.data.Items;
+                   vm.paging.totalPages = response.data.TotalPages;
+                   vm.paging.totalResults = response.data.TotalResults;
+                   vm.searchMessage = vm.employeeDocuments.length === 0 ? "No Records Found" : "";
                    return vm.employeeDocuments;
                },
                function () { /*dismissed */ });

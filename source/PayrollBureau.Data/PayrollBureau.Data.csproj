@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Bureau.cs" />
+    <Compile Include="Entities\DocumentGrid.cs" />
     <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\EmployeeGrid.cs" />
     <Compile Include="Entities\Employer.cs" />

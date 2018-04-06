@@ -1,6 +1,6 @@
 ﻿@model PayrollBureau.Models.BaseViewModel
 
-<div ng-controller="EmployeeDocumentController as model" ng-init="model.initialise('@Model.EmployeeId')" class="panel panel-danger">
+<div ng-controller="EmployeeDocumentController as model" ng-init="model.initialise('@Model.BureauId','@Model.EmployerId','@Model.EmployeeId')" class="panel panel-danger">
     <div class="panel-heading">
         <h3 class="panel-title">Documents</h3>
     </div>
@@ -20,9 +20,9 @@
                         <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                             <thead>
                                 <tr role="row">
-                                    <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Description</th>
-                                    <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Uploaded Date</th>
-                                    <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Uploaded By</th>
+                                    <th ng-click="model.order('Description')" ng-class="model.orderClass('Name')">Description</th>
+                                    <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('Name')">CreatedBy</th>
+                                    <th ng-click="model.order('CreatedBy')" ng-class="model.orderClass('Name')">Uploaded Date</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -30,7 +30,7 @@
                                 <tr ng-repeat="document in model.employeeDocuments" class="odd gradeX cursor" ng-click="$event.originalEvent.ngClickHandled || model.viewClient(client.ClientId)">
                                     <td><span ng-bind="::document.Description"></span></td>
                                     <td><span ng-bind="::document.CreatedBy"></span></td>
-                                    <td><span ng-bind="::document.CreatedDateUtc"></span></td>
+                                    <td><span ng-bind="::document.CreatedDateUtc | date : 'dd-MMMM-yyyy'"></span></td>
                                     <td>
                                         <div class="btn-group pull-right" ng-class="{'dropup':$last}">
                                             <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true; model.canDeleteCheck(pBXServiceType);">

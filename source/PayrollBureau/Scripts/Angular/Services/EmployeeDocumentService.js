@@ -14,15 +14,17 @@
 
         return service;
 
-        function retrieveEmployeeDocuments(employeeId, Paging, OrderBy) {
-            var url = "/Employee/Documents",
+        function retrieveEmployeeDocuments(bureauId, employerId, employeeId, Paging, OrderBy) {
+            var url = "/Bureaus/" + bureauId + "/Employers/" + employerId + "/Employees/" + employerId + "/Documents",
                 data = {
-                    employeeId:employeeId,
+                    bureauId: bureauId,
+                    employerId: employerId,
+                    employeeId: employeeId,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
 
             return $http.post(url, data);
-            }
+        }
     }
 })();

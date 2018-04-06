@@ -62,17 +62,19 @@ namespace PayrollBureau.Controllers
         }
 
         [HttpPost]
-        public ActionResult Documents(int employerId, int employeeId, Paging paging, List<OrderBy> orderBy)
+        [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees/{employeeId}/Documents")]
+        public ActionResult Documents(int bureauId, int employerId, int employeeId, Paging paging, List<OrderBy> orderBy)
         {
-            var data = _payrollBureauBusinessService.RetrieveEmployeeDocuments(e => e.EmployeeId == employeeId && e.DocumentCategoryId == (int)DocumentCategory.Document, orderBy, paging);
-            return this.JsonNet(data);
+            var documents = _payrollBureauBusinessService.RetrieveEmployeeDocuments(e => e.BureauId == bureauId && e.EmployeeId == employeeId && e.DocumentCategoryId == (int)DocumentCategory.Document, orderBy, paging);
+            return this.JsonNet(documents);
         }
 
         [HttpPost]
-        public ActionResult Payslips(int employerId, int employeeId, Paging paging, List<OrderBy> orderBy)
+        [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees/{employeeId}/Payslips")]
+        public ActionResult Payslips(int bureauId, int employerId, int employeeId, Paging paging, List<OrderBy> orderBy)
         {
-            var data = _payrollBureauBusinessService.RetrieveEmployeeDocuments(e => e.EmployeeId == employeeId && e.DocumentCategoryId == (int)DocumentCategory.Payslip, orderBy, paging);
-            return this.JsonNet(data);
+            var payslips = _payrollBureauBusinessService.RetrieveEmployeeDocuments(e => e.BureauId == bureauId && e.EmployeeId == employeeId && e.DocumentCategoryId == (int)DocumentCategory.Payslip, orderBy, paging);
+            return this.JsonNet(payslips);
         }
     }
 }
