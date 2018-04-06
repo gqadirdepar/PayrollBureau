@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title - OrbTalk</title>
+    @Styles.Render("~/Content/bower")
+    @Styles.Render("~/Content/Application")
+    <meta name="description" content="PayrollBureau" />
+</head>
+
+@*<body class="anonymous">*@
+<body >
+    <div class="container body-content">
+        <div class="row">
+            @RenderBody()
+        </div>
+
+
+        <div class="footer-margin">@Html.Partial("_footer")</div> 
+    </div>
+    @Scripts.Render("~/Scripts/bower")
+    @Scripts.Render("~/Scripts/Application")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

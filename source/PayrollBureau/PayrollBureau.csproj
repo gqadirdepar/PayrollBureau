@@ -328,6 +328,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_SuperAdminDashboard.cshtml" />
     <Content Include="Views\Bureau\Index.cshtml" />
+    <Content Include="Views\Shared\_footer.cshtml" />
+    <Content Include="Views\Shared\_OutsideLayout.cshtml" />
     <Content Include="Views\Employer\Index.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Shared\Pagination\_pageButtons.cshtml" />
