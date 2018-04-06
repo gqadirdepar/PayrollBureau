@@ -3,6 +3,8 @@ using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+using DocumentService.API.RESTClient;
+using DocumentService.API.RESTClient.Interfaces;
 using PayrollBureau.Business.Helper;
 using PayrollBureau.Data.Interfaces;
 using PayrollBureau.Data.Models;
@@ -75,6 +77,15 @@ namespace PayrollBureau
                 WithMappings.FromMatchingInterface,
                 WithName.Default
              );
+
+            container.RegisterType<IDocumentServiceRestClient, DocumentServiceRestClient>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(
+                    new InjectionParameter<Uri>(new Uri(ConfigurationManager.AppSettings["DocumentRESTApiAddress"])),
+                    new InjectionParameter<string>(ConfigurationManager.AppSettings["DocumentRESTUsername"]),
+                    new InjectionParameter<string>(ConfigurationManager.AppSettings["DocumentRESTPassword"])
+                ));
+
 
         }
     }

@@ -28,6 +28,9 @@ namespace PayrollBureau.Data.Entities
         [StringLength(500)]
         public string Description { get; set; }
 
+        [StringLength(255)]
+        public string Filename { get; set; }
+
         [Column(TypeName = "datetime2")]
         public DateTime? CreatedDateUtc { get; set; }
     }

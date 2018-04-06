@@ -7,6 +7,7 @@
             'ngAnimate',
             'ngSanitize',
             'ui.bootstrap',
-            'ngBootbox'
+            'ngBootbox',
+             'ui.uploader'
         ]);
 })(window.angular);

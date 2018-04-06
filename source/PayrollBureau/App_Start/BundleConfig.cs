@@ -36,6 +36,7 @@ namespace PayrollBureau
                "~/Scripts/Angular/Prototypes/*.js",
                  "~/Scripts/Angular/Controllers/*.js",
                 "~/Scripts/Angular/Services/*.js",
+                 "~/Scripts/Angular/Directives/*.js",
                 "~/Scripts/App/*.js"
                 ));
 
