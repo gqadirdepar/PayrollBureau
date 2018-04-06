@@ -105,10 +105,29 @@ namespace PayrollBureau.Business.Services
             return validationResult;
 
         }
+
+        public ValidationResult<Employee> CreateEmployee(Employee employee)
+        {
+            var validationResult = new ValidationResult<Employee>();
+            //if (!validationResult.Succeeded)
+            //    return validationResult;
+            try
+            {
+                validationResult.Entity = _payrollBureauDataService.Create(employee); ;
+                return validationResult;
+            }
+            catch (Exception ex)
+            {
+                validationResult.Succeeded = false;
+                validationResult.Message = ex.Message;
+            }
+            return validationResult;
+
+        }
         #endregion
 
         #region Helper
-        public ValidationResult<Employer> EmployerAlreadyExists(string name,string email, int? employerId)
+        public ValidationResult<Employer> EmployerAlreadyExists(string name, int? employerId)
         {
             var alreadyExists = _payrollBureauDataService.Retrieve<Employer>(p => p.Name.ToLower() == name.ToLower() && p.EmployerId != (employerId ?? -1)).Any();
             return new ValidationResult<Employer>
@@ -116,6 +135,66 @@ namespace PayrollBureau.Business.Services
                 Succeeded = !alreadyExists,
                 Errors = alreadyExists ? new List<string> { $"Employer name already exists." } : null
             };
+        }
+
+        public ValidationResult<Employee> EmployeeAlreadyExists(string name, int? employeeId)
+        {
+            var alreadyExists = _payrollBureauDataService.Retrieve<Employee>(p => p.Name.ToLower() == name.ToLower() && p.EmployeeId != (employeeId ?? -1)).Any();
+            return new ValidationResult<Employee>
+            {
+                Succeeded = !alreadyExists,
+                Errors = alreadyExists ? new List<string> { $"Employee name already exists." } : null
+            };
+        }
+        #endregion
+
+        #region update
+        public ValidationResult<Employer> UpdateEmployer(Employer employer)
+        {
+            var validationResult = EmployerAlreadyExists(employer.Name, employer.EmployerId);
+            if (!validationResult.Succeeded)
+                return validationResult;
+            try
+            {
+                var employerData = RetrieveEmployer(employer.EmployerId);
+                employerData.Name = employer.Name;
+                employerData.Address1 = employer.Address1;
+                employerData.Address2 = employer.Address2;
+                employerData.Address3 = employer.Address3;
+                employerData.Address4 = employer.Address4;
+                validationResult.Entity = _payrollBureauDataService.UpdateEntityEntry(employerData);
+                validationResult.Succeeded = true;
+                return validationResult;
+            }
+            catch (Exception ex)
+            {
+                validationResult.Succeeded = false;
+                validationResult.Message = ex.Message;
+            }
+            return validationResult;
+        }
+
+        public ValidationResult<Employee> UpdateEmployee(Employee employee)
+        {
+            var validationResult = EmployeeAlreadyExists(employee.Name, employee.EmployeeId);
+            if (!validationResult.Succeeded)
+                return validationResult;
+            try
+            {
+                var employeeData = RetrieveEmployee(employee.EmployeeId);
+                employeeData.Name = employee.Name;
+                employeeData.ProductName = employee.ProductName;
+                employeeData.PayrollNumber = employee.PayrollNumber;                
+                validationResult.Entity = _payrollBureauDataService.UpdateEntityEntry(employeeData);
+                validationResult.Succeeded = true;
+                return validationResult;
+            }
+            catch (Exception ex)
+            {
+                validationResult.Succeeded = false;
+                validationResult.Message = ex.Message;
+            }
+            return validationResult;
         }
         #endregion
     }

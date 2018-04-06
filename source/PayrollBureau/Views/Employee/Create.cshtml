@@ -1,0 +1,21 @@
+﻿@model PayrollBureau.Models.EmployeeViewModel
+@using PayrollBureau.Extensions
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="row">
+    <h2>@ViewBag.Title</h2>
+    <hr />
+</div>
+
+@using (Html.BeginForm("Create", "Employee", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.Partial("_Employee")
+    <div class="form-group">
+        <div class="text-center col-md-12">
+            <input type="submit" class="btn btn-primary" value="Submit" />
+        </div>
+    </div>
+}
+
