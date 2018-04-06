@@ -12,14 +12,13 @@
             retrieveBureau: retrieveBureau,
             retrieveUsers: retrieveUsers,
             retrieveStatistics: retrieveStatistics
-
-
+           
     };
 
         return service;
 
         function retrieveBureau(searchTerm, paging, orderBy) {
-            var url = "/Bureau/List",
+            var url = "/Bureaus/List",
                 data = {
                     searchTerm: searchTerm,
                     paging: paging,
@@ -48,7 +47,5 @@
 
             return $http.post(url, data);
         }
-
-     
     }
 })();

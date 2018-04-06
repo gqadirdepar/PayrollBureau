@@ -1,6 +1,118 @@
-﻿@{
+﻿@using PayrollBureau.Extensions
+@model PayrollBureau.Models.BaseViewModel
+@{
     ViewBag.Title = "Employees";
 }
+<div class="row">
+    <h2>@ViewBag.Title</h2>
+    <hr />
+</div>
 
-<h2>@ViewBag.Title</h2>
+<div class="row">
+    @if (User.IsSuperUser())
+    {
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Bureaus", "Index", "Bureau")</li>
+            <li>@Html.ActionLink(@Model.BureauName, "DashBoard", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
+            <li>@Html.ActionLink("Employers", "Index", "Employer", new { bureauId = @Model.BureauId }, null)</li>
+            <li>@Html.ActionLink(@Model.EmployerName, "DashBoard", "Employer", new {employerId = @Model.EmployerId}, null)</li>
+            <li>Employees</li>
+        </ol>
+    }
+    @if (User.IsBureau())
+    {
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink(@Model.BureauName, "DashBoard", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
+            <li>@Html.ActionLink("Employers", "Employers", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
+            <li>@Html.ActionLink(@Model.EmployerName, "DashBoard", "Employer", new {employerId = @Model.EmployerId}, null)</li>
+            <li>Employees</li>
+        </ol>
+    }
+    @if (User.IsEmployer())
+    {
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink(@Model.EmployerName, "DashBoard", "Employer", new { employerId = @Model.EmployerId }, null)</li>
+        </ol>
+    }
+</div>
 
+
+
+<div class="row" ng-controller="EmployeeController as model" ng-init="model.initialise('@Model.BureauId','@Model.EmployerId')">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 md-mb-10">
+            <a type="button" class="btn btn-primary" href="/Bureau/Create">Create</a>
+        </div>
+        <div class="col-sm-12 col-md-6 md-mb-10">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" ng-model="model.searchTerm" ng-keyup="$event.keyCode == 13 && model.search()">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="model.search()"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <div class="ng-cloak" ng-show="model.employees.length > 0">
+                <div>
+                    <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                        <thead>
+                            <tr role="row">
+                                <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Name</th>
+                                <th ng-click="model.order('PayrollNumber')" ng-class="model.orderClass('PayrollId')">Payroll Number</th>
+                                <th ng-click="model.order('ProductName')" ng-class="model.orderClass('PayrollId')">Product Name</th>
+                                <th ng-click="model.order('Email')" ng-class="model.orderClass('Email')">Email Id</th>
+                                <th ng-click="model.order('EmailSent')" ng-class="model.orderClass('EmailSent')">Email Sent</th>
+                                <th ng-click="model.order('EmailConfirmed')" ng-class="model.orderClass('EmailConfirmed')">Email Confirmed</th>
+                                <td>Action</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="employee in model.employees" class="odd gradeX cursor" ng-click="$event.originalEvent.ngClickHandled || model.viewEmployee(employee.EmployeeId)">
+                                <td><span ng-bind="::employee.Name"></span></td>
+                                <td><span ng-bind="::employee.PayrollNumber"></span></td>
+                                <td><span ng-bind="::employee.ProductName"></span></td>
+                                <td><span ng-bind="::employee.Email"></span></td>
+                                <td><i class="fa fa-close"></i></td>
+                                <td><i class="fa fa-close"></i></td>
+                                <td>
+                                    <div class="btn-group pull-right" ng-class="{'dropup':$last}">
+                                        <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true; model.canDeleteCheck(pBXServiceType);">
+                                            <i class="fa fa-chevron-down"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li>
+                                                <a ng-href="/Bureaus/{{::employee.BureauId}}/Employers/{{::employee.EmployerId}}/Employees/{{::employee.EmployeeId}}">
+                                                    View
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ng-bootbox-confirm="Are you sure? you want to delete employee - ({{employee.Name}})" ng-bootbox-confirm-action="model.unassignExtensionNumber(extension)" ng-bootbox-confirm-action-cancel="">
+                                                    Delete
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="">
+                    <div class="panel-footer">
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <label ng-bind="model.searchMessage"></label>
+            </div>
+        </div>
+    </div>
+</div>

@@ -238,7 +238,7 @@
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\BureauUsersViewModel.cs" />
     <Compile Include="Models\EmployerViewModel.cs" />
-    <Compile Include="Models\JsonNetResult.cs" />
+      <Compile Include="Models\JsonNetResult.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -276,6 +276,7 @@
     <Content Include="Scripts\Angular\Prototypes\OrderBy.js" />
     <Content Include="Scripts\Angular\Prototypes\Paging.js" />
     <Content Include="Scripts\Angular\app.js" />
+    <Content Include="Scripts\Angular\Services\EmployeePayslipService.js" />
     <Content Include="Scripts\Angular\Services\EmployeeDocumentService.js" />
     <Content Include="Scripts\Angular\Services\HomeService.js" />
     <Content Include="Scripts\Angular\Services\BureauService.js" />
@@ -338,10 +339,8 @@
     <Content Include="Views\Shared\Pagination\_pageSize.cshtml" />
     <Content Include="Views\Shared\Pagination\_pagination.cshtml" />
     <Content Include="Views\Shared\_EmployerDashboard.cshtml" />
-    <Content Include="Views\Employer\Employees.cshtml" />
     <Content Include="Views\Bureau\DashBoard.cshtml" />
     <Content Include="Views\Shared\_BureauDashboard.cshtml" />
-    <Content Include="Views\Bureau\Employers.cshtml" />
     <Content Include="Views\Employer\DashBoard.cshtml" />
     <Content Include="Views\Employee\DashBoard.cshtml" />
     <Content Include="Views\Shared\_EmployeeDashboard.cshtml" />
@@ -357,6 +356,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\images\" />
     <Folder Include="Views\BureauUsersController\" />
   </ItemGroup>
   <ItemGroup>

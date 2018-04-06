@@ -16,7 +16,8 @@
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li>@Html.ActionLink("Bureaus", "Index", "Bureau")</li>
             <li>@Html.ActionLink(@Model.BureauName, "DashBoard", "Bureau", new {bureauId = @Model.BureauId}, null)</li>
-            <li>@Html.ActionLink("Employers", "Employers", "Bureau", new {bureauId = @Model.BureauId}, null)</li>
+            <li>@Html.ActionLink("Employers", "Index", "Employer", new {bureauId = @Model.BureauId}, null)</li>
+            <li>@Model.EmployerName</li>
         </ol>
     }
     @if (User.IsBureau())
@@ -24,7 +25,8 @@
         <ol class="breadcrumb">
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li>@Html.ActionLink(@Model.BureauName, "DashBoard", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
-            <li>@Html.ActionLink("Employers", "Employers", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
+            <li>@Html.ActionLink("Employers", "Employers", "Bureau", new {bureauId = @Model.BureauId}, null)</li>
+            <li>@Model.EmployerName</li>
         </ol>
     }
 </div>

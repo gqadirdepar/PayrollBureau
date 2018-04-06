@@ -22,7 +22,6 @@ namespace PayrollBureau.Data.Interfaces
         PagedResult<T> RetrievePagedResult<T>(Expression<Func<T, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null, params Expression<Func<T, object>>[] includeExpressions) where T : class;
         PagedResult<AspNetUser> RetrievePagedResultBureauUsers<T>(int bureauId, string searchTerm, List<OrderBy> orderBy = null, Paging paging = null);
 
-
         #endregion
 
         #region Update
