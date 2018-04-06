@@ -56,16 +56,18 @@ namespace PayrollBureau.Controllers
         }
 
 
+        [HttpGet]     
         [Route("Employer/Create/{bureauId}")]
         public ActionResult Create(int bureauId)
-        {
-            var userId = User.Identity.GetUserId();
+        {   
+            var userId = User.Identity.GetUserId();    
             var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
             var model = new EmployerViewModel { BureauId = bureau.BureauId, BureauName = bureau.Name };
             return View(model);
         }
 
         [HttpPost]
+        [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees")]
         [Route("Employer/Create")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(EmployerViewModel viewModel)
@@ -98,8 +100,11 @@ namespace PayrollBureau.Controllers
                         ModelState.AddModelError("", error);
                 }
                 //create employer
+                var userId = User.Identity.GetUserId();
                 viewModel.Employer.BureauId = viewModel.BureauId;
                 viewModel.Employer.AspnetUserId = user.Id;
+                viewModel.Employer.CreatedDateUtc = DateTime.UtcNow;
+                viewModel.Employer.CreatedBy = userId;
                 var employer = _payrollBureauBusinessService.CreateEmployer(viewModel.Employer);
                 if (employer.Succeeded) return RedirectToAction("Index", "Employer");
 
@@ -112,13 +117,36 @@ namespace PayrollBureau.Controllers
         }
 
 
+ [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees")]
+        [Route("Employer/Employees/{employerId}")]
+        public ActionResult Employees(int employerId)
+        {
+            var employer = _payrollBureauBusinessService.RetrieveEmployer(employerId);
+            var model = new BaseViewModel
+            {
+                EmployerId = employerId,
+                BureauId = employer.BureauId,
+                BureauName = employer.Bureau.Name,
+                EmployerName = employer.Name
+            };
+            return View(model);
+        }
+
         [Route("Bureaus/{bureauId}/Employers/{employerId}")]
         public ActionResult DashBoard(int employerId)
         {
             var employer = _payrollBureauBusinessService.RetrieveEmployer(employerId);
-            return View(RetrieveModel(employer));
+            var model = new BaseViewModel
+            {
+                EmployerId = employerId,
+                BureauId = employer.BureauId,
+                BureauName = employer.Bureau.Name,
+                EmployerName = employer.Name
+            };
+            return View(model);
         }
 
+        
         private BaseViewModel RetrieveModel(Employer employer)
         {
             var model = new BaseViewModel
@@ -129,6 +157,33 @@ namespace PayrollBureau.Controllers
                 EmployerName = employer.Name
             };
             return model;
+        }
+
+        [HttpGet]
+        [Route("Employer/{id}/Edit")]       
+        public ActionResult Edit(int id)
+        {
+           
+            var employer = _payrollBureauBusinessService.RetrieveEmployer(id);
+            if (employer == null)
+                return RedirectToAction("NotFound", "Error");
+
+            var bureau = _payrollBureauBusinessService.RetrieveBureau(employer.BureauId);
+            var model = new EmployerViewModel { BureauId = bureau.BureauId, BureauName = bureau.Name ,Employer = employer};
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("Employer/Edit")]
+        public ActionResult Edit(EmployerViewModel model)
+        {
+
+            var result = _payrollBureauBusinessService.UpdateEmployer(model.Employer);
+            if (result.Succeeded) return RedirectToAction("Index", "Employer");
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
         }
     }
 }
