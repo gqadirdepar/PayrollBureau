@@ -224,6 +224,7 @@
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\BureauUsersController.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\PrincipalExtensions.cs" />
@@ -235,6 +236,8 @@
     <Compile Include="Models\Authorization\IdentityModel.cs" />
     <Compile Include="Models\Authorization\PolicyAuthorizeAttribute.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
+    <Compile Include="Models\BureauUsersViewModel.cs" />
+    <Compile Include="Models\EmployerViewModel.cs" />
     <Compile Include="Models\JsonNetResult.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -267,6 +270,7 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Scripts\Angular\Controllers\BureauController.js" />
+    <Content Include="Scripts\Angular\Controllers\BureauUsersController.js" />
     <Content Include="Scripts\Angular\Controllers\EmployeeDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\HomeController.js" />
     <Content Include="Scripts\Angular\Prototypes\OrderBy.js" />
@@ -343,10 +347,17 @@
     <Content Include="Views\Shared\_EmployeeDashboard.cshtml" />
     <Content Include="Views\Shared\_Payslips.cshtml" />
     <Content Include="Views\Shared\_Documents.cshtml" />
+    <Content Include="Views\Employer\Create.cshtml" />
+    <Content Include="Views\Employer\_Employer.cshtml" />
+    <Content Include="Views\BureauUsers\Users.cshtml" />
+    <Content Include="Views\BureauUsers\_BureauUserEntry.cshtml" />
+    <Content Include="Views\BureauUsers\Create.cshtml" />
+    <Content Include="Views\BureauUsers\Edit.cshtml" />
+    <Content Include="Views\BureauUsers\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\images\" />
+    <Folder Include="Views\BureauUsersController\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

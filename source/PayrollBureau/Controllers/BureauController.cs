@@ -120,5 +120,13 @@ namespace PayrollBureau.Controllers
             var model = new BaseViewModel { BureauId = bureau.BureauId, BureauName = bureau.Name };
             return View(model);
         }
+
+        [HttpPost]
+        [Route("Bureau/Statistics")]
+        public ActionResult Statistics(int bureauId)
+        {
+            var result = _payrollBureauBusinessService.RetrieveBureauStatistics(bureauId);
+            return this.JsonNet(result);
+        }
     }
 }

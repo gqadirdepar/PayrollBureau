@@ -24,15 +24,21 @@ namespace PayrollBureau.Business.Interfaces
         Bureau RetrieveBureau(int bureauId);
         Bureau RetrieveBureau(string aspNetUserId);
         ValidationResult<Employer> EmployerAlreadyExists(string name,string email, int? employerId);
+        PagedResult<AspNetUser> RetrieveBureauUsers(int bureauId, string searchTerm, List<OrderBy> orderBy,Paging paging);
+        BureauStatistics RetrieveBureauStatistics(int bureauId);
 
         #endregion
 
         #region create
 
         ValidationResult<Employer> CreateEmployer(Employer employer);
+        AspNetUserBureau CreateAspNetUserBureau(AspNetUserBureau aspNetUserBureau);
 
         #endregion
 
+        #region Update
 
+
+        #endregion
     }
 }

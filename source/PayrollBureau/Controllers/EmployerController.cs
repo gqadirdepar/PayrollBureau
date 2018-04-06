@@ -49,7 +49,7 @@ namespace PayrollBureau.Controllers
         public ActionResult Create(int bureauId)
         {
             var userId = User.Identity.GetUserId();
-            var bureau = _PayrollBureauBusinessService.RetrieveBureau(bureauId);
+            var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
             var model = new EmployerViewModel { BureauId = bureau.BureauId , BureauName = bureau.Name};
             return View(model);
         }
@@ -61,7 +61,7 @@ namespace PayrollBureau.Controllers
         {
             try
             {
-                var validationResult = _PayrollBureauBusinessService.EmployerAlreadyExists(viewModel.Employer.Name,viewModel.Email, null);
+                var validationResult = _payrollBureauBusinessService.EmployerAlreadyExists(viewModel.Employer.Name,viewModel.Email, null);
                 if (!validationResult.Succeeded)
                 {
                     foreach (var error in validationResult.Errors)
@@ -89,7 +89,7 @@ namespace PayrollBureau.Controllers
                 //create employer
                 viewModel.Employer.BureauId = viewModel.BureauId;
                 viewModel.Employer.AspnetUserId = user.Id;
-                var employer = _PayrollBureauBusinessService.CreateEmployer(viewModel.Employer);
+                var employer = _payrollBureauBusinessService.CreateEmployer(viewModel.Employer);
                 if (employer.Succeeded) return RedirectToAction("Index", "Employer");
               
             }

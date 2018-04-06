@@ -7,8 +7,7 @@
 <div class="row xs-mt-20 xs-ml-5 xs-mr-5">
     <div class="col-md-offset-2 col-md-8 md-mt-20">
         <section class="login_content">
-            <a class="hiddenanchor" id="signup"></a>
-            <a class="hiddenanchor" id="signin"></a>
+           
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
