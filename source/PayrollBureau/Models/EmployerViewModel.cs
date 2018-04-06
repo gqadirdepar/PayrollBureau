@@ -7,14 +7,12 @@ using PayrollBureau.Data.Entities;
 
 namespace PayrollBureau.Models
 {
-    public class EmployerViewModel
+    public class EmployerViewModel : BaseViewModel
     {
         public Employer Employer { get; set; }
-        public int BureauId { get; set; }
-        public string BureauName { get; set; }
         [Required]
-        [EmailAddress]       
+        [EmailAddress]
         public string Email { get; set; }
-        
+
     }
 }

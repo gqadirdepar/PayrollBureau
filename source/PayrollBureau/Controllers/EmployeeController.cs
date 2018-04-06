@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using PayrollBureau.Business.Interfaces;
+using PayrollBureau.Common.Enum.Document;
 using PayrollBureau.Data.Models;
 using PayrollBureau.Extensions;
 using PayrollBureau.Models;
@@ -22,10 +23,25 @@ namespace PayrollBureau.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult List(int employerId, Paging paging, List<OrderBy> orderBy)
+        [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees")]
+        public ActionResult Index(int? bureauId, int? employerId)
         {
-            var data = _payrollBureauBusinessService.RetrieveEmployees(e => e.EmployerId == employerId, orderBy, paging);
+            var employer = _payrollBureauBusinessService.RetrieveEmployer(employerId.Value);
+            var model = new BaseViewModel
+            {
+                BureauId = employer.BureauId,
+                BureauName = employer.Bureau.Name,
+                EmployerId = employer.EmployerId,
+                EmployerName = employer.Name
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees/List")]
+        public ActionResult List(int bureauId, int employerId, Paging paging, List<OrderBy> orderBy)
+        {
+            var data = _payrollBureauBusinessService.RetrieveEmployees(e => e.BureauId == bureauId && e.EmployerId == employerId, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -45,11 +61,17 @@ namespace PayrollBureau.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult Documents(int employerId, int employeeId, Paging paging, List<OrderBy> orderBy)
+        {
+            var data = _payrollBureauBusinessService.RetrieveEmployeeDocuments(e => e.EmployeeId == employeeId && e.DocumentCategoryId == (int)DocumentCategory.Document, orderBy, paging);
+            return this.JsonNet(data);
+        }
 
         [HttpPost]
-        public ActionResult Documents(int employeeId, Paging paging, List<OrderBy> orderBy)
+        public ActionResult Payslips(int employerId, int employeeId, Paging paging, List<OrderBy> orderBy)
         {
-            var data = _payrollBureauBusinessService.RetrieveEmployeeDocuments(e => e.EmployeeId == employeeId, orderBy, paging);
+            var data = _payrollBureauBusinessService.RetrieveEmployeeDocuments(e => e.EmployeeId == employeeId && e.DocumentCategoryId == (int)DocumentCategory.Payslip, orderBy, paging);
             return this.JsonNet(data);
         }
     }
