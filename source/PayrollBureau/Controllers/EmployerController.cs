@@ -47,14 +47,14 @@ namespace PayrollBureau.Controllers
         [HttpGet]     
         [Route("Employer/Create/{bureauId}")]
         public ActionResult Create(int bureauId)
-        {
-            var userId = User.Identity.GetUserId();
+        {       
             var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
             var model = new EmployerViewModel { BureauId = bureau.BureauId , BureauName = bureau.Name};
             return View(model);
         }
 
         [HttpPost]
+        [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees")]
         [Route("Employer/Create")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(EmployerViewModel viewModel)
@@ -87,8 +87,11 @@ namespace PayrollBureau.Controllers
                         ModelState.AddModelError("", error);
                 }
                 //create employer
+                var userId = User.Identity.GetUserId();
                 viewModel.Employer.BureauId = viewModel.BureauId;
                 viewModel.Employer.AspnetUserId = user.Id;
+                viewModel.Employer.CreatedDateUtc = DateTime.UtcNow;
+                viewModel.Employer.CreatedBy = userId;
                 var employer = _payrollBureauBusinessService.CreateEmployer(viewModel.Employer);
                 if (employer.Succeeded) return RedirectToAction("Index", "Employer");
               
@@ -102,6 +105,7 @@ namespace PayrollBureau.Controllers
   
         
         [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees")]
+        [Route("Employer/Employees/{employerId}")]
         public ActionResult Employees(int employerId)
         {
             var employer = _payrollBureauBusinessService.RetrieveEmployer(employerId);
