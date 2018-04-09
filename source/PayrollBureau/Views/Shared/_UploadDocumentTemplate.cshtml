@@ -12,9 +12,15 @@
         </div>
         <div class="form-horizontal">
             <div class="form-group">
+                <label class="control-label col-sm-3">Description</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="Description" ng-model="model.description"/>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="control-label col-sm-3">Select File</label>
                 <div class="col-sm-9">
-                    <input file-upload-on-change="model.onFileChange" type="file" id="FitNoteFile" name="FitNoteFile" class="form-control" data-val="true" ng-required="true" required="required" data-val-required="Fit Note file is required." />
+                    <input file-upload-on-change="model.onFileChange" type="file" id="Document" name="Document" class="form-control" data-val="true" ng-required="true" required="required" data-val-required="Fit Note file is required." />
                 </div>
             </div>
         </div>
