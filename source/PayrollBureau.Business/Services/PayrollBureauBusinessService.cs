@@ -185,7 +185,7 @@ namespace PayrollBureau.Business.Services
             };
         }
 
-        public ValidationResult<Bureau> BureaurAlreadyExists(string name, int? bureauId)
+        public ValidationResult<Bureau> BureauAlreadyExists(string name, int? bureauId)
         {
             var alreadyExists = _payrollBureauDataService.Retrieve<Bureau>(p => p.Name.ToLower() == name.ToLower() && p.BureauId != (bureauId ?? -1)).Any();
             return new ValidationResult<Bureau>
@@ -199,7 +199,7 @@ namespace PayrollBureau.Business.Services
         #region update
         public ValidationResult<Bureau> UpdateBureau(Bureau bureau)
         {
-            var validationResult = BureaurAlreadyExists(bureau.Name, bureau.BureauId);
+            var validationResult = BureauAlreadyExists(bureau.Name, bureau.BureauId);
             if (!validationResult.Succeeded)
                 return validationResult;
             try

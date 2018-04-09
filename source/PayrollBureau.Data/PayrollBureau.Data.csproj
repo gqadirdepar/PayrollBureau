@@ -68,7 +68,6 @@
     <Compile Include="Entities\AspNetUser.cs" />
     <Compile Include="Entities\AspNetUserRole.cs" />
     <Compile Include="Entities\DocumentCategory.cs" />
-    <Compile Include="Entities\Model1.cs" />
     <Compile Include="Extensions\Ordering.cs" />
     <Compile Include="Extensions\Pagination.cs" />
     <Compile Include="Interfaces\IDatabaseFactory.cs" />

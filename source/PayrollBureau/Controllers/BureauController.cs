@@ -43,7 +43,7 @@ namespace PayrollBureau.Controllers
         {
             try
             {
-                var validationResult = _payrollBureauBusinessService.BureaurAlreadyExists(viewModel.Bureau.Name, null);
+                var validationResult = _payrollBureauBusinessService.BureauAlreadyExists(viewModel.Bureau.Name, null);
                 if (!validationResult.Succeeded)
                 {
                     foreach (var error in validationResult.Errors)

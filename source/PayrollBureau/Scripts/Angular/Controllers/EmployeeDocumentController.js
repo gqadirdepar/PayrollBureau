@@ -5,7 +5,7 @@
         .module('PayrollBureau')
         .controller('EmployeeDocumentController', EmployeeDocumentController);
 
-    EmployeeDocumentController.$inject = ['$scope', '$window', 'EmployeeDocumentService', 'Paging', 'OrderService', 'OrderBy', 'Order', '$uibModal', 'uiUploader','$ngBootbox'];
+    EmployeeDocumentController.$inject = ['$scope', '$window', 'EmployeeDocumentService', 'Paging', 'OrderService', 'OrderBy', 'Order', '$uibModal', 'uiUploader', '$ngBootbox'];
 
     function EmployeeDocumentController($scope, $window, EmployeeDocumentService, Paging, OrderService, OrderBy, Order, $uibModal, uiUploader, $ngBootbox) {
         var vm = this;
@@ -20,6 +20,7 @@
         vm.employeeId;
         vm.employerId;
         vm.bureauId;
+        vm.description;
         vm.uploadDocument = uploadDocument;
         return vm;
 
@@ -74,7 +75,8 @@
                     $modal.Document = {
                         EmployeeId: parent.employeeId,
                         EmployerId: parent.employerId,
-                        BureauId: parent.bureauId
+                        BureauId: parent.bureauId,
+                        Description: parent.description
                     };
 
                     $modal.modalClose = modalClose;
@@ -113,7 +115,7 @@
                     function saveDocument(document) {
 
                         uiUploader.startUpload({
-                            url: '/Bureaus/' + document.BureauId + '/Employers/' + document.EmployerId + '/Employees/' + document.EmployeeId + '/UploadDocument' ,
+                            url: '/Bureaus/' + document.BureauId + '/Employers/' + document.EmployerId + '/Employees/' + document.EmployeeId + '/UploadDocument',
                             concurrency: 1,
                             headers: {
                                 'Accept': 'application/json'

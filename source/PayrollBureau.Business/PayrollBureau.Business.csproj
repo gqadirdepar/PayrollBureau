@@ -83,7 +83,6 @@
     <Compile Include="Models\Statistics.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ValidationResult.cs" />
-    <Compile Include="Models\ValidationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DocumentBusinessService.cs" />
     <Compile Include="Services\PayrollBureauBusinessService.cs" />
