@@ -19,7 +19,7 @@ namespace PayrollBureau.Data.Models
         public virtual DbSet<DocumentCategory> DocumentCategories { get; set; }
         public virtual DbSet<EmployeeGrid> EmployeeGrids { get; set; }
         public virtual DbSet<AspNetUserBureau> AspNetUserBureau { get; set; }
-
+        public virtual DbSet<DocumentGrid> DocumentGrids { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Bureau>()

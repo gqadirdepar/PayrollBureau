@@ -9,8 +9,8 @@
 
     function EmployeePayslipController($scope, $window, EmployeePayslipService, Paging, OrderService, OrderBy, Order) {
         var vm = this;
-        vm.retrieveEmployeeDocuments = retrieveEmployeeDocuments;
-        vm.employeeDocuments = [];
+        vm.retrieveEmployeePayslips = retrieveEmployeePayslips;
+        vm.employeePayslips = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -18,22 +18,29 @@
         vm.orderClass = orderClass;
         vm.initialise = initialise;
         vm.employeeId;
+        vm.employerId;
+        vm.bureauId;
         return vm;
 
 
-        function initialise(employeeId) {
+        function initialise(bureauId, employerId, employeeId) {
             vm.orderBy.property = "EmployeeDocumentId";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
             vm.employeeId = employeeId;
+            vm.employerId = employerId;
+            vm.bureauId = bureauId;
             order("EmployeeDocumentId");
         }
 
         function retrieveEmployeePayslips() {
-            return EmployeePayslipService.retrieveEmployeePayslips(vm.employeeId, vm.paging, vm.orderBy).then(
+            return EmployeePayslipService.retrieveEmployeePayslips(vm.bureauId, vm.employerId, vm.employeeId, vm.paging, vm.orderBy).then(
                function (response) {
-                   vm.employeeDocuments = response.data.Items;
-                   return vm.employeeDocuments;
+                   vm.employeePayslips = response.data.Items;
+                   vm.paging.totalPages = response.data.TotalPages;
+                   vm.paging.totalResults = response.data.TotalResults;
+                   vm.searchMessage = vm.employeePayslips.length === 0 ? "No Records Found" : "";
+                   return vm.employeePayslips;
                },
                function () { /*dismissed */ });
         }

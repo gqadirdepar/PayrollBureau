@@ -1,6 +1,6 @@
 ﻿@model PayrollBureau.Models.BaseViewModel
 
-<div class="panel panel-danger">
+<div ng-controller="EmployeePayslipController as model" ng-init="model.initialise('@Model.BureauId','@Model.EmployerId','@Model.EmployeeId')" class="panel panel-danger">
     <div class="panel-heading">
         <h3 class="panel-title"> Payslips</h3>
     </div>
@@ -15,19 +15,22 @@
         </div>
         <div>
             <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                <div class="ng-cloak" ng-show="model.employers.length > 0">
+                <div class="ng-cloak" ng-show="model.employeePayslips.length > 0">
                     <div>
                         <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                             <thead>
-                                <tr role="row">
-                                    <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Year</th>
-                                    <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Paydate</th>
-                                    <th>Actions</th>
-                                </tr>
+                            <tr role="row">
+                                <th ng-click="model.order('Description')" ng-class="model.orderClass('Name')">Description</th>
+                                <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('Name')">Uploaded By</th>
+                                <th ng-click="model.order('CreatedBy')" ng-class="model.orderClass('Name')">Uploaded Date</th>
+                                <th>Actions</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="employer in model.employers" class="odd gradeX cursor" ng-click="$event.originalEvent.ngClickHandled || model.viewClient(client.ClientId)">
-                                    <td><span ng-bind="::employer.Name"></span></td>
+                                <tr ng-repeat="payslip in model.employeePayslips" class="odd gradeX cursor" ng-click="$event.originalEvent.ngClickHandled || model.viewClient(client.ClientId)">
+                                    <td><span ng-bind="::payslip.Description"></span></td>
+                                    <td><span ng-bind="::payslip.CreatedBy"></span></td>
+                                    <td><span ng-bind="::payslip.CreatedDateUtc | date : 'dd-MMMM-yyyy'"></span></td>
                                     <td>
                                         <div class="btn-group pull-right" ng-class="{'dropup':$last}">
                                             <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true; model.canDeleteCheck(pBXServiceType);">
@@ -36,7 +39,7 @@
                                             <ul class="dropdown-menu dropdown-menu-right">
                                                 <li>
                                                     <a ng-href="/Bureaus/{{::employer.BureauId}}/Employers/{{::employer.EmployerId}}">
-                                                        View
+                                                        Download
                                                     </a>
                                                 </li>
                                             </ul>
