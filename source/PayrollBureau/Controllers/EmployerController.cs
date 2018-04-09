@@ -68,47 +68,44 @@ namespace PayrollBureau.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                var userId = User.Identity.GetUserId();
+                viewModel.Employer.BureauId = viewModel.BureauId.Value;
+                viewModel.Employer.CreatedBy = userId;
+                //create employeruser and role
+                var user = new ApplicationUser
                 {
-                    //create Bureau
-                    var userId = User.Identity.GetUserId();
-                    viewModel.Employer.BureauId = viewModel.BureauId.Value;
-                    viewModel.Employer.CreatedBy = userId;
-                    var employer = _payrollBureauBusinessService.CreateEmployer(viewModel.Employer);
-                    if (!employer.Succeeded)
+                    UserName = viewModel.Email,
+                    Email = viewModel.Email,
+                };
+                var employer = _payrollBureauBusinessService.CreateEmployer(viewModel.Employer);
+                if (!employer.Succeeded)
+                {
+                    foreach (var error in employer.Errors)
                     {
-                        foreach (var error in employer.Errors)
-                        {
-                            ModelState.AddModelError("", error);
-                        }
-                        return View(viewModel);
+                        ModelState.AddModelError("", error);
                     }
-
-                    //create employeruser and role
-                    var user = new ApplicationUser
-                    {
-                        UserName = viewModel.Email,
-                        Email = viewModel.Email,
-                    };
-
-                    var roleId = RoleManager.Roles.FirstOrDefault(r => r.Name == "Employer").Id;
-                    user.Roles.Add(new IdentityUserRole { UserId = user.Id, RoleId = roleId });
-                    var result = UserManager.Create(user, "Inland12!");
-                    if (!result.Succeeded)
-                    {
-                        foreach (var error in result.Errors)
-                            ModelState.AddModelError("", error);
-                    }
-
-                    //create AspNetUser Employer              
-                    _payrollBureauBusinessService.CreateAspNetUserEmployer(employer.Entity.EmployerId, user.Id);
+                    return View(viewModel);
                 }
+
+                var roleId = RoleManager.Roles.FirstOrDefault(r => r.Name == "Employer").Id;
+                user.Roles.Add(new IdentityUserRole { UserId = user.Id, RoleId = roleId });
+                var userAlreadyExists = UserManager.FindByEmail(viewModel.Email);
+                if (userAlreadyExists == null)
+                {
+                    UserManager.Create(user, "Inland12!");
+                }
+                else
+                {
+                    ModelState.AddModelError("", $"User {viewModel.Email} already exists.");
+                    return View(viewModel);
+                }
+                //create AspNetUser Employer              
+                _payrollBureauBusinessService.CreateAspNetUserEmployer(employer.Entity.EmployerId, user.Id);
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex);
             }
-
             return RedirectToAction("Index", "Employer", new { bureauId = viewModel.BureauId });
         }
 

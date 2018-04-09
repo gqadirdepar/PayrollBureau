@@ -7,8 +7,8 @@ using PayrollBureau.Data.Entities;
 
 namespace PayrollBureau.Models
 {
-    public class EmployeeViewModel:BaseViewModel
+    public class EmployeeViewModel : BaseViewModel
     {
-        public Employee Employee { get; set; }      
+        public Employee Employee { get; set; }
     }
 }

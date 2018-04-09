@@ -103,17 +103,12 @@ namespace PayrollBureau.Controllers
                     var roleId = roleManager.Roles.FirstOrDefault(r => r.Name == "Bureau").Id;
                     user.Roles.Add(new IdentityUserRole { UserId = user.Id, RoleId = roleId });
 
-                    var result = UserManager.Create(user);
+                    var result = UserManager.Create(user, "Inland12!");
                     if (result.Succeeded)
                     {
                         var newUser = UserManager.FindByName(user.UserName);
-                        var bureauAspNetUser = new AspNetUserBureau
-                        {
-                            BureauId = model.BureauId,
-                            AspNetUserId = newUser.Id
 
-                        };
-                         _payrollBureauBusinessService.CreateAspNetUserBureau(model.BureauId,newUser.Id);
+                        _payrollBureauBusinessService.CreateAspNetUserBureau(model.BureauId, newUser.Id);
                         return RedirectToAction("Edit", new { bureauId = model.BureauId, userId = newUser.Id });
 
                     }

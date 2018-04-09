@@ -41,7 +41,7 @@ namespace PayrollBureau.Controllers
         public ActionResult Create(BureauViewModel viewModel)
         {
             try
-            {             
+            {
                 //create Bureau
                 var userId = User.Identity.GetUserId();
                 viewModel.Bureau.CreatedBy = userId;
@@ -54,26 +54,6 @@ namespace PayrollBureau.Controllers
                     }
                     return View(viewModel);
                 }
-
-                //create Bureau user and role
-                var user = new ApplicationUser
-                {
-                    UserName = viewModel.Email,
-                    Email = viewModel.Email,
-                };
-
-                var roleId = RoleManager.Roles.FirstOrDefault(r => r.Name == "Bureau").Id;
-                user.Roles.Add(new IdentityUserRole { UserId = user.Id, RoleId = roleId });
-                var result = UserManager.Create(user, "Inland12!");
-                if (!result.Succeeded)
-                {
-                    foreach (var error in result.Errors)
-                        ModelState.AddModelError("", error);
-                }
-
-                //create AspNetUser Bureau              
-                _payrollBureauBusinessService.CreateAspNetUserBureau(bureau.Entity.BureauId, user.Id);
-
             }
             catch (Exception ex)
             {
@@ -95,9 +75,10 @@ namespace PayrollBureau.Controllers
         }
 
         [HttpPost]
-        [Route("Bureaus/Edit")]
-        public ActionResult Edit(BureauViewModel model)
+        [Route("Bureaus/{bureauId}/Edit")]
+        public ActionResult Edit(int bureauId, BureauViewModel model)
         {
+            model.Bureau.BureauId = bureauId;
             var result = _payrollBureauBusinessService.UpdateBureau(model.Bureau);
             if (result.Succeeded) return RedirectToAction("Index", "Bureau");
             foreach (var error in result.Errors)
@@ -150,7 +131,7 @@ namespace PayrollBureau.Controllers
             return View(RetrieveModel(bureau));
         }
 
-        private BaseViewModel RetrieveModel(Bureau bureau)
+        private BaseViewModel RetrieveModel(Business.Models.Bureau bureau)
         {
             var model = new BaseViewModel
             {
@@ -161,7 +142,7 @@ namespace PayrollBureau.Controllers
         }
 
         [HttpPost]
-        [Route("Bureau/Statistics")]
+        [Route("Bureaus/{bureauId}/Statistics")]
         public ActionResult Statistics(int bureauId)
         {
             var result = _payrollBureauBusinessService.RetrieveBureauStatistics(bureauId);

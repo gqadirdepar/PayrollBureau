@@ -1,10 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using PayrollBureau.Data.Entities;
+﻿using PayrollBureau.Business.Models;
+
 
 namespace PayrollBureau.Models
 {
-    public class BureauViewModel:BaseViewModel
+    public class BureauViewModel
     {
-        public Bureau Bureau { get; set; }    
+        public Bureau Bureau { get; set; }
     }
 }

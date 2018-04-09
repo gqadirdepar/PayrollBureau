@@ -35,6 +35,18 @@
       <HintPath>..\packages\DocumentService.API.RESTClient.1.0.0.27\lib\net461\DocumentService.API.RESTClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LinqKit, Version=1.1.15.0, Culture=neutral, PublicKeyToken=bc217f8844052a91, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqKit.1.1.15\lib\net45\LinqKit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -76,8 +88,10 @@
   <ItemGroup>
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Helper\ConfigHelper.cs" />
+    <Compile Include="Helper\MapperHelper.cs" />
     <Compile Include="Interfaces\IDocumentBusinessService.cs" />
     <Compile Include="Interfaces\IPayrollBureauBusinessService.cs" />
+    <Compile Include="Models\Bureau.cs" />
     <Compile Include="Models\BureauStatistics.cs" />
     <Compile Include="Models\DocumentMeta.cs" />
     <Compile Include="Models\Statistics.cs" />

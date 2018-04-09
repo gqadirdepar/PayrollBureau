@@ -12,7 +12,6 @@ namespace PayrollBureau.Models
         public int? BureauId { get; set; }
         public int? EmployeeId { get; set; }
         public string EmployerName { get; set; }
-        [Required]
         public string BureauName { get; set; }
         public string EmployeeName { get; set; }
         [Required]

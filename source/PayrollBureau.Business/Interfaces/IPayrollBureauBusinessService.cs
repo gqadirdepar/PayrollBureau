@@ -4,6 +4,7 @@ using PayrollBureau.Data.Entities;
 using PayrollBureau.Data.Models;
 using System.Linq.Expressions;
 using PayrollBureau.Business.Models;
+using Bureau = PayrollBureau.Business.Models.Bureau;
 
 
 namespace PayrollBureau.Business.Interfaces
@@ -23,15 +24,15 @@ namespace PayrollBureau.Business.Interfaces
         Employee RetrieveEmployee(int employeeId);
         Bureau RetrieveBureau(int bureauId);
         Bureau RetrieveBureau(string aspNetUserId);
-        PagedResult<AspNetUser> RetrieveBureauUsers(int bureauId, string searchTerm, List<OrderBy> orderBy,Paging paging);
-        BureauStatistics RetrieveBureauStatistics(int bureauId);    
-        ValidationResult<Employee> EmployeeAlreadyExists(string name, int? employeeId);   
+        PagedResult<AspNetUser> RetrieveBureauUsers(int bureauId, string searchTerm, List<OrderBy> orderBy, Paging paging);
+        BureauStatistics RetrieveBureauStatistics(int bureauId);
+        ValidationResult<Employee> EmployeeAlreadyExists(string name, int? employeeId);
         #endregion
 
         #region create
 
         ValidationResult<Employer> CreateEmployer(Employer employer);
-        AspNetUserBureau CreateAspNetUserBureau(int bureauId,string aspNetUserId);
+        AspNetUserBureau CreateAspNetUserBureau(int bureauId, string aspNetUserId);
         AspNetUserEmployer CreateAspNetUserEmployer(int employerId, string aspNetUserId);
         ValidationResult<Employee> CreateEmployee(Employee employee);
         ValidationResult<Bureau> CreateBureau(Bureau bureau);

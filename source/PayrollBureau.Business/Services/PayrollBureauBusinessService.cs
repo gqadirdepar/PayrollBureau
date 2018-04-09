@@ -4,6 +4,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using LinqKit;
+using PayrollBureau.Business.Helper;
 using PayrollBureau.Data.Interfaces;
 using PayrollBureau.Business.Interfaces;
 using PayrollBureau.Business.Models;
@@ -25,18 +27,21 @@ namespace PayrollBureau.Business.Services
 
         public Statistics Retrievestatistics()
         {
-            var result = _payrollBureauDataService.Retrieve<Bureau>(p => true).ToList();
+            var result = _payrollBureauDataService.Retrieve<Data.Entities.Bureau>(p => true).ToList();
             return new Statistics
             {
                 Bureau = result.Count,
                 //Users = result.Count(u => !string.IsNullOrEmpty(u.AspnetUserId))
             };
         }
-        public PagedResult<Bureau> RetrieveBureau(string searchTerm, List<OrderBy> orderBy, Paging paging)
+
+        public PagedResult<Models.Bureau> RetrieveBureau(string searchTerm, List<OrderBy> orderBy, Paging paging)
         {
+            var predicate = PredicateBuilder.New<Data.Entities.Bureau>(true);
             if (!string.IsNullOrEmpty(searchTerm))
-                return _payrollBureauDataService.RetrievePagedResult<Bureau>(e => e.Name.Contains(searchTerm), orderBy, paging);
-            return _payrollBureauDataService.RetrievePagedResult<Bureau>(e => true, orderBy, paging);
+                predicate = predicate.And(e => e.Name.Contains(searchTerm));
+            var result = _payrollBureauDataService.RetrievePagedResult<Data.Entities.Bureau>(predicate, orderBy, paging);
+            return MapperHelper.FromBureauPagedResult(result.Items, paging);
         }
 
 
@@ -72,15 +77,18 @@ namespace PayrollBureau.Business.Services
             return _payrollBureauDataService.Retrieve<Employee>(e => e.EmployeeId == employeeId, e => e.Employer, e => e.Employer.Bureau).FirstOrDefault();
         }
 
-        public Bureau RetrieveBureau(int bureauId)
+        public Models.Bureau RetrieveBureau(int bureauId)
         {
-            return _payrollBureauDataService.Retrieve<Bureau>(bureauId);
+            var data = _payrollBureauDataService.Retrieve<Data.Entities.Bureau>(bureauId);
+            return MapperHelper.FromBureau(data);
         }
 
-        public Bureau RetrieveBureau(string aspNetUserId)
+        public Models.Bureau RetrieveBureau(string aspNetUserId)
         {
-            return _payrollBureauDataService.Retrieve<Bureau>(e => e.AspNetUserBureaus.Any(a => a.AspNetUserId == aspNetUserId)).FirstOrDefault();
+            var data = _payrollBureauDataService.Retrieve<Data.Entities.Bureau>(e => e.AspNetUserBureaus.Any(a => a.AspNetUserId == aspNetUserId)).FirstOrDefault();
+            return MapperHelper.FromBureau(data);
         }
+
         public PagedResult<AspNetUser> RetrieveBureauUsers(int bureauId, string searchTerm, List<OrderBy> orderBy, Paging paging)
         {
 
@@ -91,7 +99,7 @@ namespace PayrollBureau.Business.Services
 
         public BureauStatistics RetrieveBureauStatistics(int bureauId)
         {
-            var result = _payrollBureauDataService.Retrieve<Bureau>(b => b.BureauId == bureauId, e => e.Employers, i => i.AspNetUserBureaus).ToList().FirstOrDefault();
+            var result = _payrollBureauDataService.Retrieve<Data.Entities.Bureau>(b => b.BureauId == bureauId, e => e.Employers, i => i.AspNetUserBureaus).ToList().FirstOrDefault();
             return new BureauStatistics
             {
                 Employer = result?.Employers.Count ?? 0,
@@ -127,10 +135,10 @@ namespace PayrollBureau.Business.Services
         {
             var aspNetUserBureau = new AspNetUserBureau
             {
-                BureauId    = bureauId,
+                BureauId = bureauId,
                 AspNetUserId = aspNetUserId
             };
-            
+
             return _payrollBureauDataService.Create(aspNetUserBureau);
         }
 
@@ -163,7 +171,7 @@ namespace PayrollBureau.Business.Services
 
         }
 
-        public ValidationResult<Bureau> CreateBureau(Bureau bureau)
+        public ValidationResult<Models.Bureau> CreateBureau(Models.Bureau bureau)
         {
             var validationResult = BureauAlreadyExists(bureau.Name, null);
             if (!validationResult.Succeeded)
@@ -182,7 +190,7 @@ namespace PayrollBureau.Business.Services
             }
             return validationResult;
         }
-   
+
         #endregion
 
         #region Helper
@@ -206,10 +214,10 @@ namespace PayrollBureau.Business.Services
             };
         }
 
-        public ValidationResult<Bureau> BureauAlreadyExists(string name, int? bureauId)
+        public ValidationResult<Models.Bureau> BureauAlreadyExists(string name, int? bureauId)
         {
-            var alreadyExists = _payrollBureauDataService.Retrieve<Bureau>(p => p.Name.ToLower() == name.ToLower() && p.BureauId != (bureauId ?? -1)).Any();
-            return new ValidationResult<Bureau>
+            var alreadyExists = _payrollBureauDataService.Retrieve<Data.Entities.Bureau>(p => p.Name.ToLower() == name.ToLower() && p.BureauId != (bureauId ?? -1)).Any();
+            return new ValidationResult<Models.Bureau>
             {
                 Succeeded = !alreadyExists,
                 Errors = alreadyExists ? new List<string> { $"Bureau name already exists." } : null
@@ -218,7 +226,7 @@ namespace PayrollBureau.Business.Services
         #endregion
 
         #region update
-        public ValidationResult<Bureau> UpdateBureau(Bureau bureau)
+        public ValidationResult<Models.Bureau> UpdateBureau(Models.Bureau bureau)
         {
             var validationResult = BureauAlreadyExists(bureau.Name, bureau.BureauId);
             if (!validationResult.Succeeded)

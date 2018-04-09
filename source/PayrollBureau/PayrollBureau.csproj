@@ -1335,9 +1335,7 @@
     <Content Include="Views\BureauUsers\Edit.cshtml" />
     <Content Include="Views\BureauUsers\View.cshtml" />
     <Content Include="Views\Shared\_UploadDocumentTemplate.cshtml" />
-    <Content Include="Views\Employer\Edit.cshtml" />
-    <Content Include="Views\Employer\Create.cshtml" />
-    <Content Include="Views\Employer\_Employer.cshtml" />
+    <Content Include="Views\Employer\Edit.cshtml" />  
     <Content Include="Views\Employee\Create.cshtml" />
     <Content Include="Views\Employee\_Employee.cshtml" />
     <Content Include="Views\Employee\Edit.cshtml" />

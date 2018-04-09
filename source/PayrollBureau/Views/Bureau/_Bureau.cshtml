@@ -11,7 +11,7 @@
                 <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                     <div class="validation-summary-errors row alert alert-danger" data-valmsg-summary="false">
                         <ul class="errors">
-                            @Html.ValidationSummary(false, null, new { @class = "" })
+                            @Html.ValidationSummary(true, null, new { @class = "" })
                         </ul>
                     </div>
                 </div>
@@ -20,14 +20,14 @@
     }
 
     @Html.AntiForgeryToken()
- 
+
     <div class="form-group">
         @Html.Label("Name", new { @class = "col-md-4 control-label" })
         <div class="col-md-4">
             @Html.TextBoxFor(m => m.Bureau.Name, new { @class = "form-control", @rows = 3 })
             @Html.ValidationMessageFor(m => m.Bureau.Name, "", new { @class = "help-block" })
         </div>
-    </div> 
+    </div>
     @if (!isEdit)
     {
         <div class="form-group">
