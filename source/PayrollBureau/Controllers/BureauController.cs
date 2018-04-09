@@ -36,7 +36,6 @@ namespace PayrollBureau.Controllers
         }
 
         [HttpPost]
-        [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees")]
         [Route("Bureau/Create")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(BureauViewModel viewModel)

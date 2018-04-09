@@ -22,7 +22,6 @@
     {
         <ol class="breadcrumb">
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li>Bureaus</li>
             <li>@Html.ActionLink(@Model.BureauName, "DashBoard", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
             <li>Users</li>
         </ol>

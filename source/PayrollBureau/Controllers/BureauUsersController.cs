@@ -44,7 +44,7 @@ namespace PayrollBureau.Controllers
         public ActionResult View(int bureauId, string userId)
         {
             var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
-            var user =  UserManager.FindById(userId);
+            var user = UserManager.FindById(userId);
             if (user == null)
                 return HttpNotFound();
 
@@ -68,13 +68,12 @@ namespace PayrollBureau.Controllers
         [Route("{bureauId}/Users/Create")]
         public ActionResult Create(int bureauId)
         {
-            var bureau =  _payrollBureauBusinessService.RetrieveBureau(bureauId);
+            var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
             var viewModel = new BureauUsersViewModel
             {
                 BureauId = bureau.BureauId,
                 BureauName = bureau.Name,
                 User = new User()
-                
             };
             return View(viewModel);
         }
@@ -95,7 +94,7 @@ namespace PayrollBureau.Controllers
                         UserName = model.User.Username,
                         Email = model.User.Email,
                         EmailConfirmed = false,
-                         Name = model.User.Name
+                        Name = model.User.Name
 
                     };
 
@@ -104,17 +103,17 @@ namespace PayrollBureau.Controllers
                     var roleId = roleManager.Roles.FirstOrDefault(r => r.Name == "Bureau").Id;
                     user.Roles.Add(new IdentityUserRole { UserId = user.Id, RoleId = roleId });
 
-                    var result =  UserManager.Create(user);
+                    var result = UserManager.Create(user);
                     if (result.Succeeded)
                     {
-                        var newUser =  UserManager.FindByName(user.UserName);
+                        var newUser = UserManager.FindByName(user.UserName);
                         var bureauAspNetUser = new AspNetUserBureau
                         {
                             BureauId = model.BureauId,
                             AspNetUserId = newUser.Id
 
                         };
-                         _payrollBureauBusinessService.CreateAspNetUserBureau(bureauAspNetUser);
+                        _payrollBureauBusinessService.CreateAspNetUserBureau(bureauAspNetUser);
                         return RedirectToAction("Edit", new { bureauId = model.BureauId, userId = newUser.Id });
 
                     }
@@ -140,7 +139,7 @@ namespace PayrollBureau.Controllers
         {
             var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
 
-            var user =  UserManager.FindById(userId);
+            var user = UserManager.FindById(userId);
             if (user == null)
                 return HttpNotFound();
 
@@ -172,11 +171,11 @@ namespace PayrollBureau.Controllers
                     user.UserName = model.User.Username;
                     user.Email = model.User.Email;
                     user.Name = model.User.Name;
-                    var result =  UserManager.Update(user);
+                    var result = UserManager.Update(user);
                     if (result.Succeeded)
                     {
 
-                        return RedirectToAction("Users", new {bureauId = model.BureauId });
+                        return RedirectToAction("Users", new { bureauId = model.BureauId });
                     }
 
                     foreach (var error in result.Errors)
@@ -219,11 +218,11 @@ namespace PayrollBureau.Controllers
 
         [HttpPost]
         [Route("BureauUsers/List")]
-        public ActionResult List(int bureauId,string searchTerm, Paging paging, List<OrderBy> orderBy)
+        public ActionResult List(int bureauId, string searchTerm, Paging paging, List<OrderBy> orderBy)
         {
             try
             {
-                var result = _payrollBureauBusinessService.RetrieveBureauUsers(bureauId,searchTerm,orderBy, paging);
+                var result = _payrollBureauBusinessService.RetrieveBureauUsers(bureauId, searchTerm, orderBy, paging);
                 return this.JsonNet(result);
             }
             catch (Exception ex)

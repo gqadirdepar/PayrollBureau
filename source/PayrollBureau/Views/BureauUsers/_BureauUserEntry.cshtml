@@ -57,12 +57,15 @@
                 </div>
             </div>
 
-            
+
         </div>
     </fieldset>
 
-    
+
+    @Html.HiddenFor(m => m.BureauId)
+    @Html.HiddenFor(m => m.BureauName)
     @Html.HiddenFor(m => m.User.UserId)
+    @Html.HiddenFor(m => m.User.Email)
 
     <div class="form-horizontal">
         <div class="form-group">

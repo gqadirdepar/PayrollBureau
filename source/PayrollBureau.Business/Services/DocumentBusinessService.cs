@@ -61,7 +61,8 @@ namespace PayrollBureau.Business.Services
                     DocumentGuid = document.DocumentGuid,
                     EmployeeId = employeeId,
                     Filename = documentMeta.FileName,
-                    CreatedBy = userId
+                    CreatedBy = userId,
+                    Description = documentMeta.Description
                 };
                 _payrollBureauDataService.Create<EmployeeDocument>(employeeDocument);
                 validationResult.Succeeded = true;

@@ -11,10 +11,6 @@
 <div class="row">
     <ol class="breadcrumb">
         <li>@Html.ActionLink("Home", "Index", "Home")</li>
-        @if (User.IsBureau())
-        {
-            <li>Bureaus</li>
-        }
         @if (User.IsSuperUser())
         {
             <li>@Html.ActionLink("Bureaus", "Index", "Bureaus")</li>
@@ -29,7 +25,7 @@
 @section scripts
 {
     <script type="text/javascript">
-       $('#entryDiv :input').attr('disabled', 'disabled');
-       $('#entryDiv [data-val-required]').removeAttr('data-val-required');
+        $('#entryDiv :input').attr('disabled', 'disabled');
+        $('#entryDiv [data-val-required]').removeAttr('data-val-required');
     </script>
 }

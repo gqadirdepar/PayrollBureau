@@ -42,8 +42,7 @@ namespace PayrollBureau.Business.Services
 
         public Employer RetrieveEmployer(string aspNetUserId)
         {
-            //return _payrollBureauDataService.Retrieve<Employer>(e => e.asp).FirstOrDefault();
-            return null;
+            return _payrollBureauDataService.Retrieve<Employer>(e => e.AspNetUserEmployers.Any(a => a.AspNetUserId == aspNetUserId)).FirstOrDefault();
         }
 
         public Employer RetrieveEmployer(int employerId)
@@ -76,13 +75,11 @@ namespace PayrollBureau.Business.Services
         public Bureau RetrieveBureau(int bureauId)
         {
             return _payrollBureauDataService.Retrieve<Bureau>(bureauId);
-
         }
 
         public Bureau RetrieveBureau(string aspNetUserId)
         {
-            //return _payrollBureauDataService.Retrieve<Bureau>(e => e.AspnetUserId == aspNetUserId).FirstOrDefault();
-            return null;
+            return _payrollBureauDataService.Retrieve<Bureau>(e => e.AspNetUserBureaus.Any(a => a.AspNetUserId == aspNetUserId)).FirstOrDefault();
         }
         public PagedResult<AspNetUser> RetrieveBureauUsers(int bureauId, string searchTerm, List<OrderBy> orderBy, Paging paging)
         {

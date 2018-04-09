@@ -20,7 +20,6 @@
         vm.employeeId;
         vm.employerId;
         vm.bureauId;
-        vm.description;
         vm.uploadDocument = uploadDocument;
         return vm;
 
@@ -72,13 +71,13 @@
                     var $modal = this;
 
                     $modal.parent = parent;
+                    $modal.description = null;
+
                     $modal.Document = {
                         EmployeeId: parent.employeeId,
                         EmployerId: parent.employerId,
-                        BureauId: parent.bureauId,
-                        Description: parent.description
+                        BureauId: parent.bureauId
                     };
-
                     $modal.modalClose = modalClose;
                     $modal.modalSubmit = modalSubmit;
                     $modal.hasErrors = hasErrors;
@@ -100,12 +99,14 @@
                         }
                     };
 
+
                     function modalClose() { $uibModalInstance.dismiss(); }
                     function modalSubmit() {
                         $modal.errorMessages = [];
                         if (!$modal.selectedFile) $modal.errorMessages.push('File is required.');
                         if ($modal.errorMessages.length > 0) return;
                         $modal.submitting = true;
+                        $modal.Document.Description = $modal.description;
                         saveDocument($modal.Document);
                     }
                     function hasErrors() {
@@ -115,7 +116,7 @@
                     function saveDocument(document) {
 
                         uiUploader.startUpload({
-                            url: '/Bureaus/' + document.BureauId + '/Employers/' + document.EmployerId + '/Employees/' + document.EmployeeId + '/UploadDocument',
+                            url: '/Bureaus/' + document.BureauId + '/Employers/' + document.EmployerId + '/Employees/' + document.EmployeeId + "/" + document.Description + '/UploadDocument',
                             concurrency: 1,
                             headers: {
                                 'Accept': 'application/json'
@@ -154,8 +155,8 @@
             });
 
             vm.modalInstance.result.then(
-                function (fitNote) {
-                    vm.getFitNotes();
+                function (document) {
+                    vm.retrieveEmployeeDocuments();
                 }
                 , function () { /*dismissed*/ }
             );
