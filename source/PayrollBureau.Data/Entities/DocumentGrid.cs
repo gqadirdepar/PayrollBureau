@@ -28,8 +28,7 @@ namespace PayrollBureau.Data.Entities
         [Column(Order = 3)]
         public Guid DocumentGuid { get; set; }
 
-        [Key]
-        [Column(Order = 4)]
+        [StringLength(100)]
         public string CreatedBy { get; set; }
 
         [Column(TypeName = "datetime2")]
@@ -41,8 +40,8 @@ namespace PayrollBureau.Data.Entities
         [StringLength(100)]
         public string Name { get; set; }
 
-        public int EmployerId { get; set; }
+        public int? EmployerId { get; set; }
 
-        public int BureauId { get; set; }
+        public int? BureauId { get; set; }
     }
 }

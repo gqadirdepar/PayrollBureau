@@ -6,12 +6,12 @@ namespace PayrollBureau.Data.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("AspNetUserBureau")]
-    public partial class AspNetUserBureau
+    [Table("AspNetUserEmployer")]
+    public partial class AspNetUserEmployer
     {
-        public int AspNetUserBureauId { get; set; }
+        public int AspNetUserEmployerId { get; set; }
 
-        public int BureauId { get; set; }
+        public int EmployerId { get; set; }
 
         [Required]
         [StringLength(128)]
@@ -19,6 +19,6 @@ namespace PayrollBureau.Data.Entities
 
         public virtual AspNetUser AspNetUser { get; set; }
 
-        public virtual Bureau Bureau { get; set; }
+        public virtual Employer Employer { get; set; }
     }
 }

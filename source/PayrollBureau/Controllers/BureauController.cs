@@ -70,7 +70,6 @@ namespace PayrollBureau.Controllers
                 }
                 //create Bureau
                 var userId = User.Identity.GetUserId();             
-                viewModel.Bureau.AspnetUserId = user.Id;               
                 viewModel.Bureau.CreatedBy = userId;
                 var employer = _payrollBureauBusinessService.CreateBureau(viewModel.Bureau);
                 if (employer.Succeeded) return RedirectToAction("Index", "Bureau");

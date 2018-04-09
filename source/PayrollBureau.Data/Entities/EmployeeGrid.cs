@@ -48,6 +48,7 @@ namespace PayrollBureau.Data.Entities
         [StringLength(100)]
         public string BureauName { get; set; }
 
+        [StringLength(256)]
         public string Email { get; set; }
     }
 }

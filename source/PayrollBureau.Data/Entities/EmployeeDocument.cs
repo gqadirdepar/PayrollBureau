@@ -9,11 +9,6 @@ namespace PayrollBureau.Data.Entities
     [Table("EmployeeDocument")]
     public partial class EmployeeDocument
     {
-        public EmployeeDocument()
-        {
-            CreatedDateUtc = DateTime.UtcNow;
-        }
-
         public int EmployeeDocumentId { get; set; }
 
         public int EmployeeId { get; set; }
@@ -34,5 +29,7 @@ namespace PayrollBureau.Data.Entities
 
         [StringLength(255)]
         public string Filename { get; set; }
+
+        public virtual Employee Employee { get; set; }
     }
 }

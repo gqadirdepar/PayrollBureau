@@ -1,16 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace PayrollBureau.Data.Entities
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("Employer")]
     public partial class Employer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employer()
         {
+            AspNetUserEmployers = new HashSet<AspNetUserEmployer>();
             Employees = new HashSet<Employee>();
         }
 
@@ -40,8 +42,8 @@ namespace PayrollBureau.Data.Entities
         [StringLength(128)]
         public string CreatedBy { get; set; }
 
-        [StringLength(128)]
-        public string AspnetUserId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetUserEmployer> AspNetUserEmployers { get; set; }
 
         public virtual Bureau Bureau { get; set; }
 

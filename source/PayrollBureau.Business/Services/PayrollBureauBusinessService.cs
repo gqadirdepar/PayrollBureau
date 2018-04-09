@@ -42,7 +42,8 @@ namespace PayrollBureau.Business.Services
 
         public Employer RetrieveEmployer(string aspNetUserId)
         {
-            return _payrollBureauDataService.Retrieve<Employer>(e => e.AspnetUserId == aspNetUserId).FirstOrDefault();
+            //return _payrollBureauDataService.Retrieve<Employer>(e => e.asp).FirstOrDefault();
+            return null;
         }
 
         public Employer RetrieveEmployer(int employerId)
@@ -80,23 +81,24 @@ namespace PayrollBureau.Business.Services
 
         public Bureau RetrieveBureau(string aspNetUserId)
         {
-            return _payrollBureauDataService.Retrieve<Bureau>(e => e.AspnetUserId == aspNetUserId).FirstOrDefault();
+            //return _payrollBureauDataService.Retrieve<Bureau>(e => e.AspnetUserId == aspNetUserId).FirstOrDefault();
+            return null;
         }
-        public PagedResult<AspNetUser> RetrieveBureauUsers(int bureauId ,string searchTerm, List<OrderBy> orderBy, Paging paging)
+        public PagedResult<AspNetUser> RetrieveBureauUsers(int bureauId, string searchTerm, List<OrderBy> orderBy, Paging paging)
         {
 
             var data = _payrollBureauDataService.RetrievePagedResultBureauUsers<AspNetUser>(bureauId, searchTerm,
                 orderBy, paging);
-                return data;
+            return data;
         }
 
         public BureauStatistics RetrieveBureauStatistics(int bureauId)
         {
-            var result = _payrollBureauDataService.Retrieve<Bureau>(b=>b.BureauId==bureauId,e=>e.Employers,i=>i.AspNetUsersBureau).ToList().FirstOrDefault();
+            var result = _payrollBureauDataService.Retrieve<Bureau>(b => b.BureauId == bureauId, e => e.Employers, i => i.AspNetUserBureaus).ToList().FirstOrDefault();
             return new BureauStatistics
             {
                 Employer = result?.Employers.Count ?? 0,
-                User = result?.AspNetUsersBureau.Count ?? 0
+                User = result?.AspNetUserBureaus.Count ?? 0
 
             };
         }
@@ -106,7 +108,7 @@ namespace PayrollBureau.Business.Services
         #region Create
         public ValidationResult<Employer> CreateEmployer(Employer employer)
         {
-            var validationResult = new ValidationResult<Employer>();          
+            var validationResult = new ValidationResult<Employer>();
             try
             {
                 employer.CreatedDateUtc = DateTime.UtcNow;
@@ -124,12 +126,12 @@ namespace PayrollBureau.Business.Services
 
         public AspNetUserBureau CreateAspNetUserBureau(AspNetUserBureau aspNetUserBureau)
         {
-            return  _payrollBureauDataService.Create(aspNetUserBureau);
+            return _payrollBureauDataService.Create(aspNetUserBureau);
         }
 
         public ValidationResult<Employee> CreateEmployee(Employee employee)
         {
-            var validationResult = new ValidationResult<Employee>();          
+            var validationResult = new ValidationResult<Employee>();
             try
             {
                 employee.CreatedDateUtc = DateTime.UtcNow;
@@ -204,9 +206,9 @@ namespace PayrollBureau.Business.Services
             if (!validationResult.Succeeded)
                 return validationResult;
             try
-            {               
+            {
                 var bureauData = RetrieveBureau(bureau.BureauId);
-                bureauData.Name = bureau.Name;             
+                bureauData.Name = bureau.Name;
                 validationResult.Entity = _payrollBureauDataService.UpdateEntityEntry(bureauData);
                 validationResult.Succeeded = true;
                 return validationResult;
@@ -218,7 +220,7 @@ namespace PayrollBureau.Business.Services
             }
             return validationResult;
         }
-   
+
         public ValidationResult<Employer> UpdateEmployer(Employer employer)
         {
             var validationResult = EmployerAlreadyExists(employer.Name, employer.EmployerId);
@@ -254,7 +256,7 @@ namespace PayrollBureau.Business.Services
                 var employeeData = RetrieveEmployee(employee.EmployeeId);
                 employeeData.Name = employee.Name;
                 employeeData.ProductName = employee.ProductName;
-                employeeData.PayrollNumber = employee.PayrollNumber;                
+                employeeData.PayrollNumber = employee.PayrollNumber;
                 validationResult.Entity = _payrollBureauDataService.UpdateEntityEntry(employeeData);
                 validationResult.Succeeded = true;
                 return validationResult;

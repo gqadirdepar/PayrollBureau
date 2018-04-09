@@ -130,9 +130,9 @@ namespace PayrollBureau.Data.Services
             {
                 var users = context
                     .AspNetUsers
-                    .Include(u => u.AspNetUsersBureau)
+                    .Include(u => u.AspNetUserBureaus)
                     .AsNoTracking()
-                    .Where(u => u.AspNetUsersBureau.Any(s=>s.BureauId==bureauId));
+                    .Where(u => u.AspNetUserBureaus.Any(s=>s.BureauId==bureauId));
                 if (!string.IsNullOrWhiteSpace(searchTerm))
                     users = users.Where(u => u.UserName.ToUpper().Contains(searchTerm.ToUpper()) && u.Email.ToUpper().Contains(searchTerm.ToUpper()));
 

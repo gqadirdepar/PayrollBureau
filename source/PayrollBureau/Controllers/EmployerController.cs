@@ -97,7 +97,6 @@ namespace PayrollBureau.Controllers
                 //create employer
                 var userId = User.Identity.GetUserId();
                 viewModel.Employer.BureauId = viewModel.BureauId;
-                viewModel.Employer.AspnetUserId = user.Id;               
                 viewModel.Employer.CreatedBy = userId;
                 var employer = _payrollBureauBusinessService.CreateEmployer(viewModel.Employer);
                 if (employer.Succeeded) return RedirectToAction("Index", "Employer", new { bureauId = viewModel.BureauId });
