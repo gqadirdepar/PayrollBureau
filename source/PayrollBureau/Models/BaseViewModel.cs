@@ -13,5 +13,6 @@ namespace PayrollBureau.Models
         public string EmployerName { get; set; }
         public string BureauName { get; set; }
         public string EmployeeName { get; set; }
+        public string Email { get; set; }
     }
 }
