@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\AspNetUserBureau.cs" />
     <Compile Include="Entities\Bureau.cs" />
     <Compile Include="Entities\DocumentGrid.cs" />
     <Compile Include="Entities\Employee.cs" />

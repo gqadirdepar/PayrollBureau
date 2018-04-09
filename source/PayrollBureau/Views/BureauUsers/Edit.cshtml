@@ -1,0 +1,41 @@
+﻿@using PayrollBureau.Extensions
+@model PayrollBureau.Models.BureauUsersViewModel
+@{
+    ViewBag.Title = $"{@Model.BureauName} : Edit {@Model.User.Name}";
+}
+
+<div class="row">
+    <h2>@ViewBag.Title</h2>
+    <hr />
+</div>
+<div class="row">
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        @if (User.IsBureau())
+        {
+            <li>Bureaus</li>
+        }
+        @if (User.IsSuperUser())
+        {
+            <li>@Html.ActionLink("Bureaus", "Index", "Bureaus")</li>
+        }
+        <li>@Html.ActionLink(Model.BureauName, "Dashboard", "Bureau", new { bureauId = Model.BureauId }, null)</li>
+        <li>@Html.ActionLink("Users", "Users", "BureauUsers", new { bureauId = Model.BureauId }, null)</li>
+        <li data-menu="Users">Edit  @Model.User.Name</li>
+    </ol>
+</div>
+
+@using (Html.BeginForm("Edit", "BureauUsers", FormMethod.Post))
+{
+    @Html.Partial("_BureauUserEntry", Model, new ViewDataDictionary(this.ViewData) { { "mode", "edit" } })
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $('#Username').attr('readonly', 'readonly');
+        //$('#Email').attr('readonly', 'readonly');
+    </script>
+
+}
+
