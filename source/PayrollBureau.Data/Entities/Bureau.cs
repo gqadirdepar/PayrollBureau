@@ -12,6 +12,7 @@ namespace PayrollBureau.Data.Entities
         public Bureau()
         {
             Employers = new HashSet<Employer>();
+            AspNetUsersBureau= new HashSet<AspNetUserBureau>();
         }
 
         public int BureauId { get; set; }
@@ -32,5 +33,9 @@ namespace PayrollBureau.Data.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employer> Employers { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetUserBureau> AspNetUsersBureau { get; set; }
+
     }
 }

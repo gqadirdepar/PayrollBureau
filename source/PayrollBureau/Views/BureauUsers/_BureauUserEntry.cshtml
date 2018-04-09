@@ -1,0 +1,92 @@
+﻿
+@model PayrollBureau.Models.BureauUsersViewModel
+
+@{
+    bool isView = (string)ViewData["mode"] == "view";
+    bool isEdit = (string)ViewData["mode"] == "edit";
+}
+
+@*setDefaultSite and setOtherSites are used to reload the "selected" sites in case there are server-side validation issues*@
+<div id="entryDiv" class="row" ng-controller="BureauUsersController as model">
+    <div class="form-control-required-example">&nbsp;Required</div>
+    <br />
+    <fieldset>
+        <legend>User Details</legend>
+        <div class="form-horizontal">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "alert alert-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.User.Username, "Username", new { @class = "control-label col-xs-12  col-sm-2" })
+                <div class="col-xs-12 col-sm-10">
+                    @if (isView)
+                    {
+                        <span class="form-control span-edit">@Model.User.Username</span>
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(m => m.User.Username, new { @class = "form-control", placeholder = "Username" })
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.User.Name, "Name", new { @class = "control-label col-xs-12  col-sm-2" })
+                <div class="col-xs-12 col-sm-10">
+                    @if (isView)
+                    {
+                        <span class="form-control span-edit">@Model.User.Name</span>
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(m => m.User.Name, new { @class = "form-control", placeholder = "Name" })
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.User.Email, "Email", new { @class = "control-label col-xs-12  col-sm-2" })
+                <div class="col-xs-12 col-sm-10">
+                    @if (isView)
+                    {
+                        <span class="form-control span-edit">@Model.User.Email</span>
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control", placeholder = "Email" })
+                    }
+                </div>
+            </div>
+
+            
+        </div>
+    </fieldset>
+
+    
+    @Html.HiddenFor(m => m.User.UserId)
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div class="pull-right">
+                    @if (!isView)
+                    {
+                        <button type="submit" class="btn btn-success" id="btnSave">Submit</button>
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Edit User", "Edit", "BureauUsers", new { id = Model.BureauId, userId = Model.User.UserId }, new { @class = "btn btn-primary pull-right" })
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (isEdit || isView)
+    {
+        <br />
+        <fieldset>
+            <legend>Password Reset</legend>
+            @Html.ActionLink("Click here to reset this user's password.", "ResetPassword", "BureautUsers", new { id = Model.BureauId, userId = Model.User.UserId }, null)
+        </fieldset>
+    }
+</div>

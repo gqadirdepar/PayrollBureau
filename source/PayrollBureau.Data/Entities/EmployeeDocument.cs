@@ -9,7 +9,11 @@ namespace PayrollBureau.Data.Entities
     [Table("EmployeeDocument")]
     public partial class EmployeeDocument
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public EmployeeDocument()
+        {
+            CreatedDateUtc = DateTime.UtcNow;
+        }
+
         public int EmployeeDocumentId { get; set; }
 
         public int EmployeeId { get; set; }
@@ -18,17 +22,17 @@ namespace PayrollBureau.Data.Entities
 
         public Guid DocumentGuid { get; set; }
 
-        public DateTime? ValidFromDate { get; set; }
-
-        public DateTime? ValidToDate { get; set; }
-
+        [Required]
         [StringLength(128)]
         public string CreatedBy { get; set; }
+
+        [Column(TypeName = "datetime2")]
+        public DateTime CreatedDateUtc { get; set; }
 
         [StringLength(500)]
         public string Description { get; set; }
 
-        [Column(TypeName = "datetime2")]
-        public DateTime? CreatedDateUtc { get; set; }
+        [StringLength(255)]
+        public string Filename { get; set; }
     }
 }

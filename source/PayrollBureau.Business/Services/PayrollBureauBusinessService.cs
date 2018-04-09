@@ -82,7 +82,24 @@ namespace PayrollBureau.Business.Services
         {
             return _payrollBureauDataService.Retrieve<Bureau>(e => e.AspnetUserId == aspNetUserId).FirstOrDefault();
         }
+        public PagedResult<AspNetUser> RetrieveBureauUsers(int bureauId ,string searchTerm, List<OrderBy> orderBy, Paging paging)
+        {
 
+            var data = _payrollBureauDataService.RetrievePagedResultBureauUsers<AspNetUser>(bureauId, searchTerm,
+                orderBy, paging);
+                return data;
+        }
+
+        public BureauStatistics RetrieveBureauStatistics(int bureauId)
+        {
+            var result = _payrollBureauDataService.Retrieve<Bureau>(b=>b.BureauId==bureauId,e=>e.Employers,i=>i.AspNetUsersBureau).ToList().FirstOrDefault();
+            return new BureauStatistics
+            {
+                Employer = result?.Employers.Count ?? 0,
+                User = result?.AspNetUsersBureau.Count ?? 0
+
+            };
+        }
         #endregion
 
 
@@ -103,6 +120,11 @@ namespace PayrollBureau.Business.Services
             }
             return validationResult;
 
+        }
+
+        public AspNetUserBureau CreateAspNetUserBureau(AspNetUserBureau aspNetUserBureau)
+        {
+            return  _payrollBureauDataService.Create(aspNetUserBureau);
         }
 
         public ValidationResult<Employee> CreateEmployee(Employee employee)

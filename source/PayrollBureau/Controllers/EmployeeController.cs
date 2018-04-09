@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using PayrollBureau.Business.Extensions;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PayrollBureau.Business.Interfaces;
+using PayrollBureau.Business.Models;
 using PayrollBureau.Common.Enum.Document;
 using PayrollBureau.Data.Models;
 using PayrollBureau.Extensions;
@@ -16,10 +18,12 @@ namespace PayrollBureau.Controllers
     public class EmployeeController : BaseController
     {
         private readonly IPayrollBureauBusinessService _payrollBureauBusinessService;
+        private readonly IDocumentBusinessService _documentBusinessService;
 
-        public EmployeeController(IPayrollBureauBusinessService payrollBureauBusinessService)
+        public EmployeeController(IPayrollBureauBusinessService payrollBureauBusinessService, IDocumentBusinessService documentBusinessService)
         {
             _payrollBureauBusinessService = payrollBureauBusinessService;
+            _documentBusinessService = documentBusinessService;
         }
 
      
@@ -76,6 +80,31 @@ namespace PayrollBureau.Controllers
         {
             var payslips = _payrollBureauBusinessService.RetrieveEmployeeDocuments(e => e.BureauId == bureauId && e.EmployeeId == employeeId && e.DocumentCategoryId == (int)DocumentCategory.Payslip, orderBy, paging);
             return this.JsonNet(payslips);
+        }
+
+        [HttpPost]
+        [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees/{employeeId}/UploadDocument")]
+        public ActionResult UploadDocument(int bureauId, int employerId, int employeeId)
+        {
+            if (Request.Files != null && Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+                var employee = _payrollBureauBusinessService.RetrieveEmployee(employeeId);
+                var documentMeta = new DocumentMeta
+                {
+                    EmployeeName = employee.Name,
+                    PayrollId = employeeId.ToString(),
+                    DocumentTypeId = (int)DocumentCategory.Document,
+                    FileName = file.FileName.Split('\\').Last().FilterSpecialChars(),
+                    CreatedBy = this.User.Identity.GetUserId(),
+                    UploadedDate = DateTime.UtcNow
+                };
+                var result = _documentBusinessService.CreateEmployeeDocument(documentMeta, employeeId, User.Identity.GetUserId());
+                if (result.Succeeded)
+                    return this.JsonNet(new { Success = true });
+
+            }
+            return this.JsonNet(new { Success = false, Error = "Error uploading fit note file." });
         }
 
         [HttpGet]

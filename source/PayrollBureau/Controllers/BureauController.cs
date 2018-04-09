@@ -160,5 +160,13 @@ namespace PayrollBureau.Controllers
             };
             return model;
         }
+
+        [HttpPost]
+        [Route("Bureau/Statistics")]
+        public ActionResult Statistics(int bureauId)
+        {
+            var result = _payrollBureauBusinessService.RetrieveBureauStatistics(bureauId);
+            return this.JsonNet(result);
+        }
     }
 }

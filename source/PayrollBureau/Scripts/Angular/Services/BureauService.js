@@ -9,8 +9,11 @@
 
     function BureauService($http) {
         var service = {
-            retrieveBureau: retrieveBureau
-        };
+            retrieveBureau: retrieveBureau,
+            retrieveUsers: retrieveUsers,
+            retrieveStatistics: retrieveStatistics
+           
+    };
 
         return service;
 
@@ -20,6 +23,26 @@
                     searchTerm: searchTerm,
                     paging: paging,
                     orderBy: new Array(orderBy)
+                };
+
+            return $http.post(url, data);
+        }
+        function retrieveUsers(bureauId,searchTerm, paging, orderBy) {
+            var url = "/Bureaus/BureauUsers/List",
+                data = {
+                    bureauId:bureauId,
+                    searchTerm: searchTerm,
+                    paging: paging,
+                    orderBy: new Array(orderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveStatistics(bureauId) {
+            var url = "/Bureau/Statistics",
+                data = {
+                    bureauId: bureauId
                 };
 
             return $http.post(url, data);

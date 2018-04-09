@@ -20,7 +20,9 @@ namespace PayrollBureau.Models.Authorization
 
             // Add custom user claims here
             return userIdentity;
-        }
+
+    }
+        public string Name { get; set; }
     }
 
     public class ApplicationRole : IdentityRole
