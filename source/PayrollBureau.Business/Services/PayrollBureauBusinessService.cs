@@ -89,11 +89,10 @@ namespace PayrollBureau.Business.Services
         #region Create
         public ValidationResult<Employer> CreateEmployer(Employer employer)
         {
-            var validationResult = new ValidationResult<Employer>();
-            //if (!validationResult.Succeeded)
-            //    return validationResult;
+            var validationResult = new ValidationResult<Employer>();          
             try
             {
+                employer.CreatedDateUtc = DateTime.UtcNow;
                 validationResult.Entity = _payrollBureauDataService.Create(employer); ;
                 return validationResult;
             }
@@ -108,11 +107,10 @@ namespace PayrollBureau.Business.Services
 
         public ValidationResult<Employee> CreateEmployee(Employee employee)
         {
-            var validationResult = new ValidationResult<Employee>();
-            //if (!validationResult.Succeeded)
-            //    return validationResult;
+            var validationResult = new ValidationResult<Employee>();          
             try
             {
+                employee.CreatedDateUtc = DateTime.UtcNow;
                 validationResult.Entity = _payrollBureauDataService.Create(employee); ;
                 return validationResult;
             }
@@ -124,6 +122,24 @@ namespace PayrollBureau.Business.Services
             return validationResult;
 
         }
+
+        public ValidationResult<Bureau> CreateBureau(Bureau bureau)
+        {
+            var validationResult = new ValidationResult<Bureau>();
+            try
+            {
+                bureau.CreatedDateUtc = DateTime.UtcNow;
+                validationResult.Entity = _payrollBureauDataService.Create(bureau); ;
+                return validationResult;
+            }
+            catch (Exception ex)
+            {
+                validationResult.Succeeded = false;
+                validationResult.Message = ex.Message;
+            }
+            return validationResult;
+        }
+
         #endregion
 
         #region Helper
@@ -146,9 +162,40 @@ namespace PayrollBureau.Business.Services
                 Errors = alreadyExists ? new List<string> { $"Employee name already exists." } : null
             };
         }
+
+        public ValidationResult<Bureau> BureaurAlreadyExists(string name, int? bureauId)
+        {
+            var alreadyExists = _payrollBureauDataService.Retrieve<Bureau>(p => p.Name.ToLower() == name.ToLower() && p.BureauId != (bureauId ?? -1)).Any();
+            return new ValidationResult<Bureau>
+            {
+                Succeeded = !alreadyExists,
+                Errors = alreadyExists ? new List<string> { $"Bureau name already exists." } : null
+            };
+        }
         #endregion
 
         #region update
+        public ValidationResult<Bureau> UpdateBureau(Bureau bureau)
+        {
+            var validationResult = BureaurAlreadyExists(bureau.Name, bureau.BureauId);
+            if (!validationResult.Succeeded)
+                return validationResult;
+            try
+            {               
+                var bureauData = RetrieveBureau(bureau.BureauId);
+                bureauData.Name = bureau.Name;             
+                validationResult.Entity = _payrollBureauDataService.UpdateEntityEntry(bureauData);
+                validationResult.Succeeded = true;
+                return validationResult;
+            }
+            catch (Exception ex)
+            {
+                validationResult.Succeeded = false;
+                validationResult.Message = ex.Message;
+            }
+            return validationResult;
+        }
+   
         public ValidationResult<Employer> UpdateEmployer(Employer employer)
         {
             var validationResult = EmployerAlreadyExists(employer.Name, employer.EmployerId);

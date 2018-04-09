@@ -25,20 +25,21 @@ namespace PayrollBureau.Business.Interfaces
         Bureau RetrieveBureau(string aspNetUserId);
         ValidationResult<Employer> EmployerAlreadyExists(string name, int? employerId);
         ValidationResult<Employee> EmployeeAlreadyExists(string name, int? employeeId);
-
+        ValidationResult<Bureau> BureaurAlreadyExists(string name, int? bureauId);
         #endregion
 
         #region create
 
         ValidationResult<Employer> CreateEmployer(Employer employer);
         ValidationResult<Employee> CreateEmployee(Employee employee);
-
+        ValidationResult<Bureau> CreateBureau(Bureau bureau);
         #endregion
 
         #region edit
 
         ValidationResult<Employer> UpdateEmployer(Employer employer);
         ValidationResult<Employee> UpdateEmployee(Employee employer);
+        ValidationResult<Bureau> UpdateBureau(Bureau bureau);
 
         #endregion
 

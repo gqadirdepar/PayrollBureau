@@ -123,8 +123,7 @@ namespace PayrollBureau.Controllers
                 var userId = User.Identity.GetUserId();
                 viewModel.Employee.EmployerId = viewModel.EmployerId;
                 viewModel.Employee.AspnetUserId = user.Id;
-                viewModel.Employee.CreatedBy = userId;
-                viewModel.Employee.CreatedDateUtc = DateTime.UtcNow;
+                viewModel.Employee.CreatedBy = userId;      
                 var employee = _payrollBureauBusinessService.CreateEmployee(viewModel.Employee);
                 if (employee.Succeeded) return RedirectToAction("Index", "Employee", new { employerId = viewModel.EmployerId ,});
 

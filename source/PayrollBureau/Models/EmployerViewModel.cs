@@ -9,10 +9,6 @@ namespace PayrollBureau.Models
 {
     public class EmployerViewModel:BaseViewModel
     {
-        public Employer Employer { get; set; }     
-        [Required]
-        [EmailAddress]       
-        public string Email { get; set; }
-        
+        public Employer Employer { get; set; }           
     }
 }

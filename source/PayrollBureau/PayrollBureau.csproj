@@ -237,8 +237,8 @@
     <Compile Include="Models\Authorization\IdentityModel.cs" />
     <Compile Include="Models\Authorization\PolicyAuthorizeAttribute.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
+    <Compile Include="Models\BureauViewModel.cs" />
     <Compile Include="Models\EmployeeViewModel.cs" />
-    <Compile Include="Models\EmployerViewModel.cs" />
     <Compile Include="Models\EmployerViewModel.cs" />
     <Compile Include="Models\JsonNetResult.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -1303,6 +1303,9 @@
     <Content Include="Views\Employee\Create.cshtml" />
     <Content Include="Views\Employee\_Employee.cshtml" />
     <Content Include="Views\Employee\Edit.cshtml" />
+    <Content Include="Views\Bureau\Create.cshtml" />
+    <Content Include="Views\Bureau\_Bureau.cshtml" />
+    <Content Include="Views\Bureau\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
