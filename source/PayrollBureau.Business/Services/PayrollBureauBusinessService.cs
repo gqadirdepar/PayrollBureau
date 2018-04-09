@@ -108,7 +108,9 @@ namespace PayrollBureau.Business.Services
         #region Create
         public ValidationResult<Employer> CreateEmployer(Employer employer)
         {
-            var validationResult = new ValidationResult<Employer>();
+            var validationResult = EmployerAlreadyExists(employer.Name, null);
+            if (!validationResult.Succeeded)
+                return validationResult;
             try
             {
                 employer.CreatedDateUtc = DateTime.UtcNow;
@@ -124,9 +126,26 @@ namespace PayrollBureau.Business.Services
 
         }
 
-        public AspNetUserBureau CreateAspNetUserBureau(AspNetUserBureau aspNetUserBureau)
+        public AspNetUserBureau CreateAspNetUserBureau(int bureauId, string aspNetUserId)
         {
+            var aspNetUserBureau = new AspNetUserBureau
+            {
+                BureauId    = bureauId,
+                AspNetUserId = aspNetUserId
+            };
+            
             return _payrollBureauDataService.Create(aspNetUserBureau);
+        }
+
+        public AspNetUserEmployer CreateAspNetUserEmployer(int employerId, string aspNetUserId)
+        {
+            var aspNetUserEmployer = new AspNetUserEmployer
+            {
+                EmployerId = employerId,
+                AspNetUserId = aspNetUserId
+            };
+
+            return _payrollBureauDataService.Create(aspNetUserEmployer);
         }
 
         public ValidationResult<Employee> CreateEmployee(Employee employee)
@@ -149,7 +168,9 @@ namespace PayrollBureau.Business.Services
 
         public ValidationResult<Bureau> CreateBureau(Bureau bureau)
         {
-            var validationResult = new ValidationResult<Bureau>();
+            var validationResult = BureauAlreadyExists(bureau.Name, null);
+            if (!validationResult.Succeeded)
+                return validationResult;
             try
             {
 
@@ -164,7 +185,7 @@ namespace PayrollBureau.Business.Services
             }
             return validationResult;
         }
-
+   
         #endregion
 
         #region Helper
