@@ -74,7 +74,8 @@ namespace PayrollBureau.Controllers
         {
             try
             {
-                var validationResult = _payrollBureauBusinessService.EmployerAlreadyExists(viewModel.Employer.Name, viewModel.Email, null);
+                var validationResult = _PayrollBureauBusinessService.EmployerAlreadyExists(viewModel.Employer.Name,viewModel.Email, null);
+           
                 if (!validationResult.Succeeded)
                 {
                     foreach (var error in validationResult.Errors)

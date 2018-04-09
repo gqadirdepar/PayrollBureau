@@ -118,6 +118,49 @@ namespace PayrollBureau.Data.Services
             }
         }
 
+        public PagedResult<T> RetrievePagedResult<T>(Expression<Func<T, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null, params Expression<Func<T, object>>[] includeExpressions) where T : class
+        {
+           return RetrieveQueryable(predicate,orderBy,includeExpressions).Paginate(paging);
+        }
+
+        public PagedResult<AspNetUser> RetrievePagedResultBureauUsers<T>(int bureauId,string searchTerm, List<OrderBy> orderBy = null, Paging paging = null) 
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.CreateContext())
+            {
+                var users = context
+                    .AspNetUsers
+                    .Include(u => u.AspNetUsersBureau)
+                    .AsNoTracking()
+                    .Where(u => u.AspNetUsersBureau.Any(s=>s.BureauId==bureauId));
+                if (!string.IsNullOrWhiteSpace(searchTerm))
+                    users = users.Where(u => u.UserName.ToUpper().Contains(searchTerm.ToUpper()) && u.Email.ToUpper().Contains(searchTerm.ToUpper()));
+
+                return  users
+                    .OrderBy(orderBy)
+                    .Paginate(paging);
+            }
+        }
+        protected virtual IQueryable<T> RetrieveQueryable<T>(Expression<Func<T, bool>> predicate, List<OrderBy> orderBy = null, params Expression<Func<T, object>>[] includeExpressions) where T : class
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.CreateContext())
+            {
+                var query = context.Set<T>().AsQueryable<T>();
+
+                if (includeExpressions?.Any() ?? false)
+                    query = includeExpressions.Aggregate(query, (current, expression) => current.Include(expression));
+
+                if (predicate != null)
+                    query = query.Where(predicate);
+
+                if (orderBy?.Any() ?? false)
+                    query = query.OrderBy(orderBy);
+
+                return query;
+            }
+        }
+
         public T UpdateEntityEntry<T>(T t) where T : class
         {
             using (var context = _databaseFactory.CreateContext())

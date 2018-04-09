@@ -23,6 +23,9 @@ namespace PayrollBureau.Business.Interfaces
         Employee RetrieveEmployee(int employeeId);
         Bureau RetrieveBureau(int bureauId);
         Bureau RetrieveBureau(string aspNetUserId);
+        ValidationResult<Employer> EmployerAlreadyExists(string name,string email, int? employerId);
+        PagedResult<AspNetUser> RetrieveBureauUsers(int bureauId, string searchTerm, List<OrderBy> orderBy,Paging paging);
+        BureauStatistics RetrieveBureauStatistics(int bureauId);
         ValidationResult<Employer> EmployerAlreadyExists(string name, int? employerId);
         ValidationResult<Employee> EmployeeAlreadyExists(string name, int? employeeId);
 
@@ -31,6 +34,7 @@ namespace PayrollBureau.Business.Interfaces
         #region create
 
         ValidationResult<Employer> CreateEmployer(Employer employer);
+        AspNetUserBureau CreateAspNetUserBureau(AspNetUserBureau aspNetUserBureau);
         ValidationResult<Employee> CreateEmployee(Employee employee);
 
         #endregion
@@ -42,6 +46,9 @@ namespace PayrollBureau.Business.Interfaces
 
         #endregion
 
+        #region Update
 
+
+        #endregion
     }
 }

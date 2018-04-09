@@ -21,6 +21,7 @@
         vm.orderClass = orderClass;
         vm.pageChanged = pageChanged;
         vm.retrieveBureau = retrieveBureau;
+        vm.retrieveStatistics = retrieveStatistics;
         vm.Errors = [];
         return vm;
 
@@ -57,7 +58,16 @@
         function search() {
             retrieveBureau();
         }
-
+        function retrieveStatistics(bureauId) {
+            vm.bureauId = bureauId;
+            return BureauService.retrieveStatistics(vm.bureauId).then(
+                function (response) {
+                    vm.user = response.data.User;
+                    vm.employer = response.data.Employer;
+                    
+                },
+                function () { /*dismissed */ });
+        }
 
     }
 })();
