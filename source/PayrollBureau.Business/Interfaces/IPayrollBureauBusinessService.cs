@@ -28,7 +28,7 @@ namespace PayrollBureau.Business.Interfaces
         BureauStatistics RetrieveBureauStatistics(int bureauId);
         ValidationResult<Employer> EmployerAlreadyExists(string name, int? employerId);
         ValidationResult<Employee> EmployeeAlreadyExists(string name, int? employeeId);
-
+        ValidationResult<Bureau> BureaurAlreadyExists(string name, int? bureauId);
         #endregion
 
         #region create
@@ -36,13 +36,14 @@ namespace PayrollBureau.Business.Interfaces
         ValidationResult<Employer> CreateEmployer(Employer employer);
         AspNetUserBureau CreateAspNetUserBureau(AspNetUserBureau aspNetUserBureau);
         ValidationResult<Employee> CreateEmployee(Employee employee);
-
+        ValidationResult<Bureau> CreateBureau(Bureau bureau);
         #endregion
 
         #region edit
 
         ValidationResult<Employer> UpdateEmployer(Employer employer);
         ValidationResult<Employee> UpdateEmployee(Employee employer);
+        ValidationResult<Bureau> UpdateBureau(Bureau bureau);
 
         #endregion
 

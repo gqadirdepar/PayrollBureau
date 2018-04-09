@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using PayrollBureau.Business.Interfaces;
 using PayrollBureau.Data.Entities;
 using PayrollBureau.Data.Models;
 using PayrollBureau.Extensions;
 using PayrollBureau.Models;
+using PayrollBureau.Models.Authorization;
 
 namespace PayrollBureau.Controllers
 {
-    public class BureauController : Controller
+    public class BureauController : BaseController
     {
         private readonly IPayrollBureauBusinessService _payrollBureauBusinessService;
 
@@ -25,50 +29,84 @@ namespace PayrollBureau.Controllers
             return View();
         }
 
-        //    // GET: Bureau/Create
-        //    public ActionResult Create()
-        //    {
-        //        return View();
-        //    }
+        [Route("Bureau/Create")]
+        public ActionResult Create()
+        {     
+            return View();
+        }
 
-        //    // POST: Bureau/Create
-        //    [HttpPost]
-        //    public ActionResult Create(FormCollection collection)
-        //    {
-        //        try
-        //        {
-        //            // TODO: Add insert logic here
+        [HttpPost]
+        [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees")]
+        [Route("Bureau/Create")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(BureauViewModel viewModel)
+        {
+            try
+            {
+                var validationResult = _payrollBureauBusinessService.BureaurAlreadyExists(viewModel.Bureau.Name, null);
+                if (!validationResult.Succeeded)
+                {
+                    foreach (var error in validationResult.Errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
+                    return View(viewModel);
+                }
 
-        //            return RedirectToAction("Index");
-        //        }
-        //        catch
-        //        {
-        //            return View();
-        //        }
-        //    }
+                //create Bureauuser and role
+                var user = new ApplicationUser
+                {
+                    UserName = viewModel.Email,
+                    Email = viewModel.Email,
+                };
 
-        //    // GET: Bureau/Edit/5
-        //    public ActionResult Edit(int id)
-        //    {
-        //        return View();
-        //    }
+                var roleId = RoleManager.Roles.FirstOrDefault(r => r.Name == "Bureau").Id;
+                user.Roles.Add(new IdentityUserRole { UserId = user.Id, RoleId = roleId });
+                var result = UserManager.Create(user, "Inland12!");
+                if (!validationResult.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                        ModelState.AddModelError("", error);
+                }
+                //create Bureau
+                var userId = User.Identity.GetUserId();             
+                viewModel.Bureau.AspnetUserId = user.Id;               
+                viewModel.Bureau.CreatedBy = userId;
+                var employer = _payrollBureauBusinessService.CreateBureau(viewModel.Bureau);
+                if (employer.Succeeded) return RedirectToAction("Index", "Bureau");
 
-        //    // POST: Bureau/Edit/5
-        //    [HttpPost]
-        //    public ActionResult Edit(int id, FormCollection collection)
-        //    {
-        //        try
-        //        {
-        //            // TODO: Add update logic here
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex);
+            }
+            return RedirectToAction("Index", "Bureau");
+        }
 
-        //            return RedirectToAction("Index");
-        //        }
-        //        catch
-        //        {
-        //            return View();
-        //        }
-        //    }
+        [HttpGet]
+        [Route("Bureaus/{bureauId}/Edit")]
+        public ActionResult Edit(int bureauId)
+        {
 
+            var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
+            if (bureau == null)
+                return RedirectToAction("NotFound", "Error");          
+            var model = new BureauViewModel { Bureau =  bureau};
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("Bureaus/Edit")]
+        public ActionResult Edit(BureauViewModel model)
+        {          
+            var result = _payrollBureauBusinessService.UpdateBureau(model.Bureau);
+            if (result.Succeeded) return RedirectToAction("Index", "Bureau");
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return View(model);
+        }
         //    // GET: Bureau/Delete/5
         //    public ActionResult Delete(int id)
         //    {

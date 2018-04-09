@@ -6,8 +6,8 @@ using PayrollBureau.Data.Entities;
 
 namespace PayrollBureau.Models
 {
-    public class EmployerViewModel :BaseViewModel
+    public class EmployerViewModel:BaseViewModel
     {
-        public Employer Employer { get; set; }
+        public Employer Employer { get; set; }           
     }
 }

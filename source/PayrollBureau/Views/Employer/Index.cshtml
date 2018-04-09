@@ -15,7 +15,7 @@
         <ol class="breadcrumb">
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li>@Html.ActionLink("Bureaus", "Index", "Bureau")</li>
-            <li>@Html.ActionLink(@Model.BureauName, "Dashboard", "Bureau", new {bureauId = @Model.BureauId}, null)</li>
+            <li>@Html.ActionLink(@Model.BureauName, "Dashboard", "Bureau", new { bureauId = @Model.BureauId }, null)</li>
             <li>Employers</li>
         </ol>
     }
@@ -31,7 +31,7 @@
 <div class="row" ng-controller="EmployerController as model" ng-init="model.initialise('@Model.BureauId')">
     <div class="row">
         <div class="col-sm-12 col-md-6 md-mb-10">
-            <a type="button" class="btn btn-primary" href="/Bureau/Create">Create</a>
+            <a type="button" class="btn btn-primary" href="/Employer/Create/@Model.BureauId">Create</a>
         </div>
         <div class="col-sm-12 col-md-6 md-mb-10">
             <div class="input-group">
@@ -43,53 +43,58 @@
         </div>
 
     </div>
-    <div>
-        <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-            <div class="ng-cloak" ng-show="model.employers.length > 0">
-                <div>
-                    <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
-                        <thead>
-                            <tr role="row">
-                                <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Name</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="employer in model.employers" class="odd gradeX cursor" ng-click="$event.originalEvent.ngClickHandled || model.viewClient(client.ClientId)">
-                                <td><span ng-bind="::employer.Name"></span></td>
-                                <td>
-                                    <div class="btn-group pull-right" ng-class="{'dropup':$last}">
-                                        <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true;">
-                                            <i class="fa fa-chevron-down"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-right">
-                                            <li>
-                                                <a ng-href="/Bureaus/{{::employer.BureauId}}/Employers/{{::employer.EmployerId}}">
-                                                    View
+        <div>
+            <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                <div class="ng-cloak" ng-show="model.employers.length > 0">
+                    <div>
+                        <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                            <thead>
+                                <tr role="row">
+                                    <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="employer in model.employers" class="odd gradeX cursor" ng-click="$event.originalEvent.ngClickHandled || model.viewClient(client.ClientId)">
+                                    <td><span ng-bind="::employer.Name"></span></td>
+                                    <td>
+                                        <div class="btn-group pull-right" ng-class="{'dropup':$last}">
+                                            <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true;">
+                                                <i class="fa fa-chevron-down"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li>
+                                                    <a ng-href="/Bureaus/{{::employer.BureauId}}/Employers/{{::employer.EmployerId}}">
+                                                        View
+                                                    </a>
+                                                </li>
+                                                   <li>
+                                                <a ng-href="/Employers/{{::employer.EmployerId}}/Edit">
+                                                    Edit
                                                 </a>
                                             </li>
+                                                <li>
+                                                    <a ng-bootbox-confirm="Are you sure? you want to delete employee - ({{employee.Name}})" ng-bootbox-confirm-action="model.unassignExtensionNumber(extension)" ng-bootbox-confirm-action-cancel="">
+                                                        Delete
 
-                                            <li>
-                                                <a ng-bootbox-confirm="Are you sure? you want to delete employee - ({{employee.Name}})" ng-bootbox-confirm-action="model.unassignExtensionNumber(extension)" ng-bootbox-confirm-action-cancel="">
-                                                    Delete
-
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                 </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="">
-                    <div class="panel-footer">
-                        @Html.Partial("Pagination/_pagination")
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="">
+                        <div class="panel-footer">
+                            @Html.Partial("Pagination/_pagination")
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xs-12">
-                <label ng-bind="model.searchMessage"></label>
+                <div class="col-xs-12">
+                    <label ng-bind="model.searchMessage"></label>
+                </div>
             </div>
         </div>
     </div>

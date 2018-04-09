@@ -26,14 +26,10 @@ namespace PayrollBureau.Controllers
             _documentBusinessService = documentBusinessService;
         }
 
-        // GET: Employee
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+     
         [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees")]
-        public ActionResult Index(int? bureauId, int? employerId)
+        [Route("Employee/Index/{employerId}")]
+        public ActionResult Index(int? employerId)
         {
             var employer = _payrollBureauBusinessService.RetrieveEmployer(employerId.Value);
             var model = new BaseViewModel
@@ -112,7 +108,7 @@ namespace PayrollBureau.Controllers
         }
 
         [HttpGet]
-        [Route("Employee/Create/{employerId}")]
+        [Route("Bureaus/{bureauId}/Employers/{employerId}/Create")]
         public ActionResult Create(int employerId)
         {
             var employer = _payrollBureauBusinessService.RetrieveEmployer(employerId);
@@ -156,17 +152,16 @@ namespace PayrollBureau.Controllers
                 var userId = User.Identity.GetUserId();
                 viewModel.Employee.EmployerId = viewModel.EmployerId;
                 viewModel.Employee.AspnetUserId = user.Id;
-                viewModel.Employee.CreatedBy = userId;
-                viewModel.Employee.CreatedDateUtc = DateTime.UtcNow;
+                viewModel.Employee.CreatedBy = userId;      
                 var employee = _payrollBureauBusinessService.CreateEmployee(viewModel.Employee);
-                if (employee.Succeeded) return RedirectToAction("Employees", "Employer", new { employerId = viewModel.EmployerId });
+                if (employee.Succeeded) return RedirectToAction("Index", "Employee", new { employerId = viewModel.EmployerId ,});
 
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex);
             }
-            return RedirectToAction("Employees", "Employer", new { employerId = viewModel.EmployerId });
+            return RedirectToAction("Index", "Employee", new { employerId = viewModel.EmployerId });
         }
 
 
@@ -190,7 +185,7 @@ namespace PayrollBureau.Controllers
         {
 
             var result = _payrollBureauBusinessService.UpdateEmployee(model.Employee);
-            if (result.Succeeded) return RedirectToAction("Employees", "Employer",new { employerId = model.EmployerId});
+            if (result.Succeeded) return RedirectToAction("Index", "Employee", new { employerId = model.EmployerId, });
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError("", error);
