@@ -21,7 +21,7 @@ namespace PayrollBureau.Controllers
         {
             _payrollBureauBusinessService = payrollBureauBusinessService;
         }
-     
+
         [Route("Bureaus/{bureauId}/Employers")]
         public ActionResult Index(int bureauId)
         {
@@ -68,43 +68,47 @@ namespace PayrollBureau.Controllers
         {
             try
             {
-                //create Bureau
-                var userId = User.Identity.GetUserId();
-                viewModel.Employer.BureauId = viewModel.BureauId;
-                viewModel.Employer.CreatedBy = userId;
-                var employer = _payrollBureauBusinessService.CreateEmployer(viewModel.Employer);
-                if (!employer.Succeeded)
+                if (ModelState.IsValid)
                 {
-                    foreach (var error in employer.Errors)
+                    //create Bureau
+                    var userId = User.Identity.GetUserId();
+                    viewModel.Employer.BureauId = viewModel.BureauId.Value;
+                    viewModel.Employer.CreatedBy = userId;
+                    var employer = _payrollBureauBusinessService.CreateEmployer(viewModel.Employer);
+                    if (!employer.Succeeded)
                     {
-                        ModelState.AddModelError("", error);
+                        foreach (var error in employer.Errors)
+                        {
+                            ModelState.AddModelError("", error);
+                        }
+                        return View(viewModel);
                     }
-                    return View(viewModel);
+
+                    //create employeruser and role
+                    var user = new ApplicationUser
+                    {
+                        UserName = viewModel.Email,
+                        Email = viewModel.Email,
+                    };
+
+                    var roleId = RoleManager.Roles.FirstOrDefault(r => r.Name == "Employer").Id;
+                    user.Roles.Add(new IdentityUserRole { UserId = user.Id, RoleId = roleId });
+                    var result = UserManager.Create(user, "Inland12!");
+                    if (!result.Succeeded)
+                    {
+                        foreach (var error in result.Errors)
+                            ModelState.AddModelError("", error);
+                    }
+
+                    //create AspNetUser Employer              
+                    _payrollBureauBusinessService.CreateAspNetUserEmployer(employer.Entity.EmployerId, user.Id);
                 }
-
-                //create employeruser and role
-                var user = new ApplicationUser
-                {
-                    UserName = viewModel.Email,
-                    Email = viewModel.Email,
-                };
-
-                var roleId = RoleManager.Roles.FirstOrDefault(r => r.Name == "Employer").Id;
-                user.Roles.Add(new IdentityUserRole { UserId = user.Id, RoleId = roleId });
-                var result = UserManager.Create(user, "Inland12!");
-                if (!result.Succeeded)
-                {
-                    foreach (var error in result.Errors)
-                        ModelState.AddModelError("", error);
-                }
-
-                //create AspNetUser Employer              
-                _payrollBureauBusinessService.CreateAspNetUserEmployer(employer.Entity.EmployerId, user.Id);
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex);
             }
+
             return RedirectToAction("Index", "Employer", new { bureauId = viewModel.BureauId });
         }
 

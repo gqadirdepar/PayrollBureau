@@ -151,7 +151,7 @@ namespace PayrollBureau.Controllers
                 }
                 //create employee
                 var userId = User.Identity.GetUserId();
-                viewModel.Employee.EmployerId = viewModel.EmployerId;
+                viewModel.Employee.EmployerId = viewModel.EmployerId.Value;
                 viewModel.Employee.AspnetUserId = user.Id;
                 viewModel.Employee.CreatedBy = userId;
                 var employee = _payrollBureauBusinessService.CreateEmployee(viewModel.Employee);
