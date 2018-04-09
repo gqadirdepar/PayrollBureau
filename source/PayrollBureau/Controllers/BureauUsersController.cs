@@ -113,7 +113,7 @@ namespace PayrollBureau.Controllers
                             AspNetUserId = newUser.Id
 
                         };
-                        _payrollBureauBusinessService.CreateAspNetUserBureau(bureauAspNetUser);
+                         _payrollBureauBusinessService.CreateAspNetUserBureau(model.BureauId,newUser.Id);
                         return RedirectToAction("Edit", new { bureauId = model.BureauId, userId = newUser.Id });
 
                     }

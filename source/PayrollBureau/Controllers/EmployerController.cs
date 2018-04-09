@@ -68,11 +68,14 @@ namespace PayrollBureau.Controllers
         {
             try
             {
-                var validationResult = _payrollBureauBusinessService.EmployerAlreadyExists(viewModel.Employer.Name, viewModel.EmployerId);
-           
-                if (!validationResult.Succeeded)
+                //create Bureau
+                var userId = User.Identity.GetUserId();
+                viewModel.Employer.BureauId = viewModel.BureauId;
+                viewModel.Employer.CreatedBy = userId;
+                var employer = _payrollBureauBusinessService.CreateEmployer(viewModel.Employer);
+                if (!employer.Succeeded)
                 {
-                    foreach (var error in validationResult.Errors)
+                    foreach (var error in employer.Errors)
                     {
                         ModelState.AddModelError("", error);
                     }
@@ -89,18 +92,14 @@ namespace PayrollBureau.Controllers
                 var roleId = RoleManager.Roles.FirstOrDefault(r => r.Name == "Employer").Id;
                 user.Roles.Add(new IdentityUserRole { UserId = user.Id, RoleId = roleId });
                 var result = UserManager.Create(user, "Inland12!");
-                if (!validationResult.Succeeded)
+                if (!result.Succeeded)
                 {
                     foreach (var error in result.Errors)
                         ModelState.AddModelError("", error);
                 }
-                //create employer
-                var userId = User.Identity.GetUserId();
-                viewModel.Employer.BureauId = viewModel.BureauId;
-                viewModel.Employer.CreatedBy = userId;
-                var employer = _payrollBureauBusinessService.CreateEmployer(viewModel.Employer);
-                if (employer.Succeeded) return RedirectToAction("Index", "Employer", new { bureauId = viewModel.BureauId });
 
+                //create AspNetUser Employer              
+                _payrollBureauBusinessService.CreateAspNetUserEmployer(employer.Entity.EmployerId, user.Id);
             }
             catch (Exception ex)
             {

@@ -5,6 +5,6 @@ namespace PayrollBureau.Models
 {
     public class BureauViewModel:BaseViewModel
     {
-        public Bureau Bureau { get; set; }
+        public Bureau Bureau { get; set; }    
     }
 }

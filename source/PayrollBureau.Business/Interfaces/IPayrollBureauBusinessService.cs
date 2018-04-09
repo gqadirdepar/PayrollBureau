@@ -24,16 +24,15 @@ namespace PayrollBureau.Business.Interfaces
         Bureau RetrieveBureau(int bureauId);
         Bureau RetrieveBureau(string aspNetUserId);
         PagedResult<AspNetUser> RetrieveBureauUsers(int bureauId, string searchTerm, List<OrderBy> orderBy,Paging paging);
-        BureauStatistics RetrieveBureauStatistics(int bureauId);
-        ValidationResult<Employer> EmployerAlreadyExists(string name, int? employerId);
-        ValidationResult<Employee> EmployeeAlreadyExists(string name, int? employeeId);
-        ValidationResult<Bureau> BureauAlreadyExists(string name, int? bureauId);
+        BureauStatistics RetrieveBureauStatistics(int bureauId);    
+        ValidationResult<Employee> EmployeeAlreadyExists(string name, int? employeeId);   
         #endregion
 
         #region create
 
         ValidationResult<Employer> CreateEmployer(Employer employer);
-        AspNetUserBureau CreateAspNetUserBureau(AspNetUserBureau aspNetUserBureau);
+        AspNetUserBureau CreateAspNetUserBureau(int bureauId,string aspNetUserId);
+        AspNetUserEmployer CreateAspNetUserEmployer(int employerId, string aspNetUserId);
         ValidationResult<Employee> CreateEmployee(Employee employee);
         ValidationResult<Bureau> CreateBureau(Bureau bureau);
         #endregion
