@@ -31,7 +31,7 @@ namespace PayrollBureau.Controllers
 
         [Route("Bureau/Create")]
         public ActionResult Create()
-        {     
+        {
             return View();
         }
 
@@ -42,11 +42,14 @@ namespace PayrollBureau.Controllers
         public ActionResult Create(BureauViewModel viewModel)
         {
             try
-            {
-                var validationResult = _payrollBureauBusinessService.BureauAlreadyExists(viewModel.Bureau.Name, null);
-                if (!validationResult.Succeeded)
+            {             
+                //create Bureau
+                var userId = User.Identity.GetUserId();
+                viewModel.Bureau.CreatedBy = userId;
+                var bureau = _payrollBureauBusinessService.CreateBureau(viewModel.Bureau);
+                if (!bureau.Succeeded)
                 {
-                    foreach (var error in validationResult.Errors)
+                    foreach (var error in bureau.Errors)
                     {
                         ModelState.AddModelError("", error);
                     }
@@ -63,16 +66,14 @@ namespace PayrollBureau.Controllers
                 var roleId = RoleManager.Roles.FirstOrDefault(r => r.Name == "Bureau").Id;
                 user.Roles.Add(new IdentityUserRole { UserId = user.Id, RoleId = roleId });
                 var result = UserManager.Create(user, "Inland12!");
-                if (!validationResult.Succeeded)
+                if (!result.Succeeded)
                 {
                     foreach (var error in result.Errors)
                         ModelState.AddModelError("", error);
                 }
-                //create Bureau
-                var userId = User.Identity.GetUserId();             
-                viewModel.Bureau.CreatedBy = userId;
-                var employer = _payrollBureauBusinessService.CreateBureau(viewModel.Bureau);
-                if (employer.Succeeded) return RedirectToAction("Index", "Bureau");
+
+                //create AspNetUser Bureau              
+                _payrollBureauBusinessService.CreateAspNetUserBureau(bureau.Entity.BureauId, user.Id);
 
             }
             catch (Exception ex)
@@ -89,15 +90,15 @@ namespace PayrollBureau.Controllers
 
             var bureau = _payrollBureauBusinessService.RetrieveBureau(bureauId);
             if (bureau == null)
-                return RedirectToAction("NotFound", "Error");          
-            var model = new BureauViewModel { Bureau =  bureau};
+                return RedirectToAction("NotFound", "Error");
+            var model = new BureauViewModel { Bureau = bureau };
             return View(model);
         }
 
         [HttpPost]
         [Route("Bureaus/Edit")]
         public ActionResult Edit(BureauViewModel model)
-        {          
+        {
             var result = _payrollBureauBusinessService.UpdateBureau(model.Bureau);
             if (result.Succeeded) return RedirectToAction("Index", "Bureau");
             foreach (var error in result.Errors)
