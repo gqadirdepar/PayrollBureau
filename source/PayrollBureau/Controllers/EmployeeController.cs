@@ -26,7 +26,7 @@ namespace PayrollBureau.Controllers
             _documentBusinessService = documentBusinessService;
         }
 
-     
+
         [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees")]
         [Route("Employee/Index/{employerId}")]
         public ActionResult Index(int? employerId)
@@ -83,8 +83,8 @@ namespace PayrollBureau.Controllers
         }
 
         [HttpPost]
-        [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees/{employeeId}/UploadDocument")]
-        public ActionResult UploadDocument(int bureauId, int employerId, int employeeId)
+        [Route("Bureaus/{bureauId}/Employers/{employerId}/Employees/{employeeId}/{description}/UploadDocument")]
+        public ActionResult UploadDocument(int bureauId, int employerId, int employeeId, string description)
         {
             if (Request.Files != null && Request.Files.Count > 0)
             {
@@ -97,7 +97,8 @@ namespace PayrollBureau.Controllers
                     DocumentTypeId = (int)DocumentCategory.Document,
                     FileName = file.FileName.Split('\\').Last().FilterSpecialChars(),
                     CreatedBy = this.User.Identity.GetUserId(),
-                    UploadedDate = DateTime.UtcNow
+                    UploadedDate = DateTime.UtcNow,
+                    Description = description
                 };
                 var result = _documentBusinessService.CreateEmployeeDocument(documentMeta, employeeId, User.Identity.GetUserId());
                 if (result.Succeeded)
@@ -152,9 +153,9 @@ namespace PayrollBureau.Controllers
                 var userId = User.Identity.GetUserId();
                 viewModel.Employee.EmployerId = viewModel.EmployerId;
                 viewModel.Employee.AspnetUserId = user.Id;
-                viewModel.Employee.CreatedBy = userId;      
+                viewModel.Employee.CreatedBy = userId;
                 var employee = _payrollBureauBusinessService.CreateEmployee(viewModel.Employee);
-                if (employee.Succeeded) return RedirectToAction("Index", "Employee", new { employerId = viewModel.EmployerId ,});
+                if (employee.Succeeded) return RedirectToAction("Index", "Employee", new { employerId = viewModel.EmployerId, });
 
             }
             catch (Exception ex)

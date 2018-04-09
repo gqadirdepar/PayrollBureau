@@ -150,6 +150,7 @@ namespace PayrollBureau.Business.Services
             var validationResult = new ValidationResult<Bureau>();
             try
             {
+
                 bureau.CreatedDateUtc = DateTime.UtcNow;
                 validationResult.Entity = _payrollBureauDataService.Create(bureau); ;
                 return validationResult;

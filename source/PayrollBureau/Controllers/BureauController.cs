@@ -53,7 +53,7 @@ namespace PayrollBureau.Controllers
                     return View(viewModel);
                 }
 
-                //create Bureauuser and role
+                //create Bureau user and role
                 var user = new ApplicationUser
                 {
                     UserName = viewModel.Email,
